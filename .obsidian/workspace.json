@@ -185,6 +185,8 @@
   },
   "active": "fa252c9f9f7b9b19",
   "lastOpenFiles": [
+    "frontend/node_modules",
+    "frontend/_tmp_24064_64553e9fcdd593f03ac80396e811c966",
     "frontend/guidelines/Guidelines.md",
     "frontend/guidelines",
     "frontend/vite.config.ts",
@@ -197,7 +199,6 @@
     "frontend/src/app/components/ui/use-mobile.ts",
     "frontend/src/app/components/ui/tooltip.tsx",
     "frontend/src/app/components/ui/toggle.tsx",
-    "frontend/src/app/components/ui/toggle-group.tsx",
     "frontend/src/imports/pasted_text/cnvn-product-requirements-docu.md",
     "设计前端网页/ATTRIBUTIONS.md",
     "设计前端网页/guidelines/Guidelines.md",

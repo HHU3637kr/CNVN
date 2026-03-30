@@ -1,0 +1,26 @@
+# Dependencies
+frontend/node_modules/
+frontend/.pnpm-store/
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*

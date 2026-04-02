@@ -1,0 +1,38 @@
+services:
+  api:
+    build: .
+    container_name: cnvn-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://cnvn:cnvn_secret@db:5432/cnvn
+      - JWT_SECRET_KEY=dev-secret-key-change-in-production
+      - APP_ENV=development
+      - APP_DEBUG=true
+      - CORS_ORIGINS=["http://localhost:5173","http://127.0.0.1:5173"]
+    volumes:
+      - ./app:/app/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  db:
+    image: postgres:16-alpine
+    container_name: cnvn-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: cnvn
+      POSTGRES_PASSWORD: cnvn_secret
+      POSTGRES_DB: cnvn
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cnvn"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

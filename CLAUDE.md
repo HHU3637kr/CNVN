@@ -4,8 +4,11 @@
 
 ## 技术栈
 
-- **语言**: TypeScript
-- **前端框架**: React + Vite + TailwindCSS
+- **前端**: TypeScript + React + Vite + TailwindCSS
+- **后端**: Python + FastAPI + SQLAlchemy 2.0 (async)
+- **数据库**: PostgreSQL 16
+- **认证**: JWT (python-jose)
+- **部署**: Docker + Docker Compose
 - **类型**: Web 应用（MVP 阶段）
 
 ## 项目规范

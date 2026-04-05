@@ -41,6 +41,7 @@ class TeacherProfileOut(BaseModel):
     response_rate: Decimal
     is_active: bool
     created_at: datetime
+    updated_at: datetime
 
     model_config = {"from_attributes": True}
 

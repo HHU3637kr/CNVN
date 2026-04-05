@@ -6,6 +6,8 @@ import { TeacherProfile } from "./pages/TeacherProfile";
 import { StudentDashboard } from "./pages/StudentDashboard";
 import { TeacherDashboard } from "./pages/TeacherDashboard";
 import { Classroom } from "./pages/Classroom";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +19,8 @@ export const router = createBrowserRouter([
       { path: "teachers/:id", Component: TeacherProfile },
       { path: "dashboard/student", Component: StudentDashboard },
       { path: "dashboard/teacher", Component: TeacherDashboard },
+      { path: "login", Component: Login },
+      { path: "register", Component: Register },
     ],
   },
   { path: "/classroom/:id", Component: Classroom },

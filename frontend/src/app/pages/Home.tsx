@@ -1,7 +1,38 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { Search, Globe, Users, Clock, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Search, Globe, Clock, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { apiFetchJson, ApiError } from "../lib/http";
+import type { PaginatedResponse, TeacherListItem } from "../types/api";
+import { formatVndK } from "../lib/format";
+import { TeacherAvatar } from "../components/TeacherAvatar";
 
 export function Home() {
+  const [featured, setFeatured] = useState<TeacherListItem[]>([]);
+  const [featErr, setFeatErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await apiFetchJson<PaginatedResponse<TeacherListItem>>(
+          "/teachers?sort_by=recommended&page_size=4&page=1",
+          { auth: false }
+        );
+        if (!cancelled) {
+          setFeatured(res.items);
+          setFeatErr(null);
+        }
+      } catch (e) {
+        if (!cancelled) {
+          setFeatured([]);
+          setFeatErr(e instanceof ApiError ? e.message : "推荐区加载失败");
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -106,126 +137,57 @@ export function Home() {
             </Link>
           </div>
 
+          {featErr && (
+            <p className="text-sm text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 mb-4">
+              {featErr}
+            </p>
+          )}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Teacher Card 1 */}
-            <div className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1746105625407-5d49d69a2a47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtZXNlJTIwdGVhY2hlciUyMHBvcnRyYWl0fGVufDF8fHx8MTc3NDg2MTI3Mnww&ixlib=rb-4.1.0&q=80&w=1080" 
-                  alt="Teacher Trang" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-gray-900 flex items-center gap-1">
-                  ⭐ 4.9
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-bold text-lg text-gray-900 mb-1">Trang Nguyen</h3>
-                <p className="text-sm text-gray-500 mb-3">武汉大学留学生 · HSK专业户</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">HSK备考</span>
-                  <span className="text-xs bg-green-50 text-green-600 px-2 py-1 rounded">越南语授课</span>
-                </div>
-                <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                  <div className="font-bold text-lg text-gray-900">
-                    ₫150k <span className="text-xs text-gray-500 font-normal">/ 小时</span>
+            {featured.map((t) => {
+              const rating = Number(t.avg_rating);
+              const tags = (t.specialties ?? []).slice(0, 2);
+              return (
+                <div
+                  key={t.id}
+                  className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all group"
+                >
+                  <div className="h-48 overflow-hidden relative bg-gray-100">
+                    <div className="w-full h-full group-hover:scale-105 transition-transform duration-500">
+                      <TeacherAvatar src={t.avatar_url} label={t.name} sizeClass="w-full h-full min-h-[12rem]" />
+                    </div>
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-gray-900 flex items-center gap-1">
+                      ⭐ {rating.toFixed(1)}
+                    </div>
                   </div>
-                  <Link to="/teachers/1" className="text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-md">
-                    查看详情
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Teacher Card 2 */}
-            <div className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1722099588943-33adb4d37bc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtZXNlJTIwbWFsZSUyMHRlYWNoZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NzQ4NjEyNzh8MA&ixlib=rb-4.1.0&q=80&w=1080" 
-                  alt="Teacher Tuan" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-gray-900 flex items-center gap-1">
-                  ⭐ 5.0
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-bold text-lg text-gray-900 mb-1">Tuan Le</h3>
-                <p className="text-sm text-gray-500 mb-3">资深中文导游 · 实用口语专家</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-orange-50 text-orange-600 px-2 py-1 rounded">商务沟通</span>
-                  <span className="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">旅游中文</span>
-                </div>
-                <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                  <div className="font-bold text-lg text-gray-900">
-                    ₫200k <span className="text-xs text-gray-500 font-normal">/ 小时</span>
+                  <div className="p-5">
+                    <h3 className="font-bold text-lg text-gray-900 mb-1">{t.name}</h3>
+                    <p className="text-sm text-gray-500 mb-3 line-clamp-2">{t.title}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                      <div className="font-bold text-lg text-gray-900">
+                        {formatVndK(t.hourly_rate)}{" "}
+                        <span className="text-xs text-gray-500 font-normal">/ 小时</span>
+                      </div>
+                      <Link
+                        to={`/teachers/${t.id}`}
+                        className="text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-md"
+                      >
+                        查看详情
+                      </Link>
+                    </div>
                   </div>
-                  <Link to="/teachers/2" className="text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-md">
-                    查看详情
-                  </Link>
                 </div>
-              </div>
-            </div>
-
-            {/* Teacher Card 3 */}
-            <div className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1698556954522-ae28ac7f61d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtZXNlJTIwdGVhY2hlciUyMHBvcnRyYWl0JTIwaGFwcHl8ZW58MXx8fHwxNzc0ODYxMjkyfDA&ixlib=rb-4.1.0&q=80&w=1080" 
-                  alt="Teacher Mai" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-gray-900 flex items-center gap-1">
-                  ⭐ 4.8
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-bold text-lg text-gray-900 mb-1">Mai Phung</h3>
-                <p className="text-sm text-gray-500 mb-3">对外汉语专业 · 零基础入门</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-purple-50 text-purple-600 px-2 py-1 rounded">零基础入门</span>
-                  <span className="text-xs bg-pink-50 text-pink-600 px-2 py-1 rounded">儿童中文</span>
-                </div>
-                <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                  <div className="font-bold text-lg text-gray-900">
-                    ₫250k <span className="text-xs text-gray-500 font-normal">/ 小时</span>
-                  </div>
-                  <Link to="/teachers/3" className="text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-md">
-                    查看详情
-                  </Link>
-                </div>
-              </div>
-            </div>
-            
-            {/* Teacher Card 4 */}
-            <div className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1583147987529-b2e1515f2b51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWV0bmFtZXNlJTIwdGVhY2hlciUyMHBvcnRyYWl0JTIwZnJpZW5kbHl8ZW58MXx8fHwxNzc0ODYxMzE0fDA&ixlib=rb-4.1.0&q=80&w=1080" 
-                  alt="Teacher Li" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-gray-900 flex items-center gap-1">
-                  ⭐ 4.9
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-bold text-lg text-gray-900 mb-1">Li Ming</h3>
-                <p className="text-sm text-gray-500 mb-3">在越中企高管 · 沉浸式口语</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-red-50 text-red-600 px-2 py-1 rounded">母语者</span>
-                  <span className="text-xs bg-orange-50 text-orange-600 px-2 py-1 rounded">高级商务</span>
-                </div>
-                <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                  <div className="font-bold text-lg text-gray-900">
-                    ₫300k <span className="text-xs text-gray-500 font-normal">/ 小时</span>
-                  </div>
-                  <Link to="/teachers/4" className="text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-md">
-                    查看详情
-                  </Link>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>

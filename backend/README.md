@@ -15,8 +15,10 @@
 
 ### 使用 Docker（推荐）
 
+编排文件在**仓库根目录** `docker-compose.yml`，镜像名：`cnvn-api:latest`、`cnvn-web:latest`，容器名：`cnvn-api`、`cnvn-web`、`cnvn-db`。
+
 ```bash
-# 启动所有服务（FastAPI + PostgreSQL）
+# 在仓库根目录（与 backend、frontend 同级）执行：PostgreSQL + FastAPI + 前端（Vite）
 docker compose up --build
 
 # 后台运行
@@ -24,12 +26,14 @@ docker compose up --build -d
 
 # 查看日志
 docker compose logs -f api
+docker compose logs -f web
 
 # 停止
 docker compose down
 ```
 
 服务启动后访问：
+- 前端: http://localhost:5173
 - API 文档: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 
@@ -59,19 +63,15 @@ backend/
 ├── alembic/                 # 数据库迁移
 ├── tests/                   # 测试
 ├── Dockerfile
-├── docker-compose.yml
 └── pyproject.toml
 ```
 
 ## 数据库迁移
 
+在仓库根目录执行（已启动 compose）：
+
 ```bash
-# 生成迁移
 docker compose exec api alembic revision --autogenerate -m "描述"
-
-# 执行迁移
 docker compose exec api alembic upgrade head
-
-# 回滚
 docker compose exec api alembic downgrade -1
 ```

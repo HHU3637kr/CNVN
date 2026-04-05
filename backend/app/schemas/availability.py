@@ -1,6 +1,7 @@
 import uuid
 from datetime import date, datetime, time
-from pydantic import BaseModel, Field
+
+from pydantic import BaseModel, Field, model_validator
 
 
 class AvailabilityCreate(BaseModel):
@@ -9,6 +10,14 @@ class AvailabilityCreate(BaseModel):
     start_time: time
     end_time: time
     is_recurring: bool = True
+
+    @model_validator(mode="after")
+    def day_or_date(self) -> "AvailabilityCreate":
+        if self.day_of_week is not None and self.specific_date is not None:
+            raise ValueError("不能同时指定 day_of_week 与 specific_date")
+        if self.day_of_week is None and self.specific_date is None:
+            raise ValueError("须指定 day_of_week 或 specific_date")
+        return self
 
 
 class AvailabilityUpdate(BaseModel):

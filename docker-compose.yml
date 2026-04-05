@@ -1,6 +1,12 @@
+# CNVN 全栈编排：PostgreSQL + FastAPI + Vite 前端
+# 使用：在仓库根目录执行  docker compose up --build
+
 services:
   api:
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: cnvn-api:latest
     container_name: cnvn-api
     ports:
       - "8000:8000"
@@ -11,11 +17,29 @@ services:
       - APP_DEBUG=true
       - CORS_ORIGINS=["http://localhost:5173","http://127.0.0.1:5173"]
     volumes:
-      - ./app:/app/app
+      - ./backend/app:/app/app
     depends_on:
       db:
         condition: service_healthy
     command: uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: cnvn-web:latest
+    container_name: cnvn-web
+    ports:
+      - "5173:5173"
+    environment:
+      # 浏览器访问宿主机上的 API（与默认 api.ts 一致）
+      - VITE_API_URL=http://localhost:8000
+    volumes:
+      - ./frontend:/app
+      - cnvn_web_node_modules:/app/node_modules
+    # 勿用 pnpm run dev -- --host（会变成 vite -- --host，无法绑定 0.0.0.0）
+    command: >
+      sh -c "pnpm install && pnpm exec vite --host 0.0.0.0 --port 5173"
 
   db:
     image: postgres:16-alpine
@@ -36,3 +60,4 @@ services:
 
 volumes:
   pgdata:
+  cnvn_web_node_modules:

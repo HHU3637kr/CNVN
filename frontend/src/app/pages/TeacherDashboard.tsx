@@ -60,6 +60,11 @@ export function TeacherDashboard() {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
+  // 非教师用户重定向到学生中心
+  if (me && !me.roles.includes("teacher")) {
+    return <Navigate to="/dashboard/student" replace />;
+  }
+
   const stats = [
     {
       label: "钱包余额",

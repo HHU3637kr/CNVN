@@ -1,0 +1,60 @@
+# CNVN 全栈部署 Blueprint — Render.com
+# 使用方式：在 Render Dashboard 中选择 "New Blueprint Instance"，关联此仓库即可
+
+databases:
+  - name: cnvn-db
+    plan: free          # 免费套餐：256 MB, 1 GB 存储, 90 天有效
+    databaseName: cnvn
+    user: cnvn
+
+services:
+  # ── 后端 API（FastAPI） ──────────────────────────────────
+  - type: web
+    name: cnvn-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cnvn-db
+          property: connectionString
+        # Render 默认给 postgresql://...，需要转成 asyncpg 格式
+        # 通过 start 脚本处理
+      - key: JWT_SECRET_KEY
+        generateValue: true          # Render 自动生成随机值
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: "7"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: CORS_ORIGINS
+        sync: false                  # 部署后手动设置为前端地址
+      - key: PYTHON_VERSION
+        value: "3.12"
+
+  # ── 前端（Vite + React 静态站点） ─────────────────────────
+  - type: web
+    name: cnvn-web
+    runtime: static
+    buildCommand: cd frontend && corepack enable && corepack prepare pnpm@9 --activate && pnpm install --frozen-lockfile && pnpm build
+    staticPublishPath: ./frontend/dist
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+    routes:
+      # SPA fallback — 所有路由指回 index.html
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false                  # 部署后手动设置为后端 URL（如 https://cnvn-api.onrender.com）

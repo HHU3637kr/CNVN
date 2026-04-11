@@ -6,7 +6,15 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Database
+    # Render 提供 postgresql://... 格式，需自动转为 asyncpg 驱动格式
     DATABASE_URL: str = "postgresql+asyncpg://cnvn:cnvn_secret@db:5432/cnvn"
+
+    @property
+    def async_database_url(self) -> str:
+        url = self.DATABASE_URL
+        if url.startswith("postgresql://"):
+            url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return url
 
     # JWT
     JWT_SECRET_KEY: str = "your-super-secret-key-change-in-production"

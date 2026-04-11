@@ -15,6 +15,9 @@ RUN uv sync --no-dev --no-install-project
 # Copy application code
 COPY . .
 
+COPY start.sh ./
+RUN chmod +x start.sh
+
 EXPOSE 8000
 
-CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["./start.sh"]

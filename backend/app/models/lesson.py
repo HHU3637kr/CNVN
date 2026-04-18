@@ -1,8 +1,7 @@
 import uuid
 from datetime import datetime, timezone
-from decimal import Decimal
 
-from sqlalchemy import DateTime, ForeignKey, Index, Integer, Numeric, String, Text
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -30,9 +29,6 @@ class Lesson(Base):
         String(20), nullable=False, server_default="pending_confirmation"
     )
     price: Mapped[int] = mapped_column(Integer, nullable=False)
-    platform_fee_rate: Mapped[Decimal] = mapped_column(
-        Numeric(3, 2), nullable=False
-    )
     cancel_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     actual_start_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
@@ -40,10 +36,7 @@ class Lesson(Base):
     actual_end_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
-    settled_at: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
-    teacher_amount: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    # 结算结果统一查 SettlementSnapshot（plan.md §1.4）
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

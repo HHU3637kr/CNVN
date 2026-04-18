@@ -1,6 +1,5 @@
 import uuid
 from datetime import datetime
-from decimal import Decimal
 from pydantic import BaseModel, Field
 
 
@@ -20,7 +19,6 @@ class LessonOut(BaseModel):
     topic: str | None
     status: str
     price: int
-    platform_fee_rate: Decimal
     cancel_reason: str | None
     actual_start_at: datetime | None
     actual_end_at: datetime | None

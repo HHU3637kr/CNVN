@@ -3,20 +3,18 @@ from __future__ import annotations
 import math
 import uuid
 from datetime import datetime, timedelta, timezone
-from decimal import Decimal
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 
-from app.config import settings
 from app.core.datetime_utils import ensure_utc, intervals_overlap
 from app.models.lesson import Lesson
 from app.models.teacher_profile import TeacherProfile
 from app.models.user import User
 from app.schemas.common import PaginatedResponse
 from app.schemas.lesson import LessonCreate, LessonListItem, LessonOut
-from app.services import availability_service, wallet_service
+from app.services import availability_service, payment_service
 
 TERMINAL_STATUSES = frozenset({"cancelled", "expired"})
 
@@ -30,7 +28,7 @@ def _price_vnd(hourly_rate: int, duration_minutes: int) -> int:
 
 
 async def expire_stale_pending_lessons(db: AsyncSession) -> None:
-    """pending_confirmation 超过 24h 未确认 → expired 并全额退款。"""
+    """pending_confirmation 超过 24h 未确认 → expired 并全额退款（走 payment_service）。"""
     deadline = datetime.now(timezone.utc) - timedelta(hours=24)
     r = await db.execute(
         select(Lesson).where(
@@ -39,13 +37,11 @@ async def expire_stale_pending_lessons(db: AsyncSession) -> None:
         )
     )
     for lesson in r.scalars().all():
-        await wallet_service.credit_refund(
-            db,
-            lesson.student_id,
-            lesson.price,
-            lesson.id,
-            "教师超时未确认，自动退款",
-        )
+        order = await payment_service.get_active_order_by_lesson(db, lesson.id)
+        if order is not None and order.status in ("held", "disputed"):
+            await payment_service.refund_payment_order(
+                db, order, "教师超时未确认，自动退款"
+            )
         lesson.status = "expired"
     await db.commit()
 
@@ -124,7 +120,6 @@ async def create_lesson(
         raise ValueError("该时段与已有课程冲突")
 
     price = _price_vnd(teacher.hourly_rate, data.duration_minutes)
-    platform_fee_rate: Decimal = settings.PLATFORM_FEE_RATE
 
     lesson = Lesson(
         student_id=user.id,
@@ -134,19 +129,13 @@ async def create_lesson(
         topic=data.topic,
         status="pending_confirmation",
         price=price,
-        platform_fee_rate=platform_fee_rate,
     )
     db.add(lesson)
     await db.flush()
 
     try:
-        await wallet_service.debit_for_lesson(
-            db,
-            user.id,
-            price,
-            lesson.id,
-            "课程预约扣款",
-        )
+        # 学员付款 → 托管户（plan.md §3.4 第 1 行）
+        await payment_service.create_order_for_lesson(db, lesson)
     except ValueError as e:
         await db.rollback()
         raise e
@@ -294,20 +283,17 @@ async def cancel_lesson(
     if reason:
         lesson.cancel_reason = reason
 
-    # 24h 取消规则修改：允许取消，但 < 24h 不退款
-    if hours_until < 24.0:
-        # < 24h：允许取消，不退款
-        lesson.status = "cancelled"
-    else:
-        # >= 24h：允许取消，全额退款
-        await wallet_service.credit_refund(
-            db,
-            lesson.student_id,
-            lesson.price,
-            lesson.id,
-            "课程取消退款",
-        )
-        lesson.status = "cancelled"
+    # 24h 取消规则（plan.md §2.1 FR-005 B1 决议）：
+    #   ≥ 24h：退款 → PaymentOrder → refunded；学员 Wallet 回款
+    #   < 24h：Lesson 置 cancelled，PaymentOrder 保持 held；争议期过后
+    #          由 dispute_watcher 按常规 release 全额结算给教师（学员违约）
+    if hours_until >= 24.0:
+        order = await payment_service.get_active_order_by_lesson(db, lesson.id)
+        if order is not None and order.status in ("held", "disputed"):
+            await payment_service.refund_payment_order(
+                db, order, "课程取消退款"
+            )
+    lesson.status = "cancelled"
 
     await db.commit()
     await db.refresh(lesson)
@@ -343,12 +329,11 @@ async def end_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> Less
         raise ValueError("只有进行中的课程可以结束")
     lesson.status = "completed"
     lesson.actual_end_at = datetime.now(timezone.utc)
+
+    # 课程完成 → 写入争议期 deadline（plan.md §2.1 FR-005）
+    # 真正结算由 dispute_watcher 在 held_until 到期后触发
+    await payment_service.mark_lesson_completed(db, lesson)
+
     await db.commit()
-
-    # 课程完成后自动结算给教师
-    from app.services import settlement_service
-
-    await settlement_service.settle_teacher_lesson(db, lesson)
-
     await db.refresh(lesson)
     return LessonOut.model_validate(lesson)

@@ -1,3 +1,14 @@
+"""
+钱包操作原语（plan.md §1.4 保留）。
+
+本模块仅保留"用户可提现余额"相关的基础操作：
+  - ensure_wallet / get_wallet_by_user_id
+  - topup（MVP 模拟充值，留作当前学员充值入口）
+  - list_transactions / count_transactions（前端钱包流水查询）
+
+MVP 时期的课程扣款/退款/结算入账接口已删除（plan.md §5.5 S5.2）；
+课程相关的所有资金动作统一由 `app.services.payment_service` 接管。
+"""
 from __future__ import annotations
 
 import uuid
@@ -30,123 +41,35 @@ async def ensure_wallet(db: AsyncSession, user_id: uuid.UUID) -> Wallet:
 
 
 async def topup(db: AsyncSession, user_id: uuid.UUID, amount: int) -> Wallet:
-    """MVP 模拟充值（正整数）。"""
-    w = await ensure_wallet(db, user_id)
+    """MVP 模拟充值（正整数）。本次不替换，保留作为学员充值入口。"""
+    if amount <= 0:
+        raise ValueError("充值金额必须为正数")
+    await ensure_wallet(db, user_id)
     w = await get_wallet_by_user_id(db, user_id, lock=True)
     assert w is not None
     w.balance += amount
     w.updated_at = datetime.now(timezone.utc)
-    tx = Transaction(
-        wallet_id=w.id,
-        lesson_id=None,
-        type="topup",
-        amount=amount,
-        description="模拟充值",
+    db.add(
+        Transaction(
+            wallet_id=w.id,
+            lesson_id=None,
+            type="topup",
+            amount=amount,
+            description="模拟充值",
+        )
     )
-    db.add(tx)
     await db.commit()
     await db.refresh(w)
     return w
 
 
-async def debit_for_lesson(
-    db: AsyncSession,
-    user_id: uuid.UUID,
-    amount: int,
-    lesson_id: uuid.UUID,
-    description: str,
-) -> Wallet:
-    if amount <= 0:
-        raise ValueError("扣款金额必须为正数")
-    w = await get_wallet_by_user_id(db, user_id, lock=True)
-    if w is None:
-        raise ValueError("钱包不存在")
-    if w.balance < amount:
-        raise ValueError("余额不足")
-    w.balance -= amount
-    w.updated_at = datetime.now(timezone.utc)
-    db.add(
-        Transaction(
-            wallet_id=w.id,
-            lesson_id=lesson_id,
-            type="payment",
-            amount=-amount,
-            description=description,
-        )
-    )
-    return w
-
-
-async def credit_refund(
-    db: AsyncSession,
-    user_id: uuid.UUID,
-    amount: int,
-    lesson_id: uuid.UUID,
-    description: str,
-) -> Wallet:
-    if amount <= 0:
-        raise ValueError("退款金额必须为正数")
-    w = await get_wallet_by_user_id(db, user_id, lock=True)
-    if w is None:
-        raise ValueError("钱包不存在")
-    w.balance += amount
-    w.updated_at = datetime.now(timezone.utc)
-    db.add(
-        Transaction(
-            wallet_id=w.id,
-            lesson_id=lesson_id,
-            type="refund",
-            amount=amount,
-            description=description,
-        )
-    )
-    return w
-
-
 async def count_transactions(db: AsyncSession, wallet_id: uuid.UUID) -> int:
     r = await db.execute(
-        select(func.count()).select_from(Transaction).where(Transaction.wallet_id == wallet_id)
+        select(func.count())
+        .select_from(Transaction)
+        .where(Transaction.wallet_id == wallet_id)
     )
     return int(r.scalar_one())
-
-
-async def credit_settlement(
-    db: AsyncSession,
-    user_id: uuid.UUID,
-    amount: int,
-    lesson_id: uuid.UUID,
-    description: str,
-) -> Transaction:
-    """
-    教师结算入账
-
-    Args:
-        db: 数据库会话
-        user_id: 用户（教师）ID
-        amount: 入账金额（正数）
-        lesson_id: 关联课程ID
-        description: 交易描述
-
-    Returns:
-        交易记录
-    """
-    if amount <= 0:
-        raise ValueError("入账金额必须为正数")
-    w = await get_wallet_by_user_id(db, user_id, lock=True)
-    if w is None:
-        raise ValueError("钱包不存在")
-    w.balance += amount
-    w.updated_at = datetime.now(timezone.utc)
-    tx = Transaction(
-        wallet_id=w.id,
-        lesson_id=lesson_id,
-        type="settlement",
-        amount=amount,
-        description=description,
-    )
-    db.add(tx)
-    await db.flush()
-    return tx
 
 
 async def list_transactions(

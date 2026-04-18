@@ -17,6 +17,11 @@ from app.schemas.teacher import (
 )
 from app.schemas.review import ReviewOut
 from app.schemas.availability import AvailabilityOut
+from app.schemas.tax_profile import TeacherTaxProfileOut, TeacherTaxProfileUpdate
+from app.models.teacher_tax_profile import (
+    DEFAULT_TAX_SCENARIO,
+    TeacherTaxProfile,
+)
 from app.services import availability_service, teacher_service
 
 router = APIRouter(prefix="/teachers", tags=["Teachers"])
@@ -85,6 +90,55 @@ async def update_teacher_profile(
         if "不存在" in str(e):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+
+# --------------------------- 税务档案（plan.md §3.2.6） ---------------------------
+
+
+async def _get_or_create_tax_profile(
+    db: AsyncSession, teacher_profile_id: uuid.UUID
+) -> TeacherTaxProfile:
+    r = await db.execute(
+        select(TeacherTaxProfile).where(
+            TeacherTaxProfile.teacher_id == teacher_profile_id
+        )
+    )
+    profile = r.scalars().first()
+    if profile is not None:
+        return profile
+    profile = TeacherTaxProfile(
+        teacher_id=teacher_profile_id,
+        tax_scenario=DEFAULT_TAX_SCENARIO,
+    )
+    db.add(profile)
+    await db.commit()
+    await db.refresh(profile)
+    return profile
+
+
+@router.get("/me/tax-profile", response_model=TeacherTaxProfileOut)
+async def get_my_tax_profile(
+    current_user: User = Depends(get_current_teacher),
+    db: AsyncSession = Depends(get_db),
+):
+    assert current_user.teacher_profile is not None
+    profile = await _get_or_create_tax_profile(db, current_user.teacher_profile.id)
+    return TeacherTaxProfileOut.model_validate(profile)
+
+
+@router.patch("/me/tax-profile", response_model=TeacherTaxProfileOut)
+async def update_my_tax_profile(
+    data: TeacherTaxProfileUpdate,
+    current_user: User = Depends(get_current_teacher),
+    db: AsyncSession = Depends(get_db),
+):
+    assert current_user.teacher_profile is not None
+    profile = await _get_or_create_tax_profile(db, current_user.teacher_profile.id)
+    for key, value in data.model_dump(exclude_unset=True).items():
+        setattr(profile, key, value)
+    await db.commit()
+    await db.refresh(profile)
+    return TeacherTaxProfileOut.model_validate(profile)
 
 
 @router.get("/{teacher_id}/reviews", response_model=PaginatedResponse[ReviewOut])

@@ -28,3 +28,12 @@ Thumbs.db
 *.log
 npm-debug.log*
 pnpm-debug.log*
+
+# Local docs / drafts (not part of source)
+docs/
+
+# Local Claude skills (personal workspace)
+.claude/skills/
+
+# Obsidian workspace state (user-local)
+.obsidian/workspace.json

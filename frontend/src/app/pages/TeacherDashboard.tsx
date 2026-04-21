@@ -108,7 +108,13 @@ export function TeacherDashboard() {
             </p>
           )}
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
+          <Link
+            to="/payouts"
+            className="flex items-center gap-2 px-4 py-2 border border-green-200 bg-green-50 text-green-800 rounded-lg hover:bg-green-100 transition-colors font-medium"
+          >
+            <DollarSign className="w-4 h-4" /> 出款单
+          </Link>
           <button
             type="button"
             className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"

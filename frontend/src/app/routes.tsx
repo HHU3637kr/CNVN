@@ -8,6 +8,9 @@ import { TeacherDashboard } from "./pages/TeacherDashboard";
 import { Classroom } from "./pages/Classroom";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { Wallet } from "./pages/Wallet";
+import { PaymentOrderDetail } from "./pages/PaymentOrderDetail";
+import { Payouts } from "./pages/Payouts";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +24,9 @@ export const router = createBrowserRouter([
       { path: "dashboard/teacher", Component: TeacherDashboard },
       { path: "login", Component: Login },
       { path: "register", Component: Register },
+      { path: "wallet", Component: Wallet },
+      { path: "payments/orders/:orderId", Component: PaymentOrderDetail },
+      { path: "payouts", Component: Payouts },
     ],
   },
   { path: "/classroom/:id", Component: Classroom },

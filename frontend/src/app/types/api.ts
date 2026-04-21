@@ -105,3 +105,60 @@ export interface WalletOut {
   balance: number;
   updated_at: string;
 }
+
+export interface TransactionOut {
+  id: string;
+  wallet_id: string;
+  lesson_id: string | null;
+  type: string;
+  amount: number;
+  description: string | null;
+  created_at: string;
+}
+
+/** 后端 Decimal 序列化常为 string */
+export interface SettlementSnapshotOut {
+  id: string;
+  lesson_id: string;
+  payment_order_id: string;
+  tax_scenario: string;
+  gross_amount: number;
+  commission_rate: string;
+  commission_amount: number;
+  tax_rate: string;
+  vat_amount: number;
+  pit_amount: number;
+  net_amount: number;
+  calculated_at: string;
+}
+
+export interface PaymentOrderDetail {
+  id: string;
+  lesson_id: string;
+  student_id: string;
+  gross_amount: number;
+  channel: string;
+  channel_txn_id: string | null;
+  status: string;
+  held_until: string | null;
+  paid_at: string | null;
+  released_at: string | null;
+  refunded_at: string | null;
+  created_at: string;
+  updated_at: string;
+  settlement_snapshot: SettlementSnapshotOut | null;
+}
+
+export interface PayoutOrderOut {
+  id: string;
+  payment_order_id: string;
+  lesson_id: string;
+  teacher_id: string;
+  settlement_snapshot_id: string;
+  net_amount: number;
+  status: string;
+  channel: string;
+  channel_txn_id: string | null;
+  paid_at: string | null;
+  created_at: string;
+}

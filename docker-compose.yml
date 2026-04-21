@@ -9,7 +9,8 @@ services:
     image: cnvn-api:latest
     container_name: cnvn-api
     ports:
-      - "8000:8000"
+      # 8000 常被本机其他容器占用；浏览器/宿主访问 API 请用 http://localhost:8001
+      - "8001:8000"
     environment:
       - DATABASE_URL=postgresql+asyncpg://cnvn:cnvn_secret@db:5432/cnvn
       - JWT_SECRET_KEY=dev-secret-key-change-in-production
@@ -33,7 +34,7 @@ services:
       - "5173:5173"
     environment:
       # 浏览器访问宿主机上的 API（与默认 api.ts 一致）
-      - VITE_API_URL=http://localhost:8000
+      - VITE_API_URL=http://localhost:8001
     volumes:
       - ./frontend:/app
       - cnvn_web_node_modules:/app/node_modules

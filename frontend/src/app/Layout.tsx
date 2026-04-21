@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from "react-router";
-import { Menu, Globe, Bell, LogOut, ChevronDown, X, GraduationCap, BookOpen, UserCircle } from "lucide-react";
+import { Menu, Globe, Bell, LogOut, ChevronDown, X, GraduationCap, BookOpen, UserCircle, CreditCard } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { getAccessToken } from "./lib/api";
 import { apiFetchJson, ApiError } from "./lib/http";
@@ -91,6 +91,14 @@ export function Layout() {
                   我的学习 (Học tập)
                 </Link>
               )}
+              {me && (
+                <Link
+                  to="/wallet"
+                  className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                >
+                  钱包 (Ví)
+                </Link>
+              )}
               {me && isTeacher && (
                 <Link
                   to="/dashboard/teacher"
@@ -133,14 +141,24 @@ export function Layout() {
                         我的学习
                       </Link>
                       {isTeacher ? (
-                        <Link
-                          to="/dashboard/teacher"
-                          onClick={() => setDropdownOpen(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                        >
-                          <GraduationCap className="w-4 h-4 text-gray-400" />
-                          教师中心
-                        </Link>
+                        <>
+                          <Link
+                            to="/dashboard/teacher"
+                            onClick={() => setDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <GraduationCap className="w-4 h-4 text-gray-400" />
+                            教师中心
+                          </Link>
+                          <Link
+                            to="/payouts"
+                            onClick={() => setDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <CreditCard className="w-4 h-4 text-gray-400" />
+                            出款单
+                          </Link>
+                        </>
                       ) : (
                         <button
                           type="button"
@@ -213,6 +231,15 @@ export function Layout() {
                 我的学习
               </Link>
             )}
+            {me && (
+              <Link
+                to="/wallet"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              >
+                钱包
+              </Link>
+            )}
             {me && isTeacher && (
               <Link
                 to="/dashboard/teacher"
@@ -220,6 +247,15 @@ export function Layout() {
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
               >
                 教师中心
+              </Link>
+            )}
+            {me && isTeacher && (
+              <Link
+                to="/payouts"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              >
+                出款单
               </Link>
             )}
             {!me ? (

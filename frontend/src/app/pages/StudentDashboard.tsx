@@ -197,18 +197,18 @@ export function StudentDashboard() {
             </div>
 
             <div className="flex gap-3 relative z-10">
-              <button
-                type="button"
-                className="flex-1 bg-white text-blue-900 font-bold py-2.5 rounded-xl hover:bg-blue-50 transition-colors"
+              <Link
+                to="/wallet"
+                className="flex-1 text-center bg-white text-blue-900 font-bold py-2.5 rounded-xl hover:bg-blue-50 transition-colors"
               >
                 充值
-              </button>
-              <button
-                type="button"
-                className="flex-1 bg-blue-700 text-white font-bold py-2.5 rounded-xl hover:bg-blue-600 transition-colors border border-blue-600"
+              </Link>
+              <Link
+                to="/wallet"
+                className="flex-1 text-center bg-blue-700 text-white font-bold py-2.5 rounded-xl hover:bg-blue-600 transition-colors border border-blue-600"
               >
                 明细
-              </button>
+              </Link>
             </div>
           </section>
 

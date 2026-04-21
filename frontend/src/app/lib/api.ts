@@ -1,6 +1,6 @@
 /** 后端 API 基址；登录后请将 access_token 写入 localStorage（键名见 getAccessToken） */
 export const API_BASE_URL =
-  import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+  import.meta.env.VITE_API_URL ?? "http://localhost:8001";
 
 export function getAccessToken(): string | null {
   return (

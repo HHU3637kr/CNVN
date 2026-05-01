@@ -4,7 +4,7 @@ Revision ID: 002_add_payment_v2_tables
 Revises: 001_add_settlement_fields
 Create Date: 2026-04-18
 
-参见 spec/03-功能实现/20260418-1810-支付系统合规改造/plan.md §3.2
+参见 spec/06-已归档/20260418-1810-支付系统合规改造/plan.md §3.2
 """
 from typing import Sequence, Union
 

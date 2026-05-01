@@ -1,7 +1,7 @@
 ---
 title: 支付系统合规改造实现方案
 type: plan
-category: 03-功能实现
+category: 03-能力交付
 status: 未确认
 priority: 高
 created: 2026-04-18
@@ -628,6 +628,6 @@ DEFAULT_PAYMENT_CHANNEL: str = "mock"
 - 探索报告：[[exploration-report|探索报告]]
 - MVP 方案：[[../20260403-支付模块实现/plan|支付模块实现方案]]
 - MVP 总结：[[../20260403-支付模块实现/summary|支付模块实现总结]]
-- 后端架构：[[../../02-架构设计/20260402-1616-后端全局架构设计/plan|后端全局架构设计]]
+- 后端架构：[[../../02-技术设计/20260402-1616-后端全局架构设计/plan|后端全局架构设计]]
 - 测试计划：[[test-plan|测试计划]]（待 spec-tester 创建）
 - 实现总结：[[summary|实现总结]]（待 spec-executor 创建）

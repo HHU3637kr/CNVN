@@ -1,5 +1,5 @@
 """
-评价业务：spec/03-功能实现/20260403-1900-评价模块/plan.md §3
+评价业务：spec/03-能力交付/20260403-1900-评价模块/plan.md §3
 """
 
 from __future__ import annotations

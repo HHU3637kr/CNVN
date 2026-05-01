@@ -1,5 +1,5 @@
 /**
- * 教师详情 — spec/03-功能实现/20260404-1400-前端对接真实API/plan.md §5 步骤 3
+ * 教师详情 — spec/03-能力交付/20260404-1400-前端对接真实API/plan.md §5 步骤 3
  * GET /teachers/{id} 无 name/avatar，标题作展示名、首字母头像 — plan §3.4
  */
 import { useEffect, useState } from "react";

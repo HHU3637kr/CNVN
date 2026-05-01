@@ -4,7 +4,7 @@ Revision ID: 003_drop_settlement
 Revises: 002_add_payment_v2_tables
 Create Date: 2026-04-18
 
-参见 spec/03-功能实现/20260418-1810-支付系统合规改造/plan.md §1.4
+参见 spec/06-已归档/20260418-1810-支付系统合规改造/plan.md §1.4
 结算数据统一查 SettlementSnapshot，Lesson 不再冗余结算字段。
 """
 from typing import Sequence, Union

@@ -1,5 +1,5 @@
 /**
- * HTTP 封装 — 见 spec/03-功能实现/20260404-1400-前端对接真实API/plan.md §3.2
+ * HTTP 封装 — 见 spec/03-能力交付/20260404-1400-前端对接真实API/plan.md §3.2
  */
 import { API_BASE_URL, getAccessToken } from "./api";
 

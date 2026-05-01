@@ -1,5 +1,5 @@
 /**
- * 钱包 / 充值 / VietQR / 线下转账占位 — spec/03-功能实现/20260421-2100-支付前端与VietQR验证-spike/plan.md
+ * 钱包 / 充值 / VietQR / 线下转账占位 — spec/03-能力交付/20260421-2100-支付前端与VietQR验证-spike/plan.md
  */
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router";

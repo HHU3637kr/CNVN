@@ -1,5 +1,5 @@
 /**
- * 学生仪表盘 — spec/03-功能实现/20260404-1400-前端对接真实API/plan.md §5 步骤 5
+ * 学生仪表盘 — spec/03-能力交付/20260404-1400-前端对接真实API/plan.md §5 步骤 5
  */
 import { useEffect, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router";

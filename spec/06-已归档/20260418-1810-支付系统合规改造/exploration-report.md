@@ -1,7 +1,7 @@
 ---
 title: 支付系统合规改造 — 探索报告
 type: exploration-report
-category: 03-功能实现
+category: 03-能力交付
 status: 已完成
 priority: 高
 created: 2026-04-18
@@ -179,7 +179,7 @@ net             = tutor_gross - vat - pit
 
 ## 5. 产出物路径
 
-- 探索报告（本文件）：`@d:\project\CNVN\spec\03-功能实现\20260418-1810-支付系统合规改造\exploration-report.md`
+- 探索报告（本文件）：`@d:\project\CNVN\spec\06-已归档\20260418-1810-支付系统合规改造\exploration-report.md`
 - 实现计划（待 spec-writer 产出）：同目录 `plan.md`
 - 测试计划（待 spec-tester 产出）：同目录 `test-plan.md`
 

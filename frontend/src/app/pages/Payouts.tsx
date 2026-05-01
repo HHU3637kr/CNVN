@@ -1,5 +1,5 @@
 /**
- * 教师出款列表 — spec/03-功能实现/20260421-2100-支付前端与VietQR验证-spike/plan.md
+ * 教师出款列表 — spec/03-能力交付/20260421-2100-支付前端与VietQR验证-spike/plan.md
  */
 import { useEffect, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router";

@@ -1,6 +1,6 @@
 /**
  * 注册页面 — 支持学生/教师身份选择
- * spec/03-功能实现/20260406-0030-教师中心访问控制/plan.md §3
+ * spec/03-能力交付/20260406-0030-教师中心访问控制/plan.md §3
  */
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";

@@ -1,5 +1,5 @@
 /**
- * 最小登录 — spec/03-功能实现/20260404-1400-前端对接真实API/plan.md §5 步骤 6
+ * 最小登录 — spec/03-能力交付/20260404-1400-前端对接真实API/plan.md §5 步骤 6
  */
 import { useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router";

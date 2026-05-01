@@ -92,6 +92,20 @@ async def update_teacher_profile(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
+@router.get("/me/profile", response_model=TeacherProfileOut)
+async def get_my_teacher_profile(
+    current_user: User = Depends(get_current_teacher),
+    db: AsyncSession = Depends(get_db),
+):
+    """读取当前教师自己的档案。"""
+    try:
+        return await teacher_service.get_teacher_profile_by_user_id(
+            db, current_user.id
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+
+
 # --------------------------- 税务档案（plan.md §3.2.6） ---------------------------
 
 

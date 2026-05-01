@@ -43,6 +43,36 @@ export interface TeacherProfileOut {
   updated_at: string;
 }
 
+export interface TeacherProfileUpdate {
+  title?: string | null;
+  about?: string | null;
+  video_url?: string | null;
+  hourly_rate?: number | null;
+  currency?: string | null;
+  teacher_type?: string | null;
+  specialties?: string[] | null;
+}
+
+export interface TeacherTaxProfileOut {
+  id: string;
+  teacher_id: string;
+  tax_scenario: string;
+  id_doc_type: string | null;
+  id_doc_no: string | null;
+  vn_tax_code: string | null;
+  vn_residency_days_ytd: number;
+  kyc_verified_at: string | null;
+  updated_at: string;
+}
+
+export interface TeacherTaxProfileUpdate {
+  tax_scenario?: "cn_resident" | "vn_passport_in_cn" | "vn_resident" | null;
+  id_doc_type?: string | null;
+  id_doc_no?: string | null;
+  vn_tax_code?: string | null;
+  vn_residency_days_ytd?: number | null;
+}
+
 export interface LessonListItem {
   id: string;
   teacher_name: string | null;
@@ -80,6 +110,22 @@ export interface AvailabilityOut {
   end_time: string;
   is_recurring: boolean;
   created_at: string;
+}
+
+export interface AvailabilityCreate {
+  day_of_week: number | null;
+  specific_date: string | null;
+  start_time: string;
+  end_time: string;
+  is_recurring: boolean;
+}
+
+export interface AvailabilityUpdate {
+  day_of_week?: number | null;
+  specific_date?: string | null;
+  start_time?: string | null;
+  end_time?: string | null;
+  is_recurring?: boolean | null;
 }
 
 export type LessonStatus =
@@ -192,10 +238,19 @@ export interface PayoutOrderOut {
   lesson_id: string;
   teacher_id: string;
   settlement_snapshot_id: string;
+  gross_amount?: number;
+  commission_rate?: string;
+  commission_amount?: number;
+  vat_amount?: number;
+  pit_amount?: number;
+  tax_amount?: number;
   net_amount: number;
+  tax_scenario?: string | null;
   status: string;
   channel: string;
   channel_txn_id: string | null;
+  held_until?: string | null;
+  released_at?: string | null;
   paid_at: string | null;
   created_at: string;
 }

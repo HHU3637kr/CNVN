@@ -16,7 +16,7 @@ import {
 import { Link, useNavigate, useParams } from "react-router";
 import { getAccessToken, wsUrlForLesson } from "@/app/lib/api";
 import { apiFetchJson, ApiError } from "../lib/http";
-import type { LessonOut, PaginatedResponse, UserOut } from "../types/api";
+import type { LessonOut, PaginatedResponse, TeacherProfileOut, UserOut } from "../types/api";
 
 type ChatMsg = {
   id: string;
@@ -69,6 +69,9 @@ export function Classroom() {
   const [blockedReason, setBlockedReason] = useState<string | null>(null);
   const [classroomAllowed, setClassroomAllowed] = useState(false);
   const [lesson, setLesson] = useState<LessonOut | null>(null);
+  const [me, setMe] = useState<UserOut | null>(null);
+  const [teacherCanEnd, setTeacherCanEnd] = useState(false);
+  const [endingLesson, setEndingLesson] = useState(false);
 
   const token = getAccessToken();
 
@@ -108,8 +111,12 @@ export function Classroom() {
       setMessages([]);
 
       let lessonData: LessonOut;
+      let userData: UserOut;
       try {
-        lessonData = await apiFetchJson<LessonOut>(`/lessons/${lessonId}`);
+        [lessonData, userData] = await Promise.all([
+          apiFetchJson<LessonOut>(`/lessons/${lessonId}`),
+          apiFetchJson<UserOut>("/auth/me"),
+        ]);
       } catch (e) {
         if (!cancelled) {
           setBlockedReason(errorMessage(e));
@@ -120,7 +127,19 @@ export function Classroom() {
 
       if (cancelled) return;
       setLesson(lessonData);
+      setMe(userData);
       setTimeLeft(Math.max(0, lessonData.duration_minutes * 60));
+
+      if (userData.active_role === "teacher") {
+        try {
+          const profile = await apiFetchJson<TeacherProfileOut>("/teachers/me/profile");
+          if (!cancelled) setTeacherCanEnd(profile.id === lessonData.teacher_id);
+        } catch {
+          if (!cancelled) setTeacherCanEnd(false);
+        }
+      } else {
+        setTeacherCanEnd(false);
+      }
 
       if (lessonData.can_enter_classroom !== true) {
         setBlockedReason(lessonData.classroom_unavailable_reason || "当前不可进入课堂。");
@@ -134,14 +153,11 @@ export function Classroom() {
       setHistoryLoading(true);
 
       try {
-        const [me, data] = await Promise.all([
-          apiFetchJson<UserOut>("/auth/me"),
-          apiFetchJson<PaginatedResponse<ChatMsg>>(
-            `/lessons/${lessonId}/messages?page=1&page_size=100`
-          ),
-        ]);
+        const data = await apiFetchJson<PaginatedResponse<ChatMsg>>(
+          `/lessons/${lessonId}/messages?page=1&page_size=100`
+        );
         if (!cancelled) {
-          setMyUserId(me.id);
+          setMyUserId(userData.id);
           setMessages(
             data.items.map((m) => ({
               ...m,
@@ -221,9 +237,29 @@ export function Classroom() {
     setDraft("");
   };
 
-  const handleEndClass = () => {
-    if (window.confirm("确定要结束课程吗？")) {
-      navigate("/dashboard/student");
+  const handleLeaveClass = () => {
+    navigate(me?.active_role === "teacher" ? "/dashboard/teacher" : "/dashboard/student");
+  };
+
+  const handleEndClass = async () => {
+    if (!lessonId) return;
+    if (!teacherCanEnd) {
+      handleLeaveClass();
+      return;
+    }
+    if (window.confirm("确定要结束课程吗？结束后课程将进入完课结算流程。")) {
+      setEndingLesson(true);
+      setFetchError(null);
+      try {
+        await apiFetchJson<LessonOut>(`/lessons/${lessonId}/end`, {
+          method: "PATCH",
+        });
+        navigate("/dashboard/teacher");
+      } catch (e) {
+        setFetchError(errorMessage(e));
+      } finally {
+        setEndingLesson(false);
+      }
     }
   };
 
@@ -255,10 +291,10 @@ export function Classroom() {
               </Link>
             )}
             <Link
-              to="/dashboard/student"
+              to={me?.active_role === "teacher" ? "/dashboard/teacher" : "/dashboard/student"}
               className="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg"
             >
-              返回学习中心
+              返回{me?.active_role === "teacher" ? "教师中心" : "学习中心"}
             </Link>
           </div>
         </div>
@@ -290,10 +326,20 @@ export function Classroom() {
           <button
             type="button"
             onClick={handleEndClass}
+            disabled={endingLesson}
             className="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-1.5 rounded transition-colors"
           >
-            离开
+            {teacherCanEnd ? (endingLesson ? "结束中..." : "结束课程") : "离开"}
           </button>
+          {teacherCanEnd && (
+            <button
+              type="button"
+              onClick={handleLeaveClass}
+              className="ml-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-1.5 rounded transition-colors"
+            >
+              普通离开
+            </button>
+          )}
         </div>
       </div>
 
@@ -356,10 +402,11 @@ export function Classroom() {
             </button>
             <button
               type="button"
-              onClick={handleEndClass}
+              onClick={teacherCanEnd ? handleEndClass : handleLeaveClass}
+              disabled={endingLesson}
               className="w-16 h-12 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition-colors shadow-lg shadow-red-900/50"
             >
-              <PhoneOff className="w-5 h-5" />
+              {endingLesson ? <Loader2 className="w-5 h-5 animate-spin" /> : <PhoneOff className="w-5 h-5" />}
             </button>
           </div>
         </div>

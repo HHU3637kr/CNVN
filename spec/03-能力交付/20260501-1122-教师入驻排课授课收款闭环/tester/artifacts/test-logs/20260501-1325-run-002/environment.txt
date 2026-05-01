@@ -1,0 +1,8 @@
+﻿run_id=20260501-1325-run-002
+timestamp=2026-05-01T13:25:45.7159188+08:00
+branch=feat/spec-20260501-1248-teacher-supply-flow
+commit=c3644f2
+python=Python 3.13.11
+node=v24.12.0
+pnpm=10.28.2
+database=postgresql+asyncpg://cnvn:<redacted>@localhost:5432/cnvn_test

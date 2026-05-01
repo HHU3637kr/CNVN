@@ -138,6 +138,66 @@ async def create_confirmed_lesson(client, db_session):
     return lesson_id, h_student
 
 
+async def create_confirmed_lesson_with_teacher(client, db_session):
+    await ensure_ledger_accounts(db_session)
+
+    student = make_register("payout_stu")
+    await client.post("/api/v1/auth/register", json=student)
+    login_student = await client.post(
+        "/api/v1/auth/login",
+        json={"email": student["email"], "password": student["password"]},
+    )
+    h_student = {"Authorization": f"Bearer {login_student.json()['access_token']}"}
+
+    teacher = make_register("payout_tch")
+    await client.post("/api/v1/auth/register", json=teacher)
+    login_teacher = await client.post(
+        "/api/v1/auth/login",
+        json={"email": teacher["email"], "password": teacher["password"]},
+    )
+    h_teacher = {"Authorization": f"Bearer {login_teacher.json()['access_token']}"}
+    await client.post(
+        "/api/v1/auth/become-teacher",
+        json=TEACHER_PROFILE_DATA,
+        headers=h_teacher,
+    )
+
+    teacher_id = await teacher_id_for_email(db_session, teacher["email"])
+    local_start = datetime.now(ZoneInfo("Asia/Ho_Chi_Minh")) + timedelta(minutes=5)
+    await client.post(
+        "/api/v1/availability",
+        json={
+            "specific_date": local_start.date().isoformat(),
+            "start_time": "00:00:00",
+            "end_time": "23:59:00",
+            "is_recurring": False,
+        },
+        headers=h_teacher,
+    )
+    await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_student)
+
+    scheduled_at = local_start.astimezone(timezone.utc)
+    created = await client.post(
+        "/api/v1/lessons",
+        json={
+            "teacher_id": str(teacher_id),
+            "scheduled_at": scheduled_at.isoformat().replace("+00:00", "Z"),
+            "duration_minutes": 60,
+            "topic": "出款明细测试",
+        },
+        headers=h_student,
+    )
+    assert created.status_code == 201, created.text
+    lesson_id = created.json()["id"]
+
+    confirmed = await client.patch(
+        f"/api/v1/lessons/{lesson_id}/confirm",
+        headers=h_teacher,
+    )
+    assert confirmed.status_code == 200, confirmed.text
+    return lesson_id, h_student, h_teacher, teacher_id
+
+
 async def create_teacher_and_student(client, db_session, prefix: str):
     student = make_register(f"{prefix}_stu")
     await client.post("/api/v1/auth/register", json=student)
@@ -340,3 +400,82 @@ async def test_commission_rate_excludes_invalid_lessons(client, db_session):
         db_session, teacher_id, actual_end_at.date()
     )
     assert rate == Decimal("0.2")
+
+
+@pytest.mark.asyncio
+async def test_payouts_me_requires_teacher_and_returns_settlement_explanation_fields(
+    client, db_session
+):
+    lesson_id, h_student, h_teacher, teacher_id = await create_confirmed_lesson_with_teacher(
+        client, db_session
+    )
+
+    before_release = await client.get("/api/v1/payouts/me", headers=h_teacher)
+    assert before_release.status_code == 200, before_release.text
+    assert before_release.json()["items"] == []
+
+    student_forbidden = await client.get("/api/v1/payouts/me", headers=h_student)
+    assert student_forbidden.status_code == 403
+    assert (
+        student_forbidden.json()["detail"]
+        == "需要教师角色权限，请切换到教师身份"
+    )
+
+    other_teacher = make_register("other_payout_tch")
+    await client.post("/api/v1/auth/register", json=other_teacher)
+    login_other = await client.post(
+        "/api/v1/auth/login",
+        json={"email": other_teacher["email"], "password": other_teacher["password"]},
+    )
+    h_other_teacher = {"Authorization": f"Bearer {login_other.json()['access_token']}"}
+    await client.post(
+        "/api/v1/auth/become-teacher",
+        json=TEACHER_PROFILE_DATA,
+        headers=h_other_teacher,
+    )
+
+    started = await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_teacher)
+    assert started.status_code == 200, started.text
+    ended = await client.patch(f"/api/v1/lessons/{lesson_id}/end", headers=h_teacher)
+    assert ended.status_code == 200, ended.text
+
+    r_order = await db_session.execute(
+        select(PaymentOrder).where(PaymentOrder.lesson_id == lesson_id)
+    )
+    order = r_order.scalars().one()
+    order.held_until = datetime.now(timezone.utc) - timedelta(seconds=1)
+    payout = await payment_service.release_payment_order(db_session, order)
+    await db_session.commit()
+
+    other_list = await client.get("/api/v1/payouts/me", headers=h_other_teacher)
+    assert other_list.status_code == 200, other_list.text
+    assert other_list.json()["total"] == 0
+
+    listed = await client.get("/api/v1/payouts/me", headers=h_teacher)
+    assert listed.status_code == 200, listed.text
+    body = listed.json()
+    assert body["total"] == 1
+    item = body["items"][0]
+
+    assert item["id"] == str(payout.id)
+    assert item["lesson_id"] == str(lesson_id)
+    assert item["teacher_id"] == str(teacher_id)
+    assert item["payment_order_id"] == str(order.id)
+    assert item["settlement_snapshot_id"] is not None
+    assert item["status"] == "paid"
+    assert item["channel"] == "mock"
+    assert item["channel_txn_id"] is not None
+    assert item["gross_amount"] == 60_000
+    assert item["commission_amount"] > 0
+    assert item["vat_amount"] >= 0
+    assert item["pit_amount"] >= 0
+    assert item["tax_amount"] == item["vat_amount"] + item["pit_amount"]
+    assert (
+        item["gross_amount"]
+        == item["commission_amount"] + item["vat_amount"] + item["pit_amount"] + item["net_amount"]
+    )
+    assert Decimal(str(item["commission_rate"])) > 0
+    assert item["tax_scenario"]
+    assert item["held_until"] is not None
+    assert item["released_at"] is not None
+    assert item["paid_at"] is not None

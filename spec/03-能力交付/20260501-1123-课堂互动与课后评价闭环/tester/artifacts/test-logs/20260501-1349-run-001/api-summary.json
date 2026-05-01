@@ -1,0 +1,20 @@
+{
+  "run_id": "20260501-1349-run-001",
+  "masked_accounts": [
+    "teacher.*@example.test",
+    "student.*@example.test",
+    "intruder.*@example.test"
+  ],
+  "blocked_lesson_id": "84abed03-523f-4a36-aa21-3a8861cddbe0",
+  "flow_lesson_id": "0de5a9ca-f696-442e-af8d-862314d2c10c",
+  "final_status": "reviewed",
+  "teacher_total_reviews": 1,
+  "cases": [
+    "US-001",
+    "US-002",
+    "US-003",
+    "US-004",
+    "US-005",
+    "US-006"
+  ]
+}

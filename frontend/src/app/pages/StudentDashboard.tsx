@@ -1,7 +1,7 @@
 /**
  * 学生仪表盘 — spec/03-能力交付/20260501-1121-学员找老师到预约上课闭环/writer/plan.md §3.5
  */
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router";
 import {
   Video,
@@ -11,6 +11,9 @@ import {
   ChevronRight,
   CheckCircle2,
   FileText,
+  Star,
+  X,
+  Loader2,
 } from "lucide-react";
 import { getAccessToken } from "../lib/api";
 import { apiFetchJson, ApiError } from "../lib/http";
@@ -18,6 +21,7 @@ import type {
   LessonListItem,
   LessonStatus,
   PaginatedResponse,
+  ReviewCreate,
   UserOut,
   WalletOut,
 } from "../types/api";
@@ -76,7 +80,33 @@ function statusPillClass(status: LessonStatus): string {
   return "text-red-700 bg-red-50";
 }
 
-function LessonCard({ lesson }: { lesson: LessonListItem }) {
+type ReviewFormState = {
+  rating_overall: number;
+  rating_teaching: string;
+  rating_punctuality: string;
+  rating_communication: string;
+  content: string;
+};
+
+const DEFAULT_REVIEW_FORM: ReviewFormState = {
+  rating_overall: 5,
+  rating_teaching: "",
+  rating_punctuality: "",
+  rating_communication: "",
+  content: "",
+};
+
+function optionalRating(value: string): number | null {
+  return value ? Number(value) : null;
+}
+
+function LessonCard({
+  lesson,
+  onReview,
+}: {
+  lesson: LessonListItem;
+  onReview: (lesson: LessonListItem) => void;
+}) {
   const { date, time } = formatLessonScheduled(lesson.scheduled_at);
   const teacherName = lesson.teacher_name || "教师";
   const canEnter = lesson.can_enter_classroom === true;
@@ -127,9 +157,10 @@ function LessonCard({ lesson }: { lesson: LessonListItem }) {
         ) : lesson.status === "completed" ? (
           <button
             type="button"
-            className="w-full sm:w-auto px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 bg-gray-50"
+            onClick={() => onReview(lesson)}
+            className="w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-colors"
           >
-            待评价
+            去评价
           </button>
         ) : lesson.status === "reviewed" ? (
           <span className="block text-center text-sm font-medium text-green-700 bg-green-50 px-4 py-2 rounded-lg">
@@ -150,6 +181,21 @@ export function StudentDashboard() {
   const [wallet, setWallet] = useState<WalletOut | null>(null);
   const [loadErr, setLoadErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reviewLesson, setReviewLesson] = useState<LessonListItem | null>(null);
+  const [reviewForm, setReviewForm] = useState<ReviewFormState>(DEFAULT_REVIEW_FORM);
+  const [reviewErr, setReviewErr] = useState<string | null>(null);
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+
+  const loadDashboard = useCallback(async () => {
+    const [u, lessonPage, w] = await Promise.all([
+      apiFetchJson<UserOut>("/auth/me"),
+      apiFetchJson<PaginatedResponse<LessonListItem>>(
+        "/lessons?role=student&page=1&page_size=100"
+      ),
+      apiFetchJson<WalletOut>("/wallet"),
+    ]);
+    return { user: u, lessons: lessonPage.items, wallet: w };
+  }, []);
 
   useEffect(() => {
     if (!token) return;
@@ -158,17 +204,11 @@ export function StudentDashboard() {
       setLoading(true);
       setLoadErr(null);
       try {
-        const [u, lessonPage, w] = await Promise.all([
-          apiFetchJson<UserOut>("/auth/me"),
-          apiFetchJson<PaginatedResponse<LessonListItem>>(
-            "/lessons?role=student&page=1&page_size=100"
-          ),
-          apiFetchJson<WalletOut>("/wallet"),
-        ]);
+        const data = await loadDashboard();
         if (!cancelled) {
-          setMe(u);
-          setLessons(lessonPage.items);
-          setWallet(w);
+          setMe(data.user);
+          setLessons(data.lessons);
+          setWallet(data.wallet);
         }
       } catch (e) {
         if (!cancelled) {
@@ -181,7 +221,55 @@ export function StudentDashboard() {
     return () => {
       cancelled = true;
     };
-  }, [token]);
+  }, [loadDashboard, token]);
+
+  const openReviewDialog = (lesson: LessonListItem) => {
+    if (lesson.status !== "completed") return;
+    setReviewLesson(lesson);
+    setReviewForm(DEFAULT_REVIEW_FORM);
+    setReviewErr(null);
+  };
+
+  const closeReviewDialog = () => {
+    if (reviewSubmitting) return;
+    setReviewLesson(null);
+    setReviewErr(null);
+    setReviewForm(DEFAULT_REVIEW_FORM);
+  };
+
+  const submitReview = async () => {
+    if (!reviewLesson || reviewLesson.status !== "completed") return;
+    setReviewSubmitting(true);
+    setReviewErr(null);
+    const payload: ReviewCreate = {
+      lesson_id: reviewLesson.id,
+      rating_overall: reviewForm.rating_overall,
+      rating_teaching: optionalRating(reviewForm.rating_teaching),
+      rating_punctuality: optionalRating(reviewForm.rating_punctuality),
+      rating_communication: optionalRating(reviewForm.rating_communication),
+      content: reviewForm.content.trim() ? reviewForm.content.trim() : null,
+    };
+    try {
+      await apiFetchJson<unknown>("/reviews", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      setReviewLesson(null);
+      setReviewForm(DEFAULT_REVIEW_FORM);
+      const data = await loadDashboard();
+      setMe(data.user);
+      setLessons(data.lessons);
+      setWallet(data.wallet);
+    } catch (e) {
+      if (e instanceof ApiError && e.status === 403) {
+        setReviewErr("无权评价该课程");
+      } else {
+        setReviewErr(e instanceof ApiError ? e.message : "评价提交失败，请稍后重试");
+      }
+    } finally {
+      setReviewSubmitting(false);
+    }
+  };
 
   if (!token) {
     return <Navigate to="/login" replace state={{ from: location }} />;
@@ -227,7 +315,7 @@ export function StudentDashboard() {
                     {group.items.length > 0 ? (
                       <div className="space-y-3">
                         {group.items.map((lesson) => (
-                          <LessonCard key={lesson.id} lesson={lesson} />
+                          <LessonCard key={lesson.id} lesson={lesson} onReview={openReviewDialog} />
                         ))}
                       </div>
                     ) : (
@@ -283,9 +371,15 @@ export function StudentDashboard() {
                         <div className="flex gap-3 w-full sm:w-auto">
                           <button
                             type="button"
-                            className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 bg-gray-50 flex-1 sm:flex-none"
+                            onClick={() => openReviewDialog(lesson)}
+                            disabled={lesson.status === "reviewed"}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium flex-1 sm:flex-none ${
+                              lesson.status === "reviewed"
+                                ? "border border-gray-200 text-green-700 bg-green-50"
+                                : "bg-blue-600 text-white hover:bg-blue-700"
+                            }`}
                           >
-                            {lesson.status === "reviewed" ? "已评价" : "待评价"}
+                            {lesson.status === "reviewed" ? "已评价" : "去评价"}
                           </button>
                           <Link
                             to="/teachers"
@@ -358,6 +452,116 @@ export function StudentDashboard() {
           </section>
         </div>
       </div>
+
+      {reviewLesson && (
+        <div className="fixed inset-0 z-50 bg-black/40 px-4 py-6 flex items-center justify-center">
+          <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="p-5 border-b border-gray-100 flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">评价课程</h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  {reviewLesson.topic || "课程"} · {reviewLesson.teacher_name || "教师"}老师
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={closeReviewDialog}
+                disabled={reviewSubmitting}
+                className="p-2 rounded-lg hover:bg-gray-100 text-gray-500"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4">
+              <label className="block">
+                <span className="text-sm font-medium text-gray-900 flex items-center gap-1">
+                  <Star className="w-4 h-4 text-amber-500" /> 总评分
+                </span>
+                <select
+                  value={reviewForm.rating_overall}
+                  onChange={(e) =>
+                    setReviewForm((prev) => ({ ...prev, rating_overall: Number(e.target.value) }))
+                  }
+                  className="mt-2 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500"
+                >
+                  {[5, 4, 3, 2, 1].map((n) => (
+                    <option key={n} value={n}>
+                      {n} 分
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <div className="grid sm:grid-cols-3 gap-3">
+                {[
+                  ["rating_teaching", "教学"],
+                  ["rating_punctuality", "准时"],
+                  ["rating_communication", "沟通"],
+                ].map(([key, label]) => (
+                  <label key={key} className="block">
+                    <span className="text-sm font-medium text-gray-700">{label}</span>
+                    <select
+                      value={reviewForm[key as keyof ReviewFormState]}
+                      onChange={(e) =>
+                        setReviewForm((prev) => ({ ...prev, [key]: e.target.value }))
+                      }
+                      className="mt-2 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    >
+                      <option value="">不评分</option>
+                      {[5, 4, 3, 2, 1].map((n) => (
+                        <option key={n} value={n}>
+                          {n} 分
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ))}
+              </div>
+
+              <label className="block">
+                <span className="text-sm font-medium text-gray-700">文字评价</span>
+                <textarea
+                  value={reviewForm.content}
+                  onChange={(e) => setReviewForm((prev) => ({ ...prev, content: e.target.value }))}
+                  maxLength={500}
+                  className="mt-2 w-full h-28 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500 resize-none"
+                  placeholder="可以写下老师的教学体验、沟通感受等"
+                />
+                <span className="block text-right text-xs text-gray-400 mt-1">
+                  {reviewForm.content.length}/500
+                </span>
+              </label>
+
+              {reviewErr && (
+                <div className="text-sm text-red-700 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+                  {reviewErr}
+                </div>
+              )}
+            </div>
+
+            <div className="p-5 border-t border-gray-100 flex flex-col sm:flex-row gap-3 justify-end">
+              <button
+                type="button"
+                onClick={closeReviewDialog}
+                disabled={reviewSubmitting}
+                className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                onClick={submitReview}
+                disabled={reviewSubmitting}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+              >
+                {reviewSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                提交评价
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

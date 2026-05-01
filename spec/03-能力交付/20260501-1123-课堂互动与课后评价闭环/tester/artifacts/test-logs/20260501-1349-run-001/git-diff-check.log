@@ -1,0 +1,15 @@
+﻿git.exe : warning: in the working copy of 'backend/app/api/v1/lessons.py', LF will be replaced by CRLF the next time Git touches it
+At line:2 char:114
++ ... 49-run-001"; & git diff --check *> "$base/git-diff-check.log"; $code= ...
++                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of 'backend/app/services/lesson_service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/services/message_service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/api/v1/test_lesson_messages.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tests/api/v1/test_reviews.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/app/pages/Classroom.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/app/pages/StudentDashboard.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/app/types/api.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'spec/03-能力交付/20260501-1123-课堂互动与课后评价闭环/writer/plan.md', LF will be replaced by CRLF the next time Git touches it

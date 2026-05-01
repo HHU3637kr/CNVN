@@ -64,6 +64,8 @@ async def list_lesson_messages(
         raise _http(e)
     except PermissionError as e:
         raise _http(e)
+    except ValueError as e:
+        raise _http(e)
 
 
 @router.websocket("/{lesson_id}/ws")
@@ -107,7 +109,7 @@ async def lesson_websocket(
         await websocket.close(code=1008)
         return
     try:
-        await lesson_service.require_lesson_participant(db, user, lesson_id)
+        await lesson_service.require_lesson_classroom_access(db, user, lesson_id)
     except LookupError as e:
         await websocket.send_json(
             {"type": "error", "code": "not_found", "message": str(e)}
@@ -117,6 +119,16 @@ async def lesson_websocket(
     except PermissionError as e:
         await websocket.send_json(
             {"type": "error", "code": "forbidden", "message": str(e)}
+        )
+        await websocket.close(code=1008)
+        return
+    except ValueError as e:
+        await websocket.send_json(
+            {
+                "type": "error",
+                "code": "classroom_unavailable",
+                "message": str(e),
+            }
         )
         await websocket.close(code=1008)
         return

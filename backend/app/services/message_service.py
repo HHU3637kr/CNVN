@@ -23,7 +23,7 @@ async def list_messages(
     page: int,
     page_size: int,
 ) -> PaginatedResponse[MessageOut]:
-    await lesson_service.require_lesson_participant(db, user, lesson_id)
+    await lesson_service.require_lesson_classroom_access(db, user, lesson_id)
 
     total = (
         await db.execute(
@@ -55,7 +55,7 @@ async def create_chat_message(
     lesson_id: uuid.UUID,
     content: str,
 ) -> Message:
-    await lesson_service.require_lesson_participant(db, user, lesson_id)
+    await lesson_service.require_lesson_classroom_access(db, user, lesson_id)
     text = content.strip()
     if not text:
         raise ValueError("消息内容不能为空")

@@ -134,3 +134,53 @@ async def test_create_profile_duplicate(client):
     r = await client.post("/api/v1/teachers/profile", json=TEACHER_PROFILE_DATA, headers=headers)
     assert r.status_code == 400
     assert "已拥有" in r.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_get_my_teacher_profile_and_update_round_trip(client):
+    data = make_register_data()
+    await client.post("/api/v1/auth/register", json=data)
+    login = await client.post(
+        "/api/v1/auth/login",
+        json={"email": data["email"], "password": data["password"]},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['access_token']}"}
+    await client.post("/api/v1/auth/become-teacher", json=TEACHER_PROFILE_DATA, headers=headers)
+
+    update = {
+        "title": "教师中心新标题",
+        "about": "教师中心更新简介",
+        "hourly_rate": 88000,
+        "specialties": ["商务中文", "发音"],
+    }
+    changed = await client.put("/api/v1/teachers/profile", json=update, headers=headers)
+    assert changed.status_code == 200, changed.text
+
+    mine = await client.get("/api/v1/teachers/me/profile", headers=headers)
+    assert mine.status_code == 200, mine.text
+    assert mine.json()["title"] == update["title"]
+    assert mine.json()["about"] == update["about"]
+    assert mine.json()["hourly_rate"] == update["hourly_rate"]
+    assert mine.json()["specialties"] == update["specialties"]
+
+
+@pytest.mark.asyncio
+async def test_get_my_teacher_profile_requires_active_teacher_role(client):
+    data = make_register_data()
+    await client.post("/api/v1/auth/register", json=data)
+    login = await client.post(
+        "/api/v1/auth/login",
+        json={"email": data["email"], "password": data["password"]},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['access_token']}"}
+
+    student_resp = await client.get("/api/v1/teachers/me/profile", headers=headers)
+    assert student_resp.status_code == 403
+    assert student_resp.json()["detail"] == "需要教师角色权限，请切换到教师身份"
+
+    await client.post("/api/v1/auth/become-teacher", json=TEACHER_PROFILE_DATA, headers=headers)
+    await client.post("/api/v1/auth/switch-role", json={"role": "student"}, headers=headers)
+
+    inactive_role = await client.get("/api/v1/teachers/me/profile", headers=headers)
+    assert inactive_role.status_code == 403
+    assert inactive_role.json()["detail"] == "需要教师角色权限，请切换到教师身份"

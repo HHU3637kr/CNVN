@@ -15,6 +15,7 @@ from app.models.review import Review
 from app.models.teacher_profile import TeacherProfile
 from app.models.user import User
 from app.schemas.review import ReviewCreate, ReviewOut
+from app.services import teacher_stats_service
 
 
 async def _sync_teacher_review_stats(db: AsyncSession, teacher_id: uuid.UUID) -> None:
@@ -69,6 +70,7 @@ async def create_review(
 
     await db.flush()
     await _sync_teacher_review_stats(db, lesson.teacher_id)
+    await teacher_stats_service.sync_teacher_delivery_stats(db, lesson.teacher_id)
 
     await db.commit()
     await db.refresh(review)

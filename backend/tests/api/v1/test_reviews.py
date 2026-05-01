@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -93,7 +93,11 @@ async def _completed_lesson_setup(client, db_session):
     )
     lesson_id = cr.json()["id"]
     await client.patch(f"/api/v1/lessons/{lesson_id}/confirm", headers=h_te)
-    await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_st)
+    r_lesson = await db_session.execute(select(Lesson).where(Lesson.id == lesson_id))
+    lesson = r_lesson.scalars().one()
+    lesson.scheduled_at = datetime.now(timezone.utc) + timedelta(minutes=5)
+    await db_session.commit()
+    await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_te)
     en = await client.patch(f"/api/v1/lessons/{lesson_id}/end", headers=h_te)
     assert en.json()["status"] == "completed"
     return h_st, h_te, lesson_id, tid
@@ -127,6 +131,7 @@ async def test_create_review_updates_teacher_and_lesson(client, db_session):
     t = await client.get(f"/api/v1/teachers/{tid}")
     assert float(t.json()["avg_rating"]) == 5.0
     assert t.json()["total_reviews"] == 1
+    assert t.json()["total_lessons"] == 1
 
     r_lesson = await db_session.execute(select(Lesson).where(Lesson.id == lesson_id))
     assert r_lesson.scalars().first().status == "reviewed"

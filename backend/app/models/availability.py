@@ -35,6 +35,22 @@ class Availability(Base):
             name="ck_availability_day_or_date",
         ),
         CheckConstraint(
+            """
+            (day_of_week IS NOT NULL AND specific_date IS NULL)
+            OR
+            (day_of_week IS NULL AND specific_date IS NOT NULL)
+            """,
+            name="ck_availability_day_date_mutually_exclusive",
+        ),
+        CheckConstraint(
+            """
+            (day_of_week IS NOT NULL AND is_recurring IS TRUE)
+            OR
+            (specific_date IS NOT NULL AND is_recurring IS FALSE)
+            """,
+            name="ck_availability_recurring_matches_mode",
+        ),
+        CheckConstraint(
             "day_of_week >= 0 AND day_of_week <= 6",
             name="ck_availability_day_of_week_range",
         ),

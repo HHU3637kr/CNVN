@@ -56,10 +56,21 @@ export function Register() {
             body: JSON.stringify({
               title,
               about: about || undefined,
+              currency: "VND",
               hourly_rate: Number(hourlyRate),
               teacher_type: teacherType,
-              specialties: specialties ? specialties.split(",").map((s) => s.trim()) : undefined,
+              specialties: specialties
+                ? specialties
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                : undefined,
             }),
+          });
+
+          await apiFetchJson<UserOut>("/auth/switch-role", {
+            method: "POST",
+            body: JSON.stringify({ role: "teacher" }),
           });
 
           // 教师注册成功，直接进入教师中心

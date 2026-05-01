@@ -16,7 +16,7 @@ from app.models.teacher_profile import TeacherProfile
 from app.models.user import User
 from app.schemas.common import PaginatedResponse
 from app.schemas.lesson import LessonCreate, LessonListItem, LessonOut
-from app.services import availability_service, payment_service
+from app.services import availability_service, payment_service, teacher_stats_service
 
 TERMINAL_STATUSES = frozenset({"cancelled", "expired"})
 LESSON_OVERLAP_CONSTRAINTS = frozenset(
@@ -149,6 +149,7 @@ async def expire_stale_pending_lessons(db: AsyncSession) -> None:
             Lesson.created_at < deadline,
         )
     )
+    expired_teacher_ids: set[uuid.UUID] = set()
     for lesson in r.scalars().all():
         order = await payment_service.get_active_order_by_lesson(db, lesson.id)
         if order is not None and order.status in ("held", "disputed"):
@@ -156,6 +157,9 @@ async def expire_stale_pending_lessons(db: AsyncSession) -> None:
                 db, order, "教师超时未确认，自动退款"
             )
         lesson.status = "expired"
+        expired_teacher_ids.add(lesson.teacher_id)
+    for teacher_id in expired_teacher_ids:
+        await teacher_stats_service.sync_teacher_delivery_stats(db, teacher_id)
     await db.commit()
 
 
@@ -372,10 +376,11 @@ async def confirm_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> 
     if not lesson:
         raise LookupError("课程不存在")
     if lesson.teacher_id != user.teacher_profile.id:
-        raise PermissionError("只能确认自己的课程")
+        raise PermissionError("只能操作自己的课程")
     if lesson.status != "pending_confirmation":
         raise ValueError("当前状态不可确认")
     lesson.status = "confirmed"
+    await teacher_stats_service.sync_teacher_delivery_stats(db, lesson.teacher_id)
     await db.commit()
     await db.refresh(lesson)
     return _lesson_out(lesson)
@@ -430,16 +435,22 @@ async def cancel_lesson(
 
 async def start_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> LessonOut:
     await expire_stale_pending_lessons(db)
+    if user.teacher_profile is None:
+        raise PermissionError("需要教师角色权限，请切换到教师身份")
     r = await db.execute(select(Lesson).where(Lesson.id == lesson_id))
     lesson = r.scalars().first()
     if not lesson:
         raise LookupError("课程不存在")
-    if not _can_access_lesson(user, lesson):
-        raise PermissionError("无权操作该课程")
+    if lesson.teacher_id != user.teacher_profile.id:
+        raise PermissionError("只能操作自己的课程")
     if lesson.status != "confirmed":
         raise ValueError("只有已确认的课程可以开始")
+    _ends_at, can_enter, reason = _classroom_entry_state(lesson)
+    if not can_enter:
+        raise ValueError(reason or "当前状态不可进入")
     lesson.status = "in_progress"
     lesson.actual_start_at = datetime.now(timezone.utc)
+    await teacher_stats_service.sync_teacher_delivery_stats(db, lesson.teacher_id)
     await db.commit()
     await db.refresh(lesson)
     return _lesson_out(lesson)
@@ -447,12 +458,14 @@ async def start_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> Le
 
 async def end_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> LessonOut:
     await expire_stale_pending_lessons(db)
+    if user.teacher_profile is None:
+        raise PermissionError("需要教师角色权限，请切换到教师身份")
     r = await db.execute(select(Lesson).where(Lesson.id == lesson_id))
     lesson = r.scalars().first()
     if not lesson:
         raise LookupError("课程不存在")
-    if not _can_access_lesson(user, lesson):
-        raise PermissionError("无权操作该课程")
+    if lesson.teacher_id != user.teacher_profile.id:
+        raise PermissionError("只能操作自己的课程")
     if lesson.status != "in_progress":
         raise ValueError("只有进行中的课程可以结束")
     lesson.status = "completed"
@@ -461,6 +474,7 @@ async def end_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> Less
     # 课程完成 → 写入争议期 deadline（plan.md §2.1 FR-005）
     # 真正结算由 dispute_watcher 在 held_until 到期后触发
     await payment_service.mark_lesson_completed(db, lesson)
+    await teacher_stats_service.sync_teacher_delivery_stats(db, lesson.teacher_id)
 
     await db.commit()
     await db.refresh(lesson)

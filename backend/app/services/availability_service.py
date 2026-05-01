@@ -94,18 +94,42 @@ async def create_availability(
 ) -> Availability:
     if data.start_time >= data.end_time:
         raise ValueError("结束时间须晚于开始时间")
+    is_recurring = _normalize_is_recurring(
+        day_of_week=data.day_of_week,
+        specific_date=data.specific_date,
+        requested=data.is_recurring if "is_recurring" in data.model_fields_set else None,
+    )
     av = Availability(
         teacher_id=teacher_profile_id,
         day_of_week=data.day_of_week,
         specific_date=data.specific_date,
         start_time=data.start_time,
         end_time=data.end_time,
-        is_recurring=data.is_recurring,
+        is_recurring=is_recurring,
     )
     db.add(av)
     await db.commit()
     await db.refresh(av)
     return av
+
+
+def _normalize_is_recurring(
+    *,
+    day_of_week: int | None,
+    specific_date,
+    requested: bool | None,
+) -> bool:
+    if day_of_week is not None and specific_date is not None:
+        raise ValueError("不能同时指定 day_of_week 与 specific_date")
+    if day_of_week is None and specific_date is None:
+        raise ValueError("须指定 day_of_week 或 specific_date")
+
+    expected = day_of_week is not None
+    if requested is not None and requested is not expected:
+        if expected:
+            raise ValueError("周期时段 is_recurring 必须为 true")
+        raise ValueError("指定日期时段 is_recurring 必须为 false")
+    return expected
 
 
 async def update_availability(
@@ -118,11 +142,18 @@ async def update_availability(
     if not av:
         raise LookupError("时段不存在")
     upd = data.model_dump(exclude_unset=True)
-    if "start_time" in upd or "end_time" in upd:
-        st = upd.get("start_time", av.start_time)
-        et = upd.get("end_time", av.end_time)
-        if st >= et:
-            raise ValueError("结束时间须晚于开始时间")
+    st = upd.get("start_time", av.start_time)
+    et = upd.get("end_time", av.end_time)
+    if st >= et:
+        raise ValueError("结束时间须晚于开始时间")
+
+    final_day = upd.get("day_of_week", av.day_of_week)
+    final_date = upd.get("specific_date", av.specific_date)
+    upd["is_recurring"] = _normalize_is_recurring(
+        day_of_week=final_day,
+        specific_date=final_date,
+        requested=upd.get("is_recurring") if "is_recurring" in upd else None,
+    )
     for k, v in upd.items():
         setattr(av, k, v)
     await db.commit()

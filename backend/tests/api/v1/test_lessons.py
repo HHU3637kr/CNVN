@@ -312,13 +312,14 @@ async def test_start_end_lesson(client, db_session):
 
     tid = await get_teacher_profile_id(db_session, te["email"])
     tz = ZoneInfo("Asia/Ho_Chi_Minh")
-    day = (datetime.now(tz) + timedelta(days=7)).date()
+    local_start = datetime.now(tz) + timedelta(minutes=5)
+    day = local_start.date()
     await client.post(
         "/api/v1/availability",
         json={
             "specific_date": day.isoformat(),
-            "start_time": "09:00:00",
-            "end_time": "21:00:00",
+            "start_time": "00:00:00",
+            "end_time": "23:59:00",
             "is_recurring": False,
         },
         headers=h_te,
@@ -326,7 +327,7 @@ async def test_start_end_lesson(client, db_session):
     await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
     await ensure_ledger_accounts(db_session)
 
-    sched = vn_dt_local(day, 10, 0).astimezone(ZoneInfo("UTC"))
+    sched = local_start.astimezone(ZoneInfo("UTC"))
     cr = await client.post(
         "/api/v1/lessons",
         json={
@@ -340,12 +341,125 @@ async def test_start_end_lesson(client, db_session):
     await client.patch(f"/api/v1/lessons/{lesson_id}/confirm", headers=h_te)
 
     st_r = await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_st)
+    assert st_r.status_code == 403
+    assert st_r.json()["detail"] == "需要教师角色权限，请切换到教师身份"
+
+    st_r = await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_te)
     assert st_r.status_code == 200
     assert st_r.json()["status"] == "in_progress"
+    assert st_r.json()["actual_start_at"] is not None
+
+    en_student = await client.patch(f"/api/v1/lessons/{lesson_id}/end", headers=h_st)
+    assert en_student.status_code == 403
+    assert en_student.json()["detail"] == "需要教师角色权限，请切换到教师身份"
 
     en = await client.patch(f"/api/v1/lessons/{lesson_id}/end", headers=h_te)
     assert en.status_code == 200
     assert en.json()["status"] == "completed"
+    assert en.json()["actual_end_at"] is not None
+
+    r_order = await db_session.execute(
+        select(PaymentOrder).where(PaymentOrder.lesson_id == lesson_id)
+    )
+    order = r_order.scalars().one()
+    assert order.status == "held"
+    assert order.held_until is not None
+
+    r_profile = await db_session.execute(
+        select(TeacherProfile).where(TeacherProfile.id == tid)
+    )
+    profile = r_profile.scalars().one()
+    assert profile.total_lessons == 1
+    assert str(profile.response_rate) == "1.00"
+
+
+@pytest.mark.asyncio
+async def test_start_lesson_rejects_outside_entry_window(client, db_session):
+    _student, h_st = await register_and_login(client)
+    _, h_te, teacher_id = await create_teacher(client, db_session)
+
+    tz = ZoneInfo("Asia/Ho_Chi_Minh")
+    day = (datetime.now(tz) + timedelta(days=7)).date()
+    await create_day_availability(client, h_te, day)
+    await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
+    await ensure_ledger_accounts(db_session)
+
+    scheduled_at = vn_dt_local(day, 12, 0).astimezone(ZoneInfo("UTC"))
+    created = await client.post(
+        "/api/v1/lessons",
+        json={
+            "teacher_id": str(teacher_id),
+            "scheduled_at": scheduled_at.isoformat().replace("+00:00", "Z"),
+            "duration_minutes": 60,
+        },
+        headers=h_st,
+    )
+    assert created.status_code == 201, created.text
+    lesson_id = created.json()["id"]
+    await client.patch(f"/api/v1/lessons/{lesson_id}/confirm", headers=h_te)
+
+    too_early = await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_te)
+    assert too_early.status_code == 400
+    assert too_early.json()["detail"] == "未到可进入时间"
+
+
+@pytest.mark.asyncio
+async def test_teacher_cannot_operate_other_teachers_lesson(client, db_session):
+    _student, h_st = await register_and_login(client)
+    _, h_teacher_a, teacher_a_id = await create_teacher(client, db_session)
+    _, h_teacher_b, _teacher_b_id = await create_teacher(client, db_session)
+
+    tz = ZoneInfo("Asia/Ho_Chi_Minh")
+    day = (datetime.now(tz) + timedelta(days=7)).date()
+    await create_day_availability(client, h_teacher_a, day)
+    await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
+    await ensure_ledger_accounts(db_session)
+
+    scheduled_at = vn_dt_local(day, 13, 0).astimezone(ZoneInfo("UTC"))
+    created = await client.post(
+        "/api/v1/lessons",
+        json={
+            "teacher_id": str(teacher_a_id),
+            "scheduled_at": scheduled_at.isoformat().replace("+00:00", "Z"),
+            "duration_minutes": 60,
+        },
+        headers=h_st,
+    )
+    assert created.status_code == 201, created.text
+    lesson_id = created.json()["id"]
+
+    forbidden = await client.patch(
+        f"/api/v1/lessons/{lesson_id}/confirm", headers=h_teacher_b
+    )
+    assert forbidden.status_code == 403
+    assert forbidden.json()["detail"] == "只能操作自己的课程"
+
+
+@pytest.mark.asyncio
+async def test_expire_pending_updates_teacher_response_rate(client, db_session):
+    student, _h_st = await register_and_login(client)
+    _, _h_te, teacher_id = await create_teacher(client, db_session)
+    student_id = await get_user_id(db_session, student["email"])
+
+    old_pending = Lesson(
+        student_id=student_id,
+        teacher_id=teacher_id,
+        scheduled_at=datetime.now(timezone.utc) + timedelta(days=1),
+        duration_minutes=60,
+        status="pending_confirmation",
+        price=60_000,
+        created_at=datetime.now(timezone.utc) - timedelta(hours=25),
+    )
+    db_session.add(old_pending)
+    await db_session.commit()
+
+    await lesson_service.expire_stale_pending_lessons(db_session)
+
+    r_profile = await db_session.execute(
+        select(TeacherProfile).where(TeacherProfile.id == teacher_id)
+    )
+    profile = r_profile.scalars().one()
+    assert profile.response_rate == 0
 
 
 @pytest.mark.asyncio

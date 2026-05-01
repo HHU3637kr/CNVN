@@ -1,0 +1,12 @@
+{"ts":"2026-05-01T05:27:44.270Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T05:27:44.274Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T05:27:44.337Z","method":"Runtime.consoleAPICalled","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T05:27:47.224Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T05:27:47.226Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T05:27:47.242Z","method":"Runtime.consoleAPICalled","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T05:27:48.525Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T05:27:48.527Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T05:27:48.536Z","method":"Runtime.consoleAPICalled","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T05:27:50.478Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T05:27:50.479Z","method":"Runtime.consoleAPICalled","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T05:27:50.489Z","method":"Runtime.consoleAPICalled","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}

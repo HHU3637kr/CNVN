@@ -266,7 +266,7 @@ async def cancel_lesson(
 @router.patch("/{lesson_id}/start", response_model=LessonOut)
 async def start_lesson(
     lesson_id: uuid.UUID,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_teacher),
     db: AsyncSession = Depends(get_db),
 ):
     """开始上课"""
@@ -283,7 +283,7 @@ async def start_lesson(
 @router.patch("/{lesson_id}/end", response_model=LessonOut)
 async def end_lesson(
     lesson_id: uuid.UUID,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_teacher),
     db: AsyncSession = Depends(get_db),
 ):
     """结束课程"""

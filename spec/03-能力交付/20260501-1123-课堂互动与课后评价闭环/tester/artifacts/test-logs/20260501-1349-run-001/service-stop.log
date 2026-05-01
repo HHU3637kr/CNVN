@@ -1,0 +1,8 @@
+﻿[2026-05-01T14:06:29.9147261+08:00] stopping smoke services
+stopped chrome pid=34080
+stopped frontend pid=25236
+stopped backend pid=29596
+removed chrome profile: C:\Users\Administrator\AppData\Local\Temp\20260501-1349-run-001-chrome-profile-17332
+stopped orphan frontend dev node on port 5174 after successful smoke
+[2026-05-01T14:07:11.3668732+08:00] final cleanup requested by user
+final cleanup found no owned listen processes on smoke ports

@@ -293,6 +293,17 @@ async def require_lesson_participant(
     return lesson
 
 
+async def require_lesson_classroom_access(
+    db: AsyncSession, user: User, lesson_id: uuid.UUID
+) -> Lesson:
+    """校验当前用户可进入互动课堂；用于消息历史、消息写入和 WebSocket。"""
+    lesson = await require_lesson_participant(db, user, lesson_id)
+    _ends_at, can_enter, reason = _classroom_entry_state(lesson)
+    if not can_enter:
+        raise ValueError(reason or "当前状态不可进入")
+    return lesson
+
+
 async def list_lessons(
     db: AsyncSession,
     user: User,

@@ -101,6 +101,15 @@ export interface ReviewOut {
   reviewer_name: string | null;
 }
 
+export interface ReviewCreate {
+  lesson_id: string;
+  rating_overall: number;
+  rating_teaching?: number | null;
+  rating_punctuality?: number | null;
+  rating_communication?: number | null;
+  content?: string | null;
+}
+
 export interface AvailabilityOut {
   id: string;
   teacher_id: string;

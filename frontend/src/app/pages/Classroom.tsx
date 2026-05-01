@@ -26,6 +26,25 @@ type ChatMsg = {
   created_at: string;
 };
 
+type WsStatus = "idle" | "connecting" | "connected" | "closed" | "error";
+
+const MAX_CHAT_LENGTH = 2000;
+
+const WS_STATUS_LABEL: Record<WsStatus, string> = {
+  idle: "未连接",
+  connecting: "连接中",
+  connected: "已连接",
+  closed: "已断开",
+  error: "连接异常",
+};
+
+function wsStatusClass(status: WsStatus): string {
+  if (status === "connected") return "bg-green-900/40 text-green-200 border-green-700";
+  if (status === "connecting") return "bg-blue-900/40 text-blue-200 border-blue-700";
+  if (status === "error") return "bg-red-900/40 text-red-200 border-red-700";
+  return "bg-gray-800 text-gray-300 border-gray-700";
+}
+
 function formatClock(seconds: number) {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -64,6 +83,7 @@ export function Classroom() {
   const [myUserId, setMyUserId] = useState<string | null>(null);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [wsError, setWsError] = useState<string | null>(null);
+  const [wsStatus, setWsStatus] = useState<WsStatus>("idle");
   const [historyLoading, setHistoryLoading] = useState(false);
   const [preflightLoading, setPreflightLoading] = useState(true);
   const [blockedReason, setBlockedReason] = useState<string | null>(null);
@@ -108,6 +128,7 @@ export function Classroom() {
       setBlockedReason(null);
       setFetchError(null);
       setWsError(null);
+      setWsStatus("idle");
       setMessages([]);
 
       let lessonData: LessonOut;
@@ -184,12 +205,19 @@ export function Classroom() {
   }, [messages, scrollChat]);
 
   useEffect(() => {
-    if (!lessonId || !token || !classroomAllowed) return;
+    if (!lessonId || !token || !classroomAllowed) {
+      setWsStatus("idle");
+      return;
+    }
 
     const url = wsUrlForLesson(lessonId, token);
     const ws = new WebSocket(url);
     wsRef.current = ws;
-    ws.onopen = () => setWsError(null);
+    setWsStatus("connecting");
+    ws.onopen = () => {
+      setWsStatus("connected");
+      setWsError(null);
+    };
     ws.onmessage = (ev) => {
       try {
         const data = JSON.parse(ev.data as string) as Record<string, unknown>;
@@ -214,14 +242,19 @@ export function Classroom() {
         setWsError("收到无法解析的消息");
       }
     };
-    ws.onerror = () => setWsError("WebSocket 连接异常");
+    ws.onerror = () => {
+      setWsStatus("error");
+      setWsError("WebSocket 连接异常");
+    };
     ws.onclose = () => {
       wsRef.current = null;
+      setWsStatus((prev) => (prev === "error" ? "error" : "closed"));
     };
 
     return () => {
       ws.close();
       wsRef.current = null;
+      setWsStatus("idle");
     };
   }, [lessonId, token, classroomAllowed]);
 
@@ -229,7 +262,7 @@ export function Classroom() {
     const text = draft.trim();
     if (!text) return;
     const ws = wsRef.current;
-    if (!ws || ws.readyState !== WebSocket.OPEN) {
+    if (wsStatus !== "connected" || !ws || ws.readyState !== WebSocket.OPEN) {
       setWsError("实时通道未就绪，请稍后重试");
       return;
     }
@@ -432,6 +465,12 @@ export function Classroom() {
           <div className="flex-1 overflow-y-auto p-4 bg-gray-900 min-h-0">
             {activeTab === "chat" ? (
               <div className="space-y-4">
+                <div className={`flex items-center justify-between gap-3 rounded-lg border px-3 py-2 text-xs ${wsStatusClass(wsStatus)}`}>
+                  <span className="font-medium">实时通道：{WS_STATUS_LABEL[wsStatus]}</span>
+                  {wsStatus !== "connected" && (
+                    <span className="text-right">未连接时不能发送消息，请稍后或刷新页面重试。</span>
+                  )}
+                </div>
                 {historyLoading && (
                   <p className="text-xs text-gray-500">加载历史消息…</p>
                 )}
@@ -509,6 +548,7 @@ export function Classroom() {
                   type="text"
                   value={draft}
                   onChange={(e) => setDraft(e.target.value)}
+                  maxLength={MAX_CHAT_LENGTH}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
                       e.preventDefault();
@@ -521,7 +561,8 @@ export function Classroom() {
                 <button
                   type="button"
                   onClick={sendChat}
-                  disabled={!draft.trim()}
+                  disabled={!draft.trim() || wsStatus !== "connected"}
+                  title={wsStatus !== "connected" ? "实时通道未就绪，请稍后重试" : "发送"}
                   className="p-1.5 text-blue-400 hover:bg-gray-700 rounded transition-colors disabled:opacity-40"
                 >
                   <Send className="w-4 h-4" />

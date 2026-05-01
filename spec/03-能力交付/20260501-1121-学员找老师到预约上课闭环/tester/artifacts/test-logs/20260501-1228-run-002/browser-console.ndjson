@@ -1,0 +1,25 @@
+{"ts":"2026-05-01T04:35:55.915Z","case_id":"US-001","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:35:55.935Z","case_id":"US-001","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:35:55.936Z","case_id":"US-001","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:35:55.979Z","case_id":"US-001","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T04:35:57.552Z","case_id":"US-001","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:35:57.553Z","case_id":"US-001","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:35:57.566Z","case_id":"US-001","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T04:35:59.604Z","case_id":"US-002","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:35:59.606Z","case_id":"US-002","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:35:59.631Z","case_id":"US-002","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T04:36:01.236Z","case_id":"US-002","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:36:01.237Z","case_id":"US-002","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:36:01.248Z","case_id":"US-002","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T04:36:03.964Z","case_id":"US-003","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:36:03.966Z","case_id":"US-003","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:36:03.992Z","case_id":"US-003","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T04:36:05.589Z","case_id":"US-003","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:36:05.591Z","case_id":"US-003","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:36:05.600Z","case_id":"US-003","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T04:36:07.350Z","case_id":"US-004","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:36:07.354Z","case_id":"US-004","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:36:07.378Z","case_id":"US-004","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}
+{"ts":"2026-05-01T04:36:08.983Z","case_id":"US-004","type":"debug","args":["[vite] connecting..."]}
+{"ts":"2026-05-01T04:36:08.984Z","case_id":"US-004","type":"debug","args":["[vite] connected."]}
+{"ts":"2026-05-01T04:36:09.000Z","case_id":"US-004","type":"info","args":["%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools","font-weight:bold"]}

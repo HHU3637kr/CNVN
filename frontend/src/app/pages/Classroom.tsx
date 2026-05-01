@@ -11,9 +11,12 @@ import {
   Share,
   Clock,
   AlertCircle,
+  Loader2,
 } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router";
-import { API_BASE_URL, getAccessToken, wsUrlForLesson } from "@/app/lib/api";
+import { getAccessToken, wsUrlForLesson } from "@/app/lib/api";
+import { apiFetchJson, ApiError } from "../lib/http";
+import type { LessonOut, PaginatedResponse, UserOut } from "../types/api";
 
 type ChatMsg = {
   id: string;
@@ -40,6 +43,12 @@ function formatMsgTime(iso: string) {
   }
 }
 
+function errorMessage(error: unknown): string {
+  if (error instanceof ApiError) return error.message;
+  if (error instanceof Error) return error.message;
+  return "加载失败";
+}
+
 export function Classroom() {
   const { id: lessonId } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -55,7 +64,11 @@ export function Classroom() {
   const [myUserId, setMyUserId] = useState<string | null>(null);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [wsError, setWsError] = useState<string | null>(null);
-  const [historyLoading, setHistoryLoading] = useState(true);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [preflightLoading, setPreflightLoading] = useState(true);
+  const [blockedReason, setBlockedReason] = useState<string | null>(null);
+  const [classroomAllowed, setClassroomAllowed] = useState(false);
+  const [lesson, setLesson] = useState<LessonOut | null>(null);
 
   const token = getAccessToken();
 
@@ -71,38 +84,66 @@ export function Classroom() {
   }, []);
 
   useEffect(() => {
-    if (!lessonId || !token) {
+    if (!lessonId) {
+      setPreflightLoading(false);
+      setBlockedReason("无效的课堂链接");
+      return;
+    }
+    if (!token) {
+      setPreflightLoading(false);
       setHistoryLoading(false);
+      setClassroomAllowed(false);
+      setBlockedReason("请先登录后再进入课堂。");
       return;
     }
 
     let cancelled = false;
     (async () => {
+      setPreflightLoading(true);
+      setHistoryLoading(false);
+      setClassroomAllowed(false);
+      setBlockedReason(null);
       setFetchError(null);
-      try {
-        const meRes = await fetch(`${API_BASE_URL}/api/v1/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!meRes.ok) {
-          throw new Error(meRes.status === 401 ? "登录已过期，请重新登录" : "无法获取用户信息");
-        }
-        const me = await meRes.json();
-        if (!cancelled) setMyUserId(me.id);
+      setWsError(null);
+      setMessages([]);
 
-        const msgRes = await fetch(
-          `${API_BASE_URL}/api/v1/lessons/${lessonId}/messages?page=1&page_size=100`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (!msgRes.ok) {
-          const d = await msgRes.json().catch(() => ({}));
-          throw new Error(
-            typeof d.detail === "string" ? d.detail : `加载消息失败 (${msgRes.status})`
-          );
-        }
-        const data = await msgRes.json();
+      let lessonData: LessonOut;
+      try {
+        lessonData = await apiFetchJson<LessonOut>(`/lessons/${lessonId}`);
+      } catch (e) {
         if (!cancelled) {
+          setBlockedReason(errorMessage(e));
+          setPreflightLoading(false);
+        }
+        return;
+      }
+
+      if (cancelled) return;
+      setLesson(lessonData);
+      setTimeLeft(Math.max(0, lessonData.duration_minutes * 60));
+
+      if (lessonData.can_enter_classroom !== true) {
+        setBlockedReason(lessonData.classroom_unavailable_reason || "当前不可进入课堂。");
+        setHistoryLoading(false);
+        setPreflightLoading(false);
+        return;
+      }
+
+      setClassroomAllowed(true);
+      setPreflightLoading(false);
+      setHistoryLoading(true);
+
+      try {
+        const [me, data] = await Promise.all([
+          apiFetchJson<UserOut>("/auth/me"),
+          apiFetchJson<PaginatedResponse<ChatMsg>>(
+            `/lessons/${lessonId}/messages?page=1&page_size=100`
+          ),
+        ]);
+        if (!cancelled) {
+          setMyUserId(me.id);
           setMessages(
-            (data.items as ChatMsg[]).map((m) => ({
+            data.items.map((m) => ({
               ...m,
               id: String(m.id),
               lesson_id: String(m.lesson_id),
@@ -111,9 +152,7 @@ export function Classroom() {
           );
         }
       } catch (e) {
-        if (!cancelled) {
-          setFetchError(e instanceof Error ? e.message : "加载失败");
-        }
+        if (!cancelled) setFetchError(errorMessage(e));
       } finally {
         if (!cancelled) setHistoryLoading(false);
       }
@@ -129,7 +168,7 @@ export function Classroom() {
   }, [messages, scrollChat]);
 
   useEffect(() => {
-    if (!lessonId || !token) return;
+    if (!lessonId || !token || !classroomAllowed) return;
 
     const url = wsUrlForLesson(lessonId, token);
     const ws = new WebSocket(url);
@@ -168,7 +207,7 @@ export function Classroom() {
       ws.close();
       wsRef.current = null;
     };
-  }, [lessonId, token]);
+  }, [lessonId, token, classroomAllowed]);
 
   const sendChat = () => {
     const text = draft.trim();
@@ -188,10 +227,41 @@ export function Classroom() {
     }
   };
 
-  if (!lessonId) {
+  if (preflightLoading) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center p-6">
-        <p className="text-gray-400">无效的课堂链接</p>
+        <div className="flex items-center gap-2 text-gray-300">
+          <Loader2 className="w-5 h-5 animate-spin" />
+          正在检查课堂入口…
+        </div>
+      </div>
+    );
+  }
+
+  if (blockedReason || !lessonId) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center p-6">
+        <div className="max-w-md w-full bg-gray-800 border border-gray-700 rounded-2xl p-6 text-center">
+          <AlertCircle className="w-10 h-10 text-amber-300 mx-auto mb-4" />
+          <h1 className="text-xl font-bold mb-2">暂时不能进入课堂</h1>
+          <p className="text-gray-300 text-sm mb-6">{blockedReason || "无效的课堂链接"}</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            {!token && (
+              <Link
+                to="/login"
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg"
+              >
+                去登录
+              </Link>
+            )}
+            <Link
+              to="/dashboard/student"
+              className="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg"
+            >
+              返回学习中心
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -205,7 +275,7 @@ export function Classroom() {
             文字实时
           </div>
           <h1 className="font-medium text-gray-200 hidden sm:block truncate">
-            在线课堂 · {lessonId.slice(0, 8)}…
+            在线课堂 · {(lesson?.topic || lessonId).slice(0, 24)}
           </h1>
         </div>
 
@@ -233,21 +303,6 @@ export function Classroom() {
             <p className="text-gray-400 mb-2">
               音视频为界面占位（本阶段未接入 Agora）；课堂文字消息通过 WebSocket 与后端实时同步。
             </p>
-            {!token && (
-              <div className="flex items-start gap-2 text-amber-300">
-                <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-                <span>
-                  未检测到登录令牌。请先{" "}
-                  <Link to="/" className="text-blue-400 underline">
-                    登录
-                  </Link>{" "}
-                  并将 <code className="text-gray-200">access_token</code> 写入{" "}
-                  <code className="text-gray-200">localStorage</code>（键名{" "}
-                  <code className="text-gray-200">cnvn_access_token</code> 或{" "}
-                  <code className="text-gray-200">access_token</code>）。
-                </span>
-              </div>
-            )}
           </div>
 
           <div className="flex-1 bg-gray-800 rounded-2xl overflow-hidden relative border border-gray-700 min-h-[200px]">
@@ -413,14 +468,13 @@ export function Classroom() {
                       sendChat();
                     }
                   }}
-                  placeholder={token ? "发送消息…" : "请先登录"}
-                  disabled={!token}
-                  className="flex-1 bg-transparent text-sm text-white px-3 py-2 outline-none disabled:opacity-50"
+                  placeholder="发送消息…"
+                  className="flex-1 bg-transparent text-sm text-white px-3 py-2 outline-none"
                 />
                 <button
                   type="button"
                   onClick={sendChat}
-                  disabled={!token || !draft.trim()}
+                  disabled={!draft.trim()}
                   className="p-1.5 text-blue-400 hover:bg-gray-700 rounded transition-colors disabled:opacity-40"
                 >
                   <Send className="w-4 h-4" />

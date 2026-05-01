@@ -6,6 +6,7 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router";
 import { ArrowLeft, CreditCard, Loader2, QrCode, Upload } from "lucide-react";
 import { getAccessToken } from "../lib/api";
 import { apiFetchJson, ApiError } from "../lib/http";
+import { loadBookingDraft } from "../lib/bookingDraft";
 import type { PaginatedResponse, TransactionOut, WalletOut } from "../types/api";
 import { formatVndFull } from "../lib/format";
 
@@ -49,6 +50,14 @@ export function Wallet() {
   const [offlineNote, setOfflineNote] = useState("");
   const [offlineFileName, setOfflineFileName] = useState("");
   const [orderIdInput, setOrderIdInput] = useState("");
+  const [bookingDraftFound, setBookingDraftFound] = useState(false);
+  const [topupSuccess, setTopupSuccess] = useState(false);
+
+  const params = new URLSearchParams(location.search);
+  const intent = params.get("intent");
+  const returnTo = params.get("returnTo") ?? "";
+  const safeBookingReturnTo = returnTo.startsWith("/teachers/") ? returnTo : null;
+  const bookingIntentActive = intent === "booking" && bookingDraftFound;
 
   const refresh = useCallback(async () => {
     if (!token) return;
@@ -70,6 +79,7 @@ export function Wallet() {
   useEffect(() => {
     if (!token) return;
     setPending(loadPending());
+    setBookingDraftFound(Boolean(loadBookingDraft()));
     void refresh();
   }, [token, refresh]);
 
@@ -92,6 +102,8 @@ export function Wallet() {
         body: JSON.stringify({ amount: Math.floor(n) }),
       });
       setWallet(w);
+      setTopupSuccess(true);
+      setBookingDraftFound(Boolean(loadBookingDraft()));
       await refresh();
     } catch (err) {
       setTopupErr(err instanceof ApiError ? err.message : "充值失败");
@@ -130,6 +142,11 @@ export function Wallet() {
     navigate(`/payments/orders/${id}`);
   }
 
+  function returnToBooking() {
+    if (!safeBookingReturnTo) return;
+    navigate(safeBookingReturnTo);
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Link
@@ -147,6 +164,31 @@ export function Wallet() {
       <p className="text-gray-600 text-sm mb-8">
         Mock 充值走平台接口；越南本地转账请扫 VietQR 或网银转账至下方账户（到账由运营人工核对）。
       </p>
+
+      {bookingIntentActive && (
+        <div className="mb-6 bg-blue-50 border border-blue-100 rounded-lg px-4 py-3 text-sm text-blue-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <div className="font-semibold">充值后返回继续预约</div>
+            <div className="text-blue-700">
+              预约草稿已保存在本浏览器；充值成功后回到教师详情页再次确认提交。
+            </div>
+          </div>
+          {safeBookingReturnTo ? (
+            <button
+              type="button"
+              onClick={returnToBooking}
+              disabled={!topupSuccess}
+              className="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {topupSuccess ? "返回继续预约" : "充值后可返回"}
+            </button>
+          ) : (
+            <span className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded px-2 py-1">
+              返回地址无效，请从教师详情重新预约
+            </span>
+          )}
+        </div>
+      )}
 
       {loadErr && (
         <div className="mb-6 text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-4 py-3">{loadErr}</div>

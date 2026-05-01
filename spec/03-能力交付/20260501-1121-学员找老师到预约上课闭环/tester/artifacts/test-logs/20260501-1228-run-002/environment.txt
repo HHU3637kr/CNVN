@@ -1,0 +1,16 @@
+﻿run_id=20260501-1228-run-002
+captured_at=2026-05-01T12:29:58.4924272+08:00
+cwd=D:\project\CNVN
+branch=feat/spec-20260501-1153-student-booking-flow
+commit=ff5edd84430340c9b67323d26e3ce0ab0685c2a3
+git_status_start=see git-status-start.txt
+python=Python 3.13.11
+node=v24.12.0
+pnpm=10.28.2
+chrome=C:\Program Files\Google\Chrome\Application\chrome.exe
+chrome_exists=True
+database=cnvn_e2e_20260501_1228_run_002
+api_url=http://127.0.0.1:8002
+frontend_url=http://127.0.0.1:5174
+chrome_version=147.0.7727.117
+services_stopped_log=spec/03-能力交付/20260501-1121-学员找老师到预约上课闭环/tester/artifacts/test-logs/20260501-1228-run-002/service-stop.log

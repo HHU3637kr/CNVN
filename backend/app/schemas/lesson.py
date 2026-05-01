@@ -15,10 +15,13 @@ class LessonOut(BaseModel):
     student_id: uuid.UUID
     teacher_id: uuid.UUID
     scheduled_at: datetime
+    ends_at: datetime
     duration_minutes: int
     topic: str | None
     status: str
     price: int
+    can_enter_classroom: bool
+    classroom_unavailable_reason: str | None
     cancel_reason: str | None
     actual_start_at: datetime | None
     actual_end_at: datetime | None
@@ -32,10 +35,13 @@ class LessonListItem(BaseModel):
     teacher_name: str | None = None
     student_name: str | None = None
     scheduled_at: datetime
+    ends_at: datetime
     duration_minutes: int
     topic: str | None
     status: str
     price: int
+    can_enter_classroom: bool
+    classroom_unavailable_reason: str | None
 
     model_config = {"from_attributes": True}
 

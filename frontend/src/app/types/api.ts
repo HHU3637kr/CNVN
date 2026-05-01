@@ -50,8 +50,11 @@ export interface LessonListItem {
   scheduled_at: string;
   duration_minutes: number;
   topic: string | null;
-  status: string;
+  status: LessonStatus;
   price: number;
+  ends_at: string;
+  can_enter_classroom: boolean;
+  classroom_unavailable_reason: string | null;
 }
 
 export interface ReviewOut {
@@ -76,6 +79,40 @@ export interface AvailabilityOut {
   start_time: string;
   end_time: string;
   is_recurring: boolean;
+  created_at: string;
+}
+
+export type LessonStatus =
+  | "pending_confirmation"
+  | "confirmed"
+  | "in_progress"
+  | "completed"
+  | "reviewed"
+  | "cancelled"
+  | "expired";
+
+export interface LessonCreate {
+  teacher_id: string;
+  scheduled_at: string;
+  duration_minutes: number;
+  topic?: string | null;
+}
+
+export interface LessonOut {
+  id: string;
+  student_id: string;
+  teacher_id: string;
+  scheduled_at: string;
+  duration_minutes: number;
+  topic: string | null;
+  status: LessonStatus;
+  price: number;
+  cancel_reason: string | null;
+  actual_start_at: string | null;
+  actual_end_at: string | null;
+  ends_at: string;
+  can_enter_classroom: boolean;
+  classroom_unavailable_reason: string | null;
   created_at: string;
 }
 

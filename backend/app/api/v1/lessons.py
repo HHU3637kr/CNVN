@@ -23,6 +23,8 @@ router = APIRouter(prefix="/lessons", tags=["Lessons"])
 
 
 def _http(e: Exception) -> HTTPException:
+    if isinstance(e, lesson_service.LessonBookingConflict):
+        return HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
     if isinstance(e, LookupError):
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     if isinstance(e, PermissionError):
@@ -39,6 +41,8 @@ async def create_lesson(
     """学生预约课程"""
     try:
         return await lesson_service.create_lesson(db, current_user, data)
+    except lesson_service.LessonBookingConflict as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 

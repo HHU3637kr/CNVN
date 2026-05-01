@@ -66,7 +66,8 @@ async def resolve_commission_rate(
     r = await db.execute(
         select(Lesson).where(
             Lesson.teacher_id == teacher_id,
-            Lesson.status == "completed",
+            Lesson.status.notin_(("cancelled", "expired")),
+            Lesson.actual_end_at.is_not(None),
             Lesson.actual_end_at >= month_start,
             Lesson.actual_end_at < month_end,
         )

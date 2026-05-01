@@ -9,6 +9,7 @@ from zoneinfo import ZoneInfo
 import pytest
 from sqlalchemy import select
 
+from app.models.ledger import LedgerAccount, SYSTEM_ACCOUNT_CODES
 from app.models.teacher_profile import TeacherProfile
 from app.models.user import User
 
@@ -19,6 +20,13 @@ TEACHER_PROFILE_DATA = {
     "currency": "VND",
     "teacher_type": "professional",
     "specialties": ["口语", "HSK备考"],
+}
+
+LEDGER_ACCOUNT_NAMES = {
+    "escrow": "托管账户",
+    "platform_revenue": "平台收入账户",
+    "tax_payable": "税费应付账户",
+    "teacher_payable": "教师应付账户",
 }
 
 
@@ -44,6 +52,21 @@ async def get_teacher_profile_id(db_session, email: str):
 def vn_dt_local(d, hour: int, minute: int = 0) -> datetime:
     tz = ZoneInfo("Asia/Ho_Chi_Minh")
     return datetime(d.year, d.month, d.day, hour, minute, tzinfo=tz)
+
+
+async def ensure_ledger_accounts(db_session):
+    for code in SYSTEM_ACCOUNT_CODES:
+        existing = await db_session.execute(
+            select(LedgerAccount).where(LedgerAccount.code == code)
+        )
+        if existing.scalars().first() is None:
+            db_session.add(
+                LedgerAccount(
+                    code=code,
+                    name=LEDGER_ACCOUNT_NAMES[code],
+                )
+            )
+    await db_session.flush()
 
 
 @pytest.mark.asyncio
@@ -128,6 +151,7 @@ async def test_lesson_happy_path_and_cancel(client, db_session):
     )
 
     await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
+    await ensure_ledger_accounts(db_session)
 
     sched = vn_dt_local(day, 15, 0).astimezone(ZoneInfo("UTC"))
     cr = await client.post(
@@ -247,6 +271,7 @@ async def test_start_end_lesson(client, db_session):
         headers=h_te,
     )
     await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
+    await ensure_ledger_accounts(db_session)
 
     sched = vn_dt_local(day, 10, 0).astimezone(ZoneInfo("UTC"))
     cr = await client.post(

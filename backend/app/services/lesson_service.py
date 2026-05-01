@@ -8,6 +8,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 
+from app.config import settings
 from app.core.datetime_utils import ensure_utc, intervals_overlap
 from app.models.lesson import Lesson
 from app.models.teacher_profile import TeacherProfile
@@ -20,7 +21,7 @@ TERMINAL_STATUSES = frozenset({"cancelled", "expired"})
 
 
 def _lesson_end(lesson: Lesson) -> datetime:
-    return lesson.scheduled_at + timedelta(minutes=lesson.duration_minutes)
+    return ensure_utc(lesson.scheduled_at) + timedelta(minutes=lesson.duration_minutes)
 
 
 def _price_vnd(hourly_rate: int, duration_minutes: int) -> int:
@@ -287,12 +288,16 @@ async def cancel_lesson(
     #   ≥ 24h：退款 → PaymentOrder → refunded；学员 Wallet 回款
     #   < 24h：Lesson 置 cancelled，PaymentOrder 保持 held；争议期过后
     #          由 dispute_watcher 按常规 release 全额结算给教师（学员违约）
+    order = await payment_service.get_active_order_by_lesson(db, lesson.id)
     if hours_until >= 24.0:
-        order = await payment_service.get_active_order_by_lesson(db, lesson.id)
         if order is not None and order.status in ("held", "disputed"):
             await payment_service.refund_payment_order(
                 db, order, "课程取消退款"
             )
+    elif order is not None and order.status in ("held", "disputed"):
+        order.held_until = _lesson_end(lesson) + timedelta(
+            hours=settings.DISPUTE_WINDOW_HOURS
+        )
     lesson.status = "cancelled"
 
     await db.commit()

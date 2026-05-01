@@ -1,0 +1,174 @@
+﻿FF...                                                                    [100%]
+================================== FAILURES ===================================
+__________________ test_cancel_less_than_24h_sets_held_until __________________
+
+client = <httpx.AsyncClient object at 0x00000273F753E900>
+db_session = <sqlalchemy.ext.asyncio.session.AsyncSession object at 0x00000273F753DFD0>
+
+    @pytest.mark.asyncio
+    async def test_cancel_less_than_24h_sets_held_until(client, db_session):
+>       lesson_id, h_student = await create_confirmed_lesson(client, db_session)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\api\v1\test_payment_settlement.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <httpx.AsyncClient object at 0x00000273F753E900>
+db_session = <sqlalchemy.ext.asyncio.session.AsyncSession object at 0x00000273F753DFD0>
+
+    async def create_confirmed_lesson(client, db_session):
+        student = make_register("pay_stu")
+        await client.post("/api/v1/auth/register", json=student)
+        login_student = await client.post(
+            "/api/v1/auth/login",
+            json={"email": student["email"], "password": student["password"]},
+        )
+        h_student = {"Authorization": f"Bearer {login_student.json()['access_token']}"}
+    
+        teacher = make_register("pay_tch")
+        await client.post("/api/v1/auth/register", json=teacher)
+        login_teacher = await client.post(
+            "/api/v1/auth/login",
+            json={"email": teacher["email"], "password": teacher["password"]},
+        )
+        h_teacher = {"Authorization": f"Bearer {login_teacher.json()['access_token']}"}
+        await client.post(
+            "/api/v1/auth/become-teacher",
+            json=TEACHER_PROFILE_DATA,
+            headers=h_teacher,
+        )
+    
+        teacher_id = await teacher_id_for_email(db_session, teacher["email"])
+        day = (datetime.now(ZoneInfo("Asia/Ho_Chi_Minh")) + timedelta(days=7)).date()
+        await client.post(
+            "/api/v1/availability",
+            json={
+                "specific_date": day.isoformat(),
+                "start_time": "09:00:00",
+                "end_time": "21:00:00",
+                "is_recurring": False,
+            },
+            headers=h_teacher,
+        )
+        await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_student)
+    
+        scheduled_at = vn_dt_local(day, 10, 0).astimezone(timezone.utc)
+        created = await client.post(
+            "/api/v1/lessons",
+            json={
+                "teacher_id": str(teacher_id),
+                "scheduled_at": scheduled_at.isoformat().replace("+00:00", "Z"),
+                "duration_minutes": 60,
+                "topic": "支付一致性测试",
+            },
+            headers=h_student,
+        )
+>       assert created.status_code == 201, created.text
+E       AssertionError: {"detail":"ledger account 不存在: escrow"}
+E       assert 400 == 201
+E        +  where 400 = <Response [400 Bad Request]>.status_code
+
+tests\api\v1\test_payment_settlement.py:105: AssertionError
+_______________ test_cancel_at_least_24h_still_refunds_student ________________
+
+client = <httpx.AsyncClient object at 0x00000273F7B0A0D0>
+db_session = <sqlalchemy.ext.asyncio.session.AsyncSession object at 0x00000273F76411D0>
+
+    @pytest.mark.asyncio
+    async def test_cancel_at_least_24h_still_refunds_student(client, db_session):
+>       lesson_id, h_student = await create_confirmed_lesson(client, db_session)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\api\v1\test_payment_settlement.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <httpx.AsyncClient object at 0x00000273F7B0A0D0>
+db_session = <sqlalchemy.ext.asyncio.session.AsyncSession object at 0x00000273F76411D0>
+
+    async def create_confirmed_lesson(client, db_session):
+        student = make_register("pay_stu")
+        await client.post("/api/v1/auth/register", json=student)
+        login_student = await client.post(
+            "/api/v1/auth/login",
+            json={"email": student["email"], "password": student["password"]},
+        )
+        h_student = {"Authorization": f"Bearer {login_student.json()['access_token']}"}
+    
+        teacher = make_register("pay_tch")
+        await client.post("/api/v1/auth/register", json=teacher)
+        login_teacher = await client.post(
+            "/api/v1/auth/login",
+            json={"email": teacher["email"], "password": teacher["password"]},
+        )
+        h_teacher = {"Authorization": f"Bearer {login_teacher.json()['access_token']}"}
+        await client.post(
+            "/api/v1/auth/become-teacher",
+            json=TEACHER_PROFILE_DATA,
+            headers=h_teacher,
+        )
+    
+        teacher_id = await teacher_id_for_email(db_session, teacher["email"])
+        day = (datetime.now(ZoneInfo("Asia/Ho_Chi_Minh")) + timedelta(days=7)).date()
+        await client.post(
+            "/api/v1/availability",
+            json={
+                "specific_date": day.isoformat(),
+                "start_time": "09:00:00",
+                "end_time": "21:00:00",
+                "is_recurring": False,
+            },
+            headers=h_teacher,
+        )
+        await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_student)
+    
+        scheduled_at = vn_dt_local(day, 10, 0).astimezone(timezone.utc)
+        created = await client.post(
+            "/api/v1/lessons",
+            json={
+                "teacher_id": str(teacher_id),
+                "scheduled_at": scheduled_at.isoformat().replace("+00:00", "Z"),
+                "duration_minutes": 60,
+                "topic": "支付一致性测试",
+            },
+            headers=h_student,
+        )
+>       assert created.status_code == 201, created.text
+E       AssertionError: {"detail":"ledger account 不存在: escrow"}
+E       assert 400 == 201
+E        +  where 400 = <Response [400 Bad Request]>.status_code
+
+tests\api\v1\test_payment_settlement.py:105: AssertionError
+============================== warnings summary ===============================
+app\main.py:27
+  D:\project\CNVN\backend\app\main.py:27: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+  D:\Conda\Lib\site-packages\fastapi\applications.py:4656: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+app\main.py:33
+  D:\project\CNVN\backend\app\main.py:33: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("shutdown")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/v1/test_payment_settlement.py::test_cancel_less_than_24h_sets_held_until
+FAILED tests/api/v1/test_payment_settlement.py::test_cancel_at_least_24h_still_refunds_student
+2 failed, 3 passed, 4 warnings in 4.38s

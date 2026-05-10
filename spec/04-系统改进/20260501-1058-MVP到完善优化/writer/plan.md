@@ -1,12 +1,12 @@
 ---
 type: spec-plan
-status: draft
+status: completed
 created: 2026-05-01
-updated: 2026-05-01
+updated: 2026-05-10
 spec_dir: spec/04-系统改进/20260501-1058-MVP到完善优化
 git_branch: feat/spec-20260501-1058-mvp-to-product-ready
 base_branch: master
-pr_url:
+pr_url: https://github.com/HHU3637kr/CNVN/pull/2
 execution_mode: single-agent
 gate_mode: skipped_by_user
 ---
@@ -140,3 +140,18 @@ P2 处理增长、本地化和规模化：
 - `explorer/backend-platform-notes.md`
 - `explorer/quality-devops-notes.md`
 - `spec/01-产品规划/20260501-1120-CNVN用户场景地图/writer/plan.md`
+
+## 8. 最终完成状态
+
+截至 2026-05-10，本总控规划拆出的 6 个实现 Spec 已全部按独立分支完成并合并回规划分支：
+
+| 顺序 | Spec | PR | 状态 |
+|---|---|---|---|
+| 1 | 支付托管退款结算一致性 | `#1` | merged |
+| 2 | 学员找老师到预约上课闭环 | `#3` | merged |
+| 3 | 教师入驻排课授课收款闭环 | `#4` | merged |
+| 4 | 课堂互动与课后评价闭环 | `#5` | merged |
+| 5 | 运营客服与争议处理闭环 | `#6` | merged |
+| 6 | 场景级回归验证体系 | `#7` | merged |
+
+最终总交付 PR：`https://github.com/HHU3637kr/CNVN/pull/2`，目标分支 `master`。

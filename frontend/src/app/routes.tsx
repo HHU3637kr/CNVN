@@ -12,6 +12,7 @@ import { Wallet } from "./pages/Wallet";
 import { PaymentOrderDetail } from "./pages/PaymentOrderDetail";
 import { Payouts } from "./pages/Payouts";
 import { OpsDisputes } from "./pages/OpsDisputes";
+import { AbtiTest } from "./pages/AbtiTest";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
       { path: "payments/orders/:orderId", Component: PaymentOrderDetail },
       { path: "payouts", Component: Payouts },
       { path: "ops/disputes", Component: OpsDisputes },
+      { path: "abti", Component: AbtiTest },
     ],
   },
   { path: "/classroom/:id", Component: Classroom },

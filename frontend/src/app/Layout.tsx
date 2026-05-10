@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from "react-router";
-import { Menu, Globe, Bell, LogOut, ChevronDown, X, GraduationCap, BookOpen, UserCircle, CreditCard } from "lucide-react";
+import { Menu, Globe, Bell, LogOut, ChevronDown, X, GraduationCap, BookOpen, CreditCard, Brain } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { getAccessToken } from "./lib/api";
 import { apiFetchJson, ApiError } from "./lib/http";
@@ -82,6 +82,12 @@ export function Layout() {
                 className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
               >
                 找老师 (Tìm giáo viên)
+              </Link>
+              <Link
+                to="/abti"
+                className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+              >
+                ABTI 测试
               </Link>
               {me && (
                 <Link
@@ -216,6 +222,13 @@ export function Layout() {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white border-b border-gray-100 px-4 pt-2 pb-4 space-y-1 shadow-lg absolute w-full z-40">
             <Link
+              to="/abti"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+            >
+              ABTI 测试
+            </Link>
+            <Link
               to="/teachers"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
@@ -340,8 +353,9 @@ export function Layout() {
                 </Link>
               </li>
               <li>
-                <Link to="#" className="hover:text-white transition-colors">
-                  常见问题
+                <Link to="/abti" className="hover:text-white transition-colors inline-flex items-center gap-2">
+                  <Brain className="h-4 w-4" />
+                  ABTI 测试
                 </Link>
               </li>
             </ul>

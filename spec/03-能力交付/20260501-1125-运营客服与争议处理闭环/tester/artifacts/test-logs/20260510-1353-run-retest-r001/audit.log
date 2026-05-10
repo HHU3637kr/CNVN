@@ -1,0 +1,12 @@
+﻿[2026-05-10T13:53:32] START pytest-targeted :: pytest tests/api/v1/test_disputes.py tests/api/v1/test_payment_settlement.py -q :: cwd=D:\project\CNVN\backend
+[2026-05-10T13:53:50] END   pytest-targeted :: exit=0
+[2026-05-10T13:53:50] START pytest-full :: pytest -q :: cwd=D:\project\CNVN\backend
+[2026-05-10T13:54:55] END   pytest-full :: exit=0
+[2026-05-10T13:54:55] START frontend-build :: pnpm run build :: cwd=D:\project\CNVN\frontend
+[2026-05-10T13:54:57] END   frontend-build :: exit=0
+[2026-05-10T13:54:57] START git-diff-check :: git diff --check :: cwd=D:\project\CNVN
+[2026-05-10T13:54:57] END   git-diff-check :: exit=0
+[2026-05-10T13:58:06] START git-diff-check-post-docs :: git diff --check :: cwd=D:\project\CNVN
+[2026-05-10T13:58:07] END   git-diff-check-post-docs :: exit=0
+[2026-05-10T13:59:15] START git-diff-check-final :: git diff --check :: cwd=D:\project\CNVN
+[2026-05-10T13:59:15] END   git-diff-check-final :: exit=0

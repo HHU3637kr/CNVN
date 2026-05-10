@@ -1,0 +1,11 @@
+﻿Docker version 29.1.3, build f52814d
+docker : docker: unknown command: docker compose
+At line:7 char:3
++   docker compose version
++   ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (docker: unknown command: docker compose:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+Run 'docker --help' for more information
+Docker Compose version v5.0.1

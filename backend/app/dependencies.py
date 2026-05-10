@@ -93,3 +93,14 @@ async def get_current_teacher(current_user: User = Depends(get_current_user)) ->
             detail="需要教师角色权限，请切换到教师身份",
         )
     return current_user
+
+
+async def get_current_operator(current_user: User = Depends(get_current_user)) -> User:
+    """临时运营权限：只要求 roles 包含 operator 或 admin。"""
+    roles = current_user.roles or []
+    if "operator" not in roles and "admin" not in roles:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="需要运营权限",
+        )
+    return current_user

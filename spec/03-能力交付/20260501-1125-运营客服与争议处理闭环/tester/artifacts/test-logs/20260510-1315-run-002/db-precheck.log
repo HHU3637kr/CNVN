@@ -1,0 +1,9 @@
+﻿[2026-05-10T13:17:18.6720169+08:00] DB precheck start
+NAMES     STATUS                   PORTS
+cnvn-db   Up 2 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+--- docker inspect health ---
+healthy
+--- cnvn_test exists ---
+cnvn_test
+--- localhost 5432 probe ---
+

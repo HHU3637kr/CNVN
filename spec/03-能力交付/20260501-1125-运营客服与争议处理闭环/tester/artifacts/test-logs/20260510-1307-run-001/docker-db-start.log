@@ -1,0 +1,13 @@
+﻿powershell : At line:1 char:98
+At line:6 char:1
++ powershell -NoProfile -ExecutionPolicy Bypass -Command $Cmd *> (Join- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (At line:1 char:98:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
++ ... pose exec -T db sh -lc createdb -U cnvn cnvn_test 2>/dev/null || true
++                                                                   ~~
+The token '||' is not a valid statement separator in this version.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidEndOfLine
+ 

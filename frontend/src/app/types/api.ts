@@ -241,6 +241,75 @@ export interface PaymentOrderDetail {
   settlement_snapshot: SettlementSnapshotOut | null;
 }
 
+export type DisputeReasonCode =
+  | "teacher_no_show"
+  | "student_no_show"
+  | "quality_issue"
+  | "technical_issue"
+  | "payment_issue"
+  | "other";
+
+export type DisputeStatus =
+  | "open"
+  | "processing"
+  | "resolved_refunded"
+  | "resolved_released"
+  | "closed_no_action";
+
+export type DisputeAction =
+  | "assign"
+  | "add_note"
+  | "refund"
+  | "release"
+  | "close_no_action";
+
+export interface DisputeCreate {
+  lesson_id?: string | null;
+  payment_order_id?: string | null;
+  reason_code: DisputeReasonCode;
+  description: string;
+}
+
+export interface DisputeActionRequest {
+  action: DisputeAction;
+  reason: string;
+}
+
+export interface DisputeEventOut {
+  id: string;
+  dispute_id: string;
+  type: string;
+  actor_id: string | null;
+  note: string | null;
+  from_status: string | null;
+  to_status: string | null;
+  created_at: string;
+}
+
+export interface DisputeOut {
+  id: string;
+  status: DisputeStatus | string;
+  reason_code: DisputeReasonCode | string;
+  description: string | null;
+  lesson_id: string;
+  payment_order_id: string;
+  student_id: string;
+  teacher_id: string;
+  operator_id: string | null;
+  resolution: string | null;
+  created_at: string;
+  updated_at: string;
+  resolved_at: string | null;
+}
+
+export interface DisputeDetailOut extends DisputeOut {
+  payment_order: PaymentOrderDetail;
+  lesson: LessonOut;
+  student_name: string | null;
+  teacher_name: string | null;
+  events: DisputeEventOut[];
+}
+
 export interface PayoutOrderOut {
   id: string;
   payment_order_id: string;

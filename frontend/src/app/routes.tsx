@@ -11,6 +11,7 @@ import { Register } from "./pages/Register";
 import { Wallet } from "./pages/Wallet";
 import { PaymentOrderDetail } from "./pages/PaymentOrderDetail";
 import { Payouts } from "./pages/Payouts";
+import { OpsDisputes } from "./pages/OpsDisputes";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
       { path: "wallet", Component: Wallet },
       { path: "payments/orders/:orderId", Component: PaymentOrderDetail },
       { path: "payouts", Component: Payouts },
+      { path: "ops/disputes", Component: OpsDisputes },
     ],
   },
   { path: "/classroom/:id", Component: Classroom },

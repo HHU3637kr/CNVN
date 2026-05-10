@@ -8,6 +8,7 @@ from app.models.message import Message
 from app.models.payment_order import PaymentOrder, PayoutOrder, SettlementSnapshot
 from app.models.ledger import LedgerAccount, LedgerEntry
 from app.models.teacher_tax_profile import TeacherTaxProfile
+from app.models.dispute import DisputeCase, DisputeEvent
 
 __all__ = [
     "User",
@@ -24,4 +25,6 @@ __all__ = [
     "LedgerAccount",
     "LedgerEntry",
     "TeacherTaxProfile",
+    "DisputeCase",
+    "DisputeEvent",
 ]

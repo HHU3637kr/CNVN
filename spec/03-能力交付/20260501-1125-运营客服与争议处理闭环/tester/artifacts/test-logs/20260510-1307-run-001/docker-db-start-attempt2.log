@@ -1,0 +1,11 @@
+﻿docker : unknown shorthand flag: 'd' in -d
+At line:6 char:3
++   docker compose up -d db
++   ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (unknown shorthand flag: 'd' in -d:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+Usage:  docker [OPTIONS] COMMAND [ARG...]
+
+Run 'docker --help' for more information

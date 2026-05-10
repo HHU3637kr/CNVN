@@ -14,10 +14,14 @@ import {
   Star,
   X,
   Loader2,
+  AlertTriangle,
 } from "lucide-react";
 import { getAccessToken } from "../lib/api";
 import { apiFetchJson, ApiError } from "../lib/http";
 import type {
+  DisputeCreate,
+  DisputeOut,
+  DisputeReasonCode,
   LessonListItem,
   LessonStatus,
   PaginatedResponse,
@@ -96,6 +100,24 @@ const DEFAULT_REVIEW_FORM: ReviewFormState = {
   content: "",
 };
 
+type DisputeFormState = {
+  reason_code: DisputeReasonCode;
+  description: string;
+};
+
+const DEFAULT_DISPUTE_FORM: DisputeFormState = {
+  reason_code: "quality_issue",
+  description: "",
+};
+
+const DISPUTE_REASON_OPTIONS: { value: DisputeReasonCode; label: string }[] = [
+  { value: "teacher_no_show", label: "老师未出席" },
+  { value: "quality_issue", label: "教学质量问题" },
+  { value: "technical_issue", label: "技术问题" },
+  { value: "payment_issue", label: "付款或结算问题" },
+  { value: "other", label: "其他" },
+];
+
 function optionalRating(value: string): number | null {
   return value ? Number(value) : null;
 }
@@ -103,9 +125,11 @@ function optionalRating(value: string): number | null {
 function LessonCard({
   lesson,
   onReview,
+  onDispute,
 }: {
   lesson: LessonListItem;
   onReview: (lesson: LessonListItem) => void;
+  onDispute: (lesson: LessonListItem) => void;
 }) {
   const { date, time } = formatLessonScheduled(lesson.scheduled_at);
   const teacherName = lesson.teacher_name || "教师";
@@ -146,7 +170,7 @@ function LessonCard({
         </div>
       </div>
 
-      <div className="w-full sm:w-auto">
+      <div className="w-full sm:w-auto flex flex-col sm:items-end gap-2">
         {canEnter ? (
           <Link
             to={`/classroom/${lesson.id}`}
@@ -167,6 +191,16 @@ function LessonCard({
             已评价
           </span>
         ) : null}
+        {(lesson.status === "completed" || lesson.status === "reviewed") && (
+          <button
+            type="button"
+            onClick={() => onDispute(lesson)}
+            className="w-full sm:w-auto px-4 py-2 border border-amber-200 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2"
+          >
+            <AlertTriangle className="w-4 h-4" />
+            发起争议
+          </button>
+        )}
       </div>
     </div>
   );
@@ -185,6 +219,11 @@ export function StudentDashboard() {
   const [reviewForm, setReviewForm] = useState<ReviewFormState>(DEFAULT_REVIEW_FORM);
   const [reviewErr, setReviewErr] = useState<string | null>(null);
   const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [disputeLesson, setDisputeLesson] = useState<LessonListItem | null>(null);
+  const [disputeForm, setDisputeForm] = useState<DisputeFormState>(DEFAULT_DISPUTE_FORM);
+  const [disputeMessage, setDisputeMessage] = useState<string | null>(null);
+  const [disputeMessageTone, setDisputeMessageTone] = useState<"success" | "error">("success");
+  const [disputeSubmitting, setDisputeSubmitting] = useState(false);
 
   const loadDashboard = useCallback(async () => {
     const [u, lessonPage, w] = await Promise.all([
@@ -271,6 +310,59 @@ export function StudentDashboard() {
     }
   };
 
+  const openDisputeDialog = (lesson: LessonListItem) => {
+    if (lesson.status !== "completed" && lesson.status !== "reviewed") return;
+    setDisputeLesson(lesson);
+    setDisputeForm(DEFAULT_DISPUTE_FORM);
+    setDisputeMessage(null);
+    setDisputeMessageTone("success");
+  };
+
+  const closeDisputeDialog = () => {
+    if (disputeSubmitting) return;
+    setDisputeLesson(null);
+    setDisputeForm(DEFAULT_DISPUTE_FORM);
+    setDisputeMessage(null);
+  };
+
+  const submitDispute = async () => {
+    if (!disputeLesson) return;
+    const description = disputeForm.description.trim();
+    if (!description) {
+      setDisputeMessageTone("error");
+      setDisputeMessage("请填写争议说明");
+      return;
+    }
+
+    const payload: DisputeCreate = {
+      lesson_id: disputeLesson.id,
+      reason_code: disputeForm.reason_code,
+      description,
+    };
+
+    setDisputeSubmitting(true);
+    setDisputeMessage(null);
+    try {
+      await apiFetchJson<DisputeOut>("/disputes", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      setDisputeMessageTone("success");
+      setDisputeMessage("争议已提交，平台客服会继续处理。");
+    } catch (e) {
+      setDisputeMessageTone("error");
+      if (e instanceof ApiError && e.status === 409) {
+        setDisputeMessage("该课程已有处理中争议，请勿重复提交。");
+      } else if (e instanceof ApiError && e.status === 403) {
+        setDisputeMessage("无权对该课程发起争议。");
+      } else {
+        setDisputeMessage(e instanceof ApiError ? e.message : "争议提交失败，请稍后重试。");
+      }
+    } finally {
+      setDisputeSubmitting(false);
+    }
+  };
+
   if (!token) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
@@ -315,7 +407,12 @@ export function StudentDashboard() {
                     {group.items.length > 0 ? (
                       <div className="space-y-3">
                         {group.items.map((lesson) => (
-                          <LessonCard key={lesson.id} lesson={lesson} onReview={openReviewDialog} />
+                          <LessonCard
+                            key={lesson.id}
+                            lesson={lesson}
+                            onReview={openReviewDialog}
+                            onDispute={openDisputeDialog}
+                          />
                         ))}
                       </div>
                     ) : (
@@ -368,7 +465,7 @@ export function StudentDashboard() {
                           </div>
                         </div>
 
-                        <div className="flex gap-3 w-full sm:w-auto">
+                        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                           <button
                             type="button"
                             onClick={() => openReviewDialog(lesson)}
@@ -380,6 +477,13 @@ export function StudentDashboard() {
                             }`}
                           >
                             {lesson.status === "reviewed" ? "已评价" : "去评价"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => openDisputeDialog(lesson)}
+                            className="px-4 py-2 border border-amber-200 bg-amber-50 rounded-lg text-sm font-medium text-amber-800 hover:bg-amber-100 transition-all flex-1 sm:flex-none"
+                          >
+                            发起争议
                           </button>
                           <Link
                             to="/teachers"
@@ -557,6 +661,99 @@ export function StudentDashboard() {
               >
                 {reviewSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
                 提交评价
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {disputeLesson && (
+        <div className="fixed inset-0 z-50 bg-black/40 px-4 py-6 flex items-center justify-center">
+          <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="p-5 border-b border-gray-100 flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">发起争议</h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  {disputeLesson.topic || "课程"} · {disputeLesson.teacher_name || "教师"}老师
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={closeDisputeDialog}
+                disabled={disputeSubmitting}
+                className="p-2 rounded-lg hover:bg-gray-100 text-gray-500"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4">
+              <label className="block">
+                <span className="text-sm font-medium text-gray-700">争议原因</span>
+                <select
+                  value={disputeForm.reason_code}
+                  onChange={(e) =>
+                    setDisputeForm((prev) => ({
+                      ...prev,
+                      reason_code: e.target.value as DisputeReasonCode,
+                    }))
+                  }
+                  className="mt-2 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500"
+                >
+                  {DISPUTE_REASON_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="block">
+                <span className="text-sm font-medium text-gray-700">情况说明</span>
+                <textarea
+                  value={disputeForm.description}
+                  onChange={(e) =>
+                    setDisputeForm((prev) => ({ ...prev, description: e.target.value }))
+                  }
+                  maxLength={1000}
+                  className="mt-2 w-full h-32 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500 resize-none"
+                  placeholder="请说明争议原因，平台客服会据此处理。"
+                />
+                <span className="block text-right text-xs text-gray-400 mt-1">
+                  {disputeForm.description.length}/1000
+                </span>
+              </label>
+
+              {disputeMessage && (
+                <div
+                  className={`text-sm rounded-lg px-3 py-2 border ${
+                    disputeMessageTone === "success"
+                      ? "text-green-700 bg-green-50 border-green-100"
+                      : "text-red-700 bg-red-50 border-red-100"
+                  }`}
+                >
+                  {disputeMessage}
+                </div>
+              )}
+            </div>
+
+            <div className="p-5 border-t border-gray-100 flex flex-col sm:flex-row gap-3 justify-end">
+              <button
+                type="button"
+                onClick={closeDisputeDialog}
+                disabled={disputeSubmitting}
+                className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                关闭
+              </button>
+              <button
+                type="button"
+                onClick={submitDispute}
+                disabled={disputeSubmitting}
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 disabled:opacity-60 text-white rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+              >
+                {disputeSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                提交争议
               </button>
             </div>
           </div>

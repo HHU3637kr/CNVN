@@ -1,0 +1,17 @@
+﻿powershell : warning: in the working copy of '.cursor/mcp.json', LF will be replaced by CRLF the next time Git touches it
+At line:2 char:138
++ ... check.log"; powershell -NoProfile -ExecutionPolicy Bypass -Command 'g ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of '.cursorrules', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/api/v1/router.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/dependencies.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/models/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/app/services/dispute_watcher.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/app/pages/PaymentOrderDetail.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/app/pages/StudentDashboard.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/app/routes.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/app/types/api.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'spec/03-能力交付/20260501-1125-运营客服与争议处理闭环/writer/plan.md', LF will be replaced by CRLF the next time Git touches it

@@ -1,0 +1,1596 @@
+﻿EEEEEEEEEEE                                                              [100%]
+=================================== ERRORS ====================================
+__ ERROR at setup of test_student_creates_dispute_and_duplicate_is_rejected ___
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_ ERROR at setup of test_teacher_can_create_dispute_and_unrelated_user_is_forbidden _
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+___ ERROR at setup of test_ops_requires_operator_and_can_assign_then_refund ___
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_ ERROR at setup of test_ops_release_uses_payment_service_and_rejects_repeat __
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_____ ERROR at setup of test_watcher_skips_disputed_and_open_held_orders ______
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_________ ERROR at setup of test_cancel_less_than_24h_sets_held_until _________
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+______ ERROR at setup of test_cancel_at_least_24h_still_refunds_student _______
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_______ ERROR at setup of test_commission_rate_counts_reviewed_lessons ________
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_______ ERROR at setup of test_commission_rate_uses_actual_end_at_month _______
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_______ ERROR at setup of test_commission_rate_excludes_invalid_lessons _______
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+_ ERROR at setup of test_payouts_me_requires_teacher_and_returns_settlement_explanation_fields _
+
+request = <SubRequest 'setup_database' for <Coroutine test_student_creates_dispute_and_duplicate_is_rejected>>
+kwargs = {}, func = <function setup_database at 0x000002249DB33C40>
+event_loop_fixture_id = '_session_event_loop'
+setup = <function _wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup at 0x000002249E398540>
+setup_task = <Task finished name='Task-1' coro=<_wrap_asyncgen_fixture.<locals>._asyncgen_fixture_wrapper.<locals>.setup() done, de...Lib\site-packages\pytest_asyncio\plugin.py:323> exception=ConnectionRefusedError(22, '远程计算机拒绝网络连接。', None, 1225, None)>
+
+    @functools.wraps(fixture)
+    def _asyncgen_fixture_wrapper(request: FixtureRequest, **kwargs: Any):
+        func = _perhaps_rebind_fixture_func(fixture, request.instance)
+        event_loop_fixture_id = _get_event_loop_fixture_id_for_async_fixture(
+            request, func
+        )
+        event_loop = request.getfixturevalue(event_loop_fixture_id)
+        kwargs.pop(event_loop_fixture_id, None)
+        gen_obj = func(**_add_kwargs(func, kwargs, event_loop, request))
+    
+        async def setup():
+            res = await gen_obj.__anext__()  # type: ignore[union-attr]
+            return res
+    
+        context = contextvars.copy_context()
+        setup_task = _create_task_in_context(event_loop, setup(), context)
+>       result = event_loop.run_until_complete(setup_task)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\Conda\Lib\asyncio\base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\pytest_asyncio\plugin.py:324: in setup
+    res = await gen_obj.__anext__()  # type: ignore[union-attr]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in setup_database
+    async with engine.begin() as conn:
+               ^^^^^^^^^^^^^^
+D:\Conda\Lib\contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:1068: in begin
+    async with conn:
+               ^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\base.py:121: in __aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\ext\asyncio\engine.py:275: in start
+    await greenlet_spawn(self.sync_engine.connect)
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3293: in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:143: in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\base.py:3317: in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:448: in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:1272: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:712: in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:177: in _do_get
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\impl.py:175: in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:389: in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:674: in __init__
+    self.__connect()
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:900: in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\langhelpers.py:121: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+D:\Conda\Lib\site-packages\sqlalchemy\pool\base.py:896: in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\create.py:667: in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\engine\default.py:630: in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:955: in connect
+    await_only(creator_fn(*arg, **kw)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connection.py:2443: in connect
+    return await connect_utils._connect(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1249: in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1218: in _connect
+    conn = await _connect_addr(
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1054: in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:1099: in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+D:\Conda\Lib\site-packages\asyncpg\connect_utils.py:969: in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+D:\Conda\Lib\asyncio\base_events.py:1176: in create_connection
+    raise exceptions[0]
+D:\Conda\Lib\asyncio\base_events.py:1146: in create_connection
+    sock = await self._connect_sock(
+D:\Conda\Lib\asyncio\base_events.py:1045: in _connect_sock
+    await self.sock_connect(sock, address)
+D:\Conda\Lib\asyncio\proactor_events.py:728: in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\Conda\Lib\asyncio\windows_events.py:804: in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+trans = 0, key = 0, ov = <_overlapped.Overlapped object at 0x000002249E3DC1B0>
+
+    def finish_connect(trans, key, ov):
+>       ov.getresult()
+E       ConnectionRefusedError: [WinError 1225] 远程计算机拒绝网络连接。
+
+D:\Conda\Lib\asyncio\windows_events.py:600: ConnectionRefusedError
+============================== warnings summary ===============================
+app\main.py:27
+  D:\project\CNVN\backend\app\main.py:27: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+  D:\Conda\Lib\site-packages\fastapi\applications.py:4656: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+app\main.py:33
+  D:\project\CNVN\backend\app\main.py:33: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("shutdown")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR tests/api/v1/test_disputes.py::test_student_creates_dispute_and_duplicate_is_rejected
+ERROR tests/api/v1/test_disputes.py::test_teacher_can_create_dispute_and_unrelated_user_is_forbidden
+ERROR tests/api/v1/test_disputes.py::test_ops_requires_operator_and_can_assign_then_refund
+ERROR tests/api/v1/test_disputes.py::test_ops_release_uses_payment_service_and_rejects_repeat
+ERROR tests/api/v1/test_disputes.py::test_watcher_skips_disputed_and_open_held_orders
+ERROR tests/api/v1/test_payment_settlement.py::test_cancel_less_than_24h_sets_held_until
+ERROR tests/api/v1/test_payment_settlement.py::test_cancel_at_least_24h_still_refunds_student
+ERROR tests/api/v1/test_payment_settlement.py::test_commission_rate_counts_reviewed_lessons
+ERROR tests/api/v1/test_payment_settlement.py::test_commission_rate_uses_actual_end_at_month
+ERROR tests/api/v1/test_payment_settlement.py::test_commission_rate_excludes_invalid_lessons
+ERROR tests/api/v1/test_payment_settlement.py::test_payouts_me_requires_teacher_and_returns_settlement_explanation_fields
+4 warnings, 11 errors in 7.00s

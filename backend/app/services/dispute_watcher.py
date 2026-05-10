@@ -20,7 +20,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.database import async_session
 from app.models.payment_order import PaymentOrder
-from app.services import payment_service
+from app.services import dispute_service, payment_service
 
 logger = logging.getLogger(__name__)
 
@@ -69,6 +69,7 @@ async def run_once(
             PaymentOrder.held_until.is_not(None),
             PaymentOrder.held_until < now,
             PaymentOrder.retry_count < _MAX_RETRY,
+            ~dispute_service.has_active_dispute_exists_clause(),
         )
         .order_by(PaymentOrder.held_until.asc())
         .limit(limit)

@@ -1,0 +1,33 @@
+﻿[2026-05-10T13:17:34.9294123+08:00] COMMAND: cd backend; pytest tests/api/v1/test_disputes.py tests/api/v1/test_payment_settlement.py -q
+...........                                                              [100%]
+============================== warnings summary ===============================
+app\main.py:27
+  D:\project\CNVN\backend\app\main.py:27: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+  D:\Conda\Lib\site-packages\fastapi\applications.py:4656: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+app\main.py:33
+  D:\project\CNVN\backend\app\main.py:33: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("shutdown")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+11 passed, 4 warnings in 12.16s

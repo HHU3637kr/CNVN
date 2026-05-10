@@ -1,0 +1,101 @@
+﻿[2026-05-10T13:31:59.5503147+08:00] COMMAND: cd backend; pytest -vv -x
+============================= test session starts =============================
+platform win32 -- Python 3.13.11, pytest-8.4.2, pluggy-1.5.0 -- D:\Conda\python.exe
+cachedir: .pytest_cache
+rootdir: D:\project\CNVN\backend
+configfile: pyproject.toml
+plugins: anyio-4.12.1, asyncio-0.25.0, httpx-0.35.0, respx-0.23.1
+asyncio: mode=Mode.AUTO, asyncio_default_fixture_loop_scope=None
+collecting ... collected 59 items
+
+tests/api/v1/test_auth.py::test_register_success PASSED                  [  1%]
+tests/api/v1/test_auth.py::test_register_duplicate_email PASSED          [  3%]
+tests/api/v1/test_auth.py::test_login_success PASSED                     [  5%]
+tests/api/v1/test_auth.py::test_login_wrong_password PASSED              [  6%]
+tests/api/v1/test_auth.py::test_login_nonexistent_user PASSED            [  8%]
+tests/api/v1/test_auth.py::test_refresh_token PASSED                     [ 10%]
+tests/api/v1/test_auth.py::test_refresh_invalid_token PASSED             [ 11%]
+tests/api/v1/test_auth.py::test_get_me PASSED                            [ 13%]
+tests/api/v1/test_auth.py::test_switch_role_success PASSED               [ 15%]
+tests/api/v1/test_auth.py::test_switch_role_not_owned PASSED             [ 16%]
+tests/api/v1/test_auth.py::test_become_teacher_success PASSED            [ 18%]
+tests/api/v1/test_auth.py::test_become_teacher_duplicate PASSED          [ 20%]
+tests/api/v1/test_availability.py::test_update_recurring_rejects_specific_date_without_clearing_day PASSED [ 22%]
+tests/api/v1/test_availability.py::test_update_specific_date_rejects_day_without_clearing_date PASSED [ 23%]
+tests/api/v1/test_availability.py::test_update_switches_modes_with_explicit_nulls_and_normalizes_recurring PASSED [ 25%]
+tests/api/v1/test_availability.py::test_update_rejects_empty_mode_invalid_time_and_recurring_mismatch PASSED [ 27%]
+tests/api/v1/test_disputes.py::test_student_creates_dispute_and_duplicate_is_rejected PASSED [ 28%]
+tests/api/v1/test_disputes.py::test_teacher_can_create_dispute_and_unrelated_user_is_forbidden PASSED [ 30%]
+tests/api/v1/test_disputes.py::test_ops_requires_operator_and_can_assign_then_refund PASSED [ 32%]
+tests/api/v1/test_disputes.py::test_ops_release_uses_payment_service_and_rejects_repeat PASSED [ 33%]
+tests/api/v1/test_disputes.py::test_watcher_skips_disputed_and_open_held_orders PASSED [ 35%]
+tests/api/v1/test_lesson_messages.py::test_list_messages_forbidden_for_stranger PASSED [ 37%]
+tests/api/v1/test_lesson_messages.py::test_list_messages_rejects_unavailable_classroom_states PASSED [ 38%]
+tests/api/v1/test_lesson_messages.py::test_ws_chat_roundtrip PASSED      [ 40%]
+tests/api/v1/test_lesson_messages.py::test_ws_rejects_without_token PASSED [ 42%]
+tests/api/v1/test_lesson_messages.py::test_ws_rejects_invalid_token PASSED [ 44%]
+tests/api/v1/test_lesson_messages.py::test_ws_rejects_non_member PASSED  [ 45%]
+tests/api/v1/test_lesson_messages.py::test_ws_rejects_unavailable_classroom PASSED [ 47%]
+tests/api/v1/test_lesson_messages.py::test_ws_invalid_json_returns_error PASSED [ 49%]
+tests/api/v1/test_lesson_messages.py::test_ws_empty_and_too_long_messages_return_validation_without_persisting PASSED [ 50%]
+tests/api/v1/test_lesson_messages.py::test_lesson_room_broadcasts_to_all_sockets PASSED [ 52%]
+tests/api/v1/test_lessons.py::test_lesson_rejects_without_availability PASSED [ 54%]
+tests/api/v1/test_lessons.py::test_lesson_happy_path_and_cancel PASSED   [ 55%]
+tests/api/v1/test_lessons.py::test_lesson_insufficient_balance PASSED    [ 57%]
+tests/api/v1/test_lessons.py::test_start_end_lesson PASSED               [ 59%]
+tests/api/v1/test_lessons.py::test_start_lesson_rejects_outside_entry_window PASSED [ 61%]
+tests/api/v1/test_lessons.py::test_teacher_cannot_operate_other_teachers_lesson PASSED [ 62%]
+tests/api/v1/test_lessons.py::test_expire_pending_updates_teacher_response_rate PASSED [ 64%]
+tests/api/v1/test_lessons.py::test_lesson_rejects_teacher_overlap_with_409_and_no_second_charge PASSED [ 66%]
+tests/api/v1/test_lessons.py::test_lesson_rejects_student_overlap_with_409_and_single_charge PASSED [ 67%]
+tests/api/v1/test_lessons.py::test_concurrent_overlap_uses_exclusion_constraint_without_double_charge PASSED [ 69%]
+tests/api/v1/test_lessons.py::test_lesson_list_and_detail_include_classroom_entry_fields PASSED [ 71%]
+tests/api/v1/test_payment_settlement.py::test_cancel_less_than_24h_sets_held_until PASSED [ 72%]
+tests/api/v1/test_payment_settlement.py::test_cancel_at_least_24h_still_refunds_student PASSED [ 74%]
+tests/api/v1/test_payment_settlement.py::test_commission_rate_counts_reviewed_lessons PASSED [ 76%]
+tests/api/v1/test_payment_settlement.py::test_commission_rate_uses_actual_end_at_month PASSED [ 77%]
+tests/api/v1/test_payment_settlement.py::test_commission_rate_excludes_invalid_lessons PASSED [ 79%]
+tests/api/v1/test_payment_settlement.py::test_payouts_me_requires_teacher_and_returns_settlement_explanation_fields PASSED [ 81%]
+tests/api/v1/test_reviews.py::test_create_review_updates_teacher_and_lesson PASSED [ 83%]
+tests/api/v1/test_reviews.py::test_duplicate_review_rejected PASSED      [ 84%]
+tests/api/v1/test_reviews.py::test_review_wrong_student_forbidden PASSED [ 86%]
+tests/api/v1/test_reviews.py::test_review_not_completed_rejected PASSED  [ 88%]
+tests/api/v1/test_teachers.py::test_search_teachers_includes_active PASSED [ 89%]
+tests/api/v1/test_teachers.py::test_get_teacher_detail PASSED            [ 91%]
+tests/api/v1/test_teachers.py::test_get_teacher_availability_public PASSED [ 93%]
+tests/api/v1/test_teachers.py::test_get_teacher_reviews_empty PASSED     [ 94%]
+tests/api/v1/test_teachers.py::test_create_profile_duplicate PASSED      [ 96%]
+tests/api/v1/test_teachers.py::test_get_my_teacher_profile_and_update_round_trip PASSED [ 98%]
+tests/api/v1/test_teachers.py::test_get_my_teacher_profile_requires_active_teacher_role PASSED [100%]
+
+============================== warnings summary ===============================
+app\main.py:27
+  D:\project\CNVN\backend\app\main.py:27: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+  D:\Conda\Lib\site-packages\fastapi\applications.py:4656: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+app\main.py:33
+  D:\project\CNVN\backend\app\main.py:33: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("shutdown")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 59 passed, 4 warnings in 57.72s =======================

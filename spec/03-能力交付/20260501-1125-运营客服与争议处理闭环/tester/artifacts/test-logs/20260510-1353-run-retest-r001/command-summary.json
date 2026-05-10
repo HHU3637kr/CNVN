@@ -1,0 +1,38 @@
+﻿[
+    {
+        "name":  "pytest-targeted",
+        "command":  "pytest tests/api/v1/test_disputes.py tests/api/v1/test_payment_settlement.py -q",
+        "cwd":  "D:\\project\\CNVN\\backend",
+        "stdout":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\pytest-targeted.stdout.log",
+        "stderr":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\pytest-targeted.stderr.log",
+        "exitcode_file":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\pytest-targeted.exitcode.txt",
+        "exitcode":  0
+    },
+    {
+        "name":  "pytest-full",
+        "command":  "pytest -q",
+        "cwd":  "D:\\project\\CNVN\\backend",
+        "stdout":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\pytest-full.stdout.log",
+        "stderr":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\pytest-full.stderr.log",
+        "exitcode_file":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\pytest-full.exitcode.txt",
+        "exitcode":  0
+    },
+    {
+        "name":  "frontend-build",
+        "command":  "pnpm run build",
+        "cwd":  "D:\\project\\CNVN\\frontend",
+        "stdout":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\frontend-build.stdout.log",
+        "stderr":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\frontend-build.stderr.log",
+        "exitcode_file":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\frontend-build.exitcode.txt",
+        "exitcode":  0
+    },
+    {
+        "name":  "git-diff-check",
+        "command":  "git diff --check",
+        "cwd":  "D:\\project\\CNVN",
+        "stdout":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\git-diff-check.stdout.log",
+        "stderr":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\git-diff-check.stderr.log",
+        "exitcode_file":  "spec\\03-能力交付\\20260501-1125-运营客服与争议处理闭环\\tester\\artifacts\\test-logs\\20260510-1353-run-retest-r001\\git-diff-check.exitcode.txt",
+        "exitcode":  0
+    }
+]

@@ -1,0 +1,63 @@
+==> backend pytest
+    cwd: D:\project\CNVN-scenario-regression\backend
+    cmd: D:\Conda\python.exe -m pytest tests/scenarios tests/integration/test_alembic_migrations.py -q
+..                                                                       [100%]
+============================== warnings summary ===============================
+app\main.py:27
+  D:\project\CNVN-scenario-regression\backend\app\main.py:27: DeprecationWarning:
+          on_event is deprecated, use lifespan event handlers instead.
+
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+
+    @app.on_event("startup")
+
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+  D:\Conda\Lib\site-packages\fastapi\applications.py:4656: DeprecationWarning:
+          on_event is deprecated, use lifespan event handlers instead.
+
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+app\main.py:33
+  D:\project\CNVN-scenario-regression\backend\app\main.py:33: DeprecationWarning:
+          on_event is deprecated, use lifespan event handlers instead.
+
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+
+    @app.on_event("shutdown")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2 passed, 4 warnings in 3.42s
+==> frontend build smoke
+    cwd: D:\project\CNVN-scenario-regression\frontend
+    cmd: D:\node\npm-global\pnpm.cmd run build
+
+> @figma/my-make-file@0.0.1 build D:\project\CNVN-scenario-regression\frontend
+> vite build
+
+[36mvite v6.3.5 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 1627 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.45 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mdist/[22m[35massets/index-NbItDgWk.css  [39m[1m[2m111.85 kB[22m[1m[22m[2m │ gzip:  18.03 kB[22m
+[2mdist/[22m[36massets/index-DUD7bUL2.js   [39m[1m[2m387.13 kB[22m[1m[22m[2m │ gzip: 112.17 kB[22m
+[32m✓ built in 1.95s[39m
+==> git whitespace check
+    cwd: D:\project\CNVN-scenario-regression
+    cmd: git diff --check
+python : warning: in the working copy of 'backend/alembic/versions/005_availability_final_state_checks.py', LF will be replaced by CRLF the next time Git touches it
+At line:5 char:1
++ python scripts/verify.py --suite smoke *> "$runDir/verify-smoke.log";
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+warning: in the working copy of 'backend/alembic/versions/006_add_dispute_cases.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'spec/05-验证工程/20260501-1126-场景级回归验证体系/writer/plan.md', LF will be replaced by CRLF the next time Git touches it

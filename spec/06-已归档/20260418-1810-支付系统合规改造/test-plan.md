@@ -1,7 +1,7 @@
 ---
 title: 支付系统合规改造 — 测试计划
 type: test-plan
-category: 03-功能实现
+category: 03-能力交付
 status: 未确认
 priority: 高
 created: 2026-04-18

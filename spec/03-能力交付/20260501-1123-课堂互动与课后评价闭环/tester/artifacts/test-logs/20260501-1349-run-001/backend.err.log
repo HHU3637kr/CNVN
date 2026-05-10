@@ -1,0 +1,10 @@
+INFO:     Started server process [29596]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8002 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51616 - "WebSocket /api/v1/lessons/0de5a9ca-f696-442e-af8d-862314d2c10c/ws?access_token=<redacted>" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     127.0.0.1:57830 - "WebSocket /api/v1/lessons/0de5a9ca-f696-442e-af8d-862314d2c10c/ws?access_token=<redacted>" [accepted]
+INFO:     connection open
+INFO:     connection closed

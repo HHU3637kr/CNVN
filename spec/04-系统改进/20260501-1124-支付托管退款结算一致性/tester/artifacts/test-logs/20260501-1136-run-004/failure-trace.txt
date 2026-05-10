@@ -1,0 +1,151 @@
+﻿.F.F.....                                                                [100%]
+================================== FAILURES ===================================
+______________________ test_lesson_happy_path_and_cancel ______________________
+
+client = <httpx.AsyncClient object at 0x000002403C530F50>
+db_session = <sqlalchemy.ext.asyncio.session.AsyncSession object at 0x000002403C5316D0>
+
+    @pytest.mark.asyncio
+    async def test_lesson_happy_path_and_cancel(client, db_session):
+        """有时段、有余额：预约 → 确认 → 取消（≥24h）"""
+        st = make_register_data()
+        await client.post("/api/v1/auth/register", json=st)
+        login_st = await client.post(
+            "/api/v1/auth/login",
+            json={"email": st["email"], "password": st["password"]},
+        )
+        tok_st = login_st.json()["access_token"]
+        h_st = {"Authorization": f"Bearer {tok_st}"}
+    
+        te = make_register_data()
+        await client.post("/api/v1/auth/register", json=te)
+        login_te = await client.post(
+            "/api/v1/auth/login",
+            json={"email": te["email"], "password": te["password"]},
+        )
+        tok_te = login_te.json()["access_token"]
+        h_te = {"Authorization": f"Bearer {tok_te}"}
+        await client.post("/api/v1/auth/become-teacher", json=TEACHER_PROFILE_DATA, headers=h_te)
+    
+        tid = await get_teacher_profile_id(db_session, te["email"])
+    
+        tz = ZoneInfo("Asia/Ho_Chi_Minh")
+        day = (datetime.now(tz) + timedelta(days=7)).date()
+        await client.post(
+            "/api/v1/availability",
+            json={
+                "specific_date": day.isoformat(),
+                "start_time": "09:00:00",
+                "end_time": "21:00:00",
+                "is_recurring": False,
+            },
+            headers=h_te,
+        )
+    
+        await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
+    
+        sched = vn_dt_local(day, 15, 0).astimezone(ZoneInfo("UTC"))
+        cr = await client.post(
+            "/api/v1/lessons",
+            json={
+                "teacher_id": str(tid),
+                "scheduled_at": sched.isoformat().replace("+00:00", "Z"),
+                "duration_minutes": 60,
+                "topic": "试听课",
+            },
+            headers=h_st,
+        )
+>       assert cr.status_code == 201, cr.text
+E       AssertionError: {"detail":"ledger account 不存在: escrow"}
+E       assert 400 == 201
+E        +  where 400 = <Response [400 Bad Request]>.status_code
+
+tests\api\v1\test_lessons.py:143: AssertionError
+____________________________ test_start_end_lesson ____________________________
+
+client = <httpx.AsyncClient object at 0x000002403C629350>
+db_session = <sqlalchemy.ext.asyncio.session.AsyncSession object at 0x000002403C6296E0>
+
+    @pytest.mark.asyncio
+    async def test_start_end_lesson(client, db_session):
+        st = make_register_data()
+        await client.post("/api/v1/auth/register", json=st)
+        login_st = await client.post(
+            "/api/v1/auth/login",
+            json={"email": st["email"], "password": st["password"]},
+        )
+        h_st = {"Authorization": f"Bearer {login_st.json()['access_token']}"}
+    
+        te = make_register_data()
+        await client.post("/api/v1/auth/register", json=te)
+        login_te = await client.post(
+            "/api/v1/auth/login",
+            json={"email": te["email"], "password": te["password"]},
+        )
+        h_te = {"Authorization": f"Bearer {login_te.json()['access_token']}"}
+        await client.post("/api/v1/auth/become-teacher", json=TEACHER_PROFILE_DATA, headers=h_te)
+    
+        tid = await get_teacher_profile_id(db_session, te["email"])
+        tz = ZoneInfo("Asia/Ho_Chi_Minh")
+        day = (datetime.now(tz) + timedelta(days=7)).date()
+        await client.post(
+            "/api/v1/availability",
+            json={
+                "specific_date": day.isoformat(),
+                "start_time": "09:00:00",
+                "end_time": "21:00:00",
+                "is_recurring": False,
+            },
+            headers=h_te,
+        )
+        await client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
+    
+        sched = vn_dt_local(day, 10, 0).astimezone(ZoneInfo("UTC"))
+        cr = await client.post(
+            "/api/v1/lessons",
+            json={
+                "teacher_id": str(tid),
+                "scheduled_at": sched.isoformat().replace("+00:00", "Z"),
+                "duration_minutes": 60,
+            },
+            headers=h_st,
+        )
+>       lesson_id = cr.json()["id"]
+                    ^^^^^^^^^^^^^^^
+E       KeyError: 'id'
+
+tests\api\v1\test_lessons.py:261: KeyError
+============================== warnings summary ===============================
+app\main.py:27
+  D:\project\CNVN\backend\app\main.py:27: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+..\..\..\Conda\Lib\site-packages\fastapi\applications.py:4656
+  D:\Conda\Lib\site-packages\fastapi\applications.py:4656: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+app\main.py:33
+  D:\project\CNVN\backend\app\main.py:33: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("shutdown")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/api/v1/test_lessons.py::test_lesson_happy_path_and_cancel - Asse...
+FAILED tests/api/v1/test_lessons.py::test_start_end_lesson - KeyError: 'id'
+2 failed, 7 passed, 4 warnings in 7.89s

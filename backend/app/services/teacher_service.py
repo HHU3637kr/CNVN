@@ -155,6 +155,16 @@ async def get_teacher_profile(
     return TeacherProfileOut.model_validate(tp)
 
 
+async def get_teacher_profile_by_user_id(
+    db: AsyncSession, user_id: uuid.UUID
+) -> TeacherProfileOut:
+    r = await db.execute(select(TeacherProfile).where(TeacherProfile.user_id == user_id))
+    profile = r.scalars().first()
+    if not profile:
+        raise ValueError("教师档案不存在")
+    return TeacherProfileOut.model_validate(profile)
+
+
 async def create_teacher_profile(
     db: AsyncSession, user_id: uuid.UUID, data: TeacherProfileCreate
 ) -> TeacherProfileOut:

@@ -1,0 +1,12 @@
+﻿run_id=20260501-1137-run-005
+timestamp=2026-05-01T11:37:43.8936604+08:00
+pwd=D:\project\CNVN
+python=Python 3.13.11
+pytest=pytest 8.4.2
+uv=
+git_branch=fix/spec-20260501-1124-payment-consistency
+git_head=9b807c1
+test_db_host=localhost
+test_db_port=5432
+test_db_name=cnvn_test
+note=reviewer_supplemental_combo_regression_after_lesson_fixture_seed

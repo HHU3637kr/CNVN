@@ -1,0 +1,1493 @@
+{
+  "run_id": "20260501-1325-run-002",
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/register",
+      "status": 200,
+      "duration_ms": 4,
+      "request_id": "A5AD90DBC2742F518F6E33B092E1ACF5",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@vite/client",
+      "status": 200,
+      "duration_ms": 8,
+      "request_id": "27188.2",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/main.tsx",
+      "status": 200,
+      "duration_ms": 7,
+      "request_id": "27188.3",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@react-refresh",
+      "status": 200,
+      "duration_ms": 12,
+      "request_id": "27188.6",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 6,
+      "request_id": "27188.7",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 4,
+      "request_id": "27188.8",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/App.tsx",
+      "status": 200,
+      "duration_ms": 4,
+      "request_id": "27188.9",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/styles/index.css",
+      "status": 200,
+      "duration_ms": 10,
+      "request_id": "27188.10",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 200,
+      "duration_ms": 7,
+      "request_id": "27188.11",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 19,
+      "request_id": "27188.12",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 7,
+      "request_id": "27188.13",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 19,
+      "request_id": "27188.14",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/routes.tsx",
+      "status": 200,
+      "duration_ms": 9,
+      "request_id": "27188.15",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/Layout.tsx",
+      "status": 200,
+      "duration_ms": 5,
+      "request_id": "27188.17",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Home.tsx",
+      "status": 200,
+      "duration_ms": 4,
+      "request_id": "27188.18",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Teachers.tsx",
+      "status": 200,
+      "duration_ms": 7,
+      "request_id": "27188.19",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherProfile.tsx",
+      "status": 200,
+      "duration_ms": 10,
+      "request_id": "27188.20",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/StudentDashboard.tsx",
+      "status": 200,
+      "duration_ms": 11,
+      "request_id": "27188.21",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherDashboard.tsx",
+      "status": 200,
+      "duration_ms": 12,
+      "request_id": "27188.22",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Classroom.tsx",
+      "status": 200,
+      "duration_ms": 12,
+      "request_id": "27188.23",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Login.tsx",
+      "status": 200,
+      "duration_ms": 13,
+      "request_id": "27188.24",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Register.tsx",
+      "status": 200,
+      "duration_ms": 13,
+      "request_id": "27188.25",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Wallet.tsx",
+      "status": 200,
+      "duration_ms": 14,
+      "request_id": "27188.26",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 200,
+      "duration_ms": 13,
+      "request_id": "27188.27",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Payouts.tsx",
+      "status": 200,
+      "duration_ms": 14,
+      "request_id": "27188.28",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 9,
+      "request_id": "27188.29",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 24,
+      "request_id": "27188.30",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/http.ts",
+      "status": 200,
+      "duration_ms": 10,
+      "request_id": "27188.31",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/format.ts",
+      "status": 200,
+      "duration_ms": 10,
+      "request_id": "27188.32",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/components/TeacherAvatar.tsx",
+      "status": 200,
+      "duration_ms": 10,
+      "request_id": "27188.33",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/api.ts",
+      "status": 200,
+      "duration_ms": 10,
+      "request_id": "27188.34",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/authStorage.ts",
+      "status": 200,
+      "duration_ms": 11,
+      "request_id": "27188.35",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/bookingDraft.ts",
+      "status": 200,
+      "duration_ms": 6,
+      "request_id": "27188.36",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/favicon.ico",
+      "status": 404,
+      "duration_ms": 2,
+      "request_id": "27188.37",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/auth/register",
+      "status": 201,
+      "duration_ms": 518,
+      "request_id": "27188.38",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/auth/register",
+      "status": 200,
+      "duration_ms": 309,
+      "request_id": "86DC2B183F9687275F877C00A039AB9A",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/auth/login",
+      "status": 200,
+      "duration_ms": 185,
+      "request_id": "27188.39",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/auth/login",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "66818B6C7B9E8E9C44B88AA638F2DE6A",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/auth/become-teacher",
+      "status": 200,
+      "duration_ms": 25,
+      "request_id": "27188.40",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/auth/become-teacher",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "94A21A911860EF895D60EC865617BA7C",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/auth/switch-role",
+      "status": 200,
+      "duration_ms": 14,
+      "request_id": "27188.41",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/auth/switch-role",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "8422AD6C8A89BA1AE68787EB91A5AF51",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/teachers/me/profile",
+      "status": 200,
+      "duration_ms": 12,
+      "request_id": "27188.42",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/teachers/me/profile",
+      "status": 200,
+      "duration_ms": 2,
+      "request_id": "70B1C2D529A1C693BBA23EA12240BA40",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:8001/api/v1/teachers/profile",
+      "status": 200,
+      "duration_ms": 17,
+      "request_id": "27188.43",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/teachers/profile",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "9B6E4C0AC802A793652A4E331221C445",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/availability",
+      "status": 201,
+      "duration_ms": 24,
+      "request_id": "27188.44",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/availability",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "5641521B242C7014B5F197411293AC58",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:8001/api/v1/availability/cdf86d9c-ba15-48cc-8b63-5e858df70d6f",
+      "status": 200,
+      "duration_ms": 19,
+      "request_id": "27188.45",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/availability/cdf86d9c-ba15-48cc-8b63-5e858df70d6f",
+      "status": 200,
+      "duration_ms": 3,
+      "request_id": "EE37784C25A3633D6C1808BCC5FA3DEA",
+      "error": null
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:8001/api/v1/availability/cdf86d9c-ba15-48cc-8b63-5e858df70d6f",
+      "status": 200,
+      "duration_ms": 12,
+      "request_id": "27188.46",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/auth/register",
+      "status": 201,
+      "duration_ms": 192,
+      "request_id": "27188.47",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/auth/login",
+      "status": 200,
+      "duration_ms": 491,
+      "request_id": "27188.48",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/wallet/topup",
+      "status": 200,
+      "duration_ms": 20,
+      "request_id": "27188.49",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/wallet/topup",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "257555A72FBF7BAEA250086284BD4477",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:8001/api/v1/lessons",
+      "status": 201,
+      "duration_ms": 37,
+      "request_id": "27188.50",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/lessons",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "FDF5E94A914851E47D28D8BDD0157A77",
+      "error": null
+    },
+    {
+      "method": "PATCH",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc/confirm",
+      "status": 200,
+      "duration_ms": 25,
+      "request_id": "27188.51",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc/confirm",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "D82A6E3253AC84CDFA99E353681220FF",
+      "error": null
+    },
+    {
+      "method": "PATCH",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc/start",
+      "status": 200,
+      "duration_ms": 21,
+      "request_id": "27188.52",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc/start",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "7ADB71437D3C7440E15EBE6BE5F20C67",
+      "error": null
+    },
+    {
+      "method": "PATCH",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc/end",
+      "status": 403,
+      "duration_ms": 6,
+      "request_id": "27188.53",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc/end",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "53E60F57CE5773A37E20E818CBF27902",
+      "error": null
+    },
+    {
+      "method": "PATCH",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc/end",
+      "status": 200,
+      "duration_ms": 35,
+      "request_id": "runner-1777613267185",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/dashboard/teacher",
+      "status": 200,
+      "duration_ms": 3,
+      "request_id": "B64B5176EE123F5924208AC1886FB94D",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@vite/client",
+      "status": 304,
+      "duration_ms": 4,
+      "request_id": "27188.55",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/main.tsx",
+      "status": 304,
+      "duration_ms": 11,
+      "request_id": "27188.56",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@react-refresh",
+      "status": 304,
+      "duration_ms": 12,
+      "request_id": "27188.59",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "duration_ms": 18,
+      "request_id": "27188.60",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.61",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "27188.62",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/App.tsx",
+      "status": 304,
+      "duration_ms": 8,
+      "request_id": "27188.63",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/styles/index.css",
+      "status": 304,
+      "duration_ms": 9,
+      "request_id": "27188.64",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 2,
+      "request_id": "27188.65",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.66",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.68",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/routes.tsx",
+      "status": 304,
+      "duration_ms": 0,
+      "request_id": "27188.69",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/Layout.tsx",
+      "status": 304,
+      "duration_ms": 1,
+      "request_id": "27188.70",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Home.tsx",
+      "status": 304,
+      "duration_ms": 1,
+      "request_id": "27188.71",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Teachers.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.72",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherProfile.tsx",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.73",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/StudentDashboard.tsx",
+      "status": 304,
+      "duration_ms": 8,
+      "request_id": "27188.74",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherDashboard.tsx",
+      "status": 304,
+      "duration_ms": 8,
+      "request_id": "27188.75",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Classroom.tsx",
+      "status": 304,
+      "duration_ms": 9,
+      "request_id": "27188.76",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Login.tsx",
+      "status": 304,
+      "duration_ms": 9,
+      "request_id": "27188.77",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Register.tsx",
+      "status": 304,
+      "duration_ms": 10,
+      "request_id": "27188.78",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Wallet.tsx",
+      "status": 304,
+      "duration_ms": 11,
+      "request_id": "27188.79",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 304,
+      "duration_ms": 11,
+      "request_id": "27188.80",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Payouts.tsx",
+      "status": 304,
+      "duration_ms": 10,
+      "request_id": "27188.81",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.82",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "27188.83",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/http.ts",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.84",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/format.ts",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.85",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/components/TeacherAvatar.tsx",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.86",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/api.ts",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.87",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/authStorage.ts",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.88",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/bookingDraft.ts",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.89",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJXaW5kb3dUZXh0IiBkPSJNMTEuOTkgMkM2LjQ3IDIgMiA2LjQ4IDIgMTJzNC40NyAxMCA5Ljk5IDEwQzE3LjUyIDIyIDIyIDE3LjUyIDIyIDEyUzE3LjUyIDIgMTEuOTkgMnpNMTIgMjBjLTQuNDIgMC04LTMuNTgtOC04czMuNTgtOCA4LTggOCAzLjU4IDggOC0zLjU4IDgtOCA4eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48cGF0aCBmaWxsPSJXaW5kb3dUZXh0IiBkPSJNMTIuNSA3SDExdjZsNS4yNSAzLjE1Ljc1LTEuMjMtNC41LTIuNjd6Ii8+PC9zdmc+",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "27188.90",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/auth/me",
+      "status": 200,
+      "duration_ms": 8,
+      "request_id": "27188.91",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/auth/me",
+      "status": 200,
+      "duration_ms": 103,
+      "request_id": "27188.92",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/auth/me",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "95DB30506610409A22C321C2A360152D",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/auth/me",
+      "status": 200,
+      "duration_ms": 2,
+      "request_id": "3002DD2C241BDFAAC7B14864B0C5EDFE",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/teachers/me/tax-profile",
+      "status": 200,
+      "duration_ms": 2,
+      "request_id": "69BADFAB74BBCEE0A598C3156DC657C4",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/teachers/me/profile",
+      "status": 200,
+      "duration_ms": 42,
+      "request_id": "27188.93",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/teachers/me/tax-profile",
+      "status": 200,
+      "duration_ms": 120,
+      "request_id": "27188.94",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/availability",
+      "status": 200,
+      "duration_ms": 34,
+      "request_id": "27188.95",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/lessons?role=teacher&page_size=100",
+      "status": 200,
+      "duration_ms": 127,
+      "request_id": "27188.96",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/wallet",
+      "status": 200,
+      "duration_ms": 88,
+      "request_id": "27188.97",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/payouts/me?page=1&page_size=10",
+      "status": 200,
+      "duration_ms": 113,
+      "request_id": "27188.98",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/lessons?role=teacher&page_size=100",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "1D0296B209D66B0C585CDFC56CEE2FC8",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/wallet",
+      "status": 200,
+      "duration_ms": 3,
+      "request_id": "B2134F2E464A205BE7508BE66373B0A9",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/payouts/me?page=1&page_size=10",
+      "status": 200,
+      "duration_ms": 34,
+      "request_id": "8E57A66A6397399B05C248E913FBAA53",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/classroom/117dbc0b-9d70-427b-a561-d48b9e8e9dbc",
+      "status": 200,
+      "duration_ms": 3,
+      "request_id": "0393E01C6D041E43B7201706C4C0B104",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@vite/client",
+      "status": 304,
+      "duration_ms": 2,
+      "request_id": "27188.100",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/main.tsx",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.101",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@react-refresh",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.104",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.105",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.106",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.107",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/App.tsx",
+      "status": 304,
+      "duration_ms": 2,
+      "request_id": "27188.108",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/styles/index.css",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.109",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.110",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "27188.111",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.113",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/routes.tsx",
+      "status": 304,
+      "duration_ms": 1,
+      "request_id": "27188.114",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/Layout.tsx",
+      "status": 304,
+      "duration_ms": 1,
+      "request_id": "27188.115",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Home.tsx",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.116",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Teachers.tsx",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.117",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherProfile.tsx",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.118",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/StudentDashboard.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.119",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherDashboard.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.120",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Classroom.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.121",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Login.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.122",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Register.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.123",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Wallet.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.124",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.125",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Payouts.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.126",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "27188.127",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.128",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/api.ts",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.129",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/http.ts",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.130",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/authStorage.ts",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.131",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/format.ts",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.132",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/components/TeacherAvatar.tsx",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.133",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/bookingDraft.ts",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.134",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "E449E20D1E00027C9CAC7212BC04998D",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/lessons/117dbc0b-9d70-427b-a561-d48b9e8e9dbc",
+      "status": 200,
+      "duration_ms": 13,
+      "request_id": "27188.135",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/auth/me",
+      "status": 200,
+      "duration_ms": 7,
+      "request_id": "27188.136",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/teachers/me/profile",
+      "status": 200,
+      "duration_ms": 6,
+      "request_id": "27188.137",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/payouts",
+      "status": 200,
+      "duration_ms": 3,
+      "request_id": "70A895A0E063B359C414BD399F027091",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@vite/client",
+      "status": 304,
+      "duration_ms": 2,
+      "request_id": "27188.139",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/main.tsx",
+      "status": 304,
+      "duration_ms": 2,
+      "request_id": "27188.140",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/@react-refresh",
+      "status": 304,
+      "duration_ms": 4,
+      "request_id": "27188.143",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.144",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.145",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.146",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/App.tsx",
+      "status": 304,
+      "duration_ms": 2,
+      "request_id": "27188.147",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/styles/index.css",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.148",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.149",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.150",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.152",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/routes.tsx",
+      "status": 304,
+      "duration_ms": 0,
+      "request_id": "27188.153",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/Layout.tsx",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.154",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Home.tsx",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.155",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Teachers.tsx",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.156",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherProfile.tsx",
+      "status": 304,
+      "duration_ms": 4,
+      "request_id": "27188.157",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/StudentDashboard.tsx",
+      "status": 304,
+      "duration_ms": 4,
+      "request_id": "27188.158",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/TeacherDashboard.tsx",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.159",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Classroom.tsx",
+      "status": 304,
+      "duration_ms": 5,
+      "request_id": "27188.160",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Login.tsx",
+      "status": 304,
+      "duration_ms": 6,
+      "request_id": "27188.161",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Register.tsx",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.162",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Wallet.tsx",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.163",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.164",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/pages/Payouts.tsx",
+      "status": 304,
+      "duration_ms": 7,
+      "request_id": "27188.165",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "27188.166",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "duration_ms": 0,
+      "request_id": "27188.167",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/api.ts",
+      "status": 304,
+      "duration_ms": 2,
+      "request_id": "27188.168",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/http.ts",
+      "status": 304,
+      "duration_ms": 2,
+      "request_id": "27188.169",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/authStorage.ts",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.170",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/format.ts",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.171",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/components/TeacherAvatar.tsx",
+      "status": 304,
+      "duration_ms": 3,
+      "request_id": "27188.172",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:5173/src/app/lib/bookingDraft.ts",
+      "status": 304,
+      "duration_ms": 1,
+      "request_id": "27188.173",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/auth/me",
+      "status": 200,
+      "duration_ms": 6,
+      "request_id": "27188.174",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/auth/me",
+      "status": 200,
+      "duration_ms": 12,
+      "request_id": "27188.175",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:8001/api/v1/payouts/me?page=1&page_size=50",
+      "status": 200,
+      "duration_ms": 18,
+      "request_id": "27188.176",
+      "error": null
+    },
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8001/api/v1/payouts/me?page=1&page_size=50",
+      "status": 200,
+      "duration_ms": 1,
+      "request_id": "56E1408C004BAB7CF535C05402AB44C8",
+      "error": null
+    }
+  ]
+}

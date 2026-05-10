@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 import pytest
 from sqlalchemy import select
 
 from app.models.lesson import Lesson
+from app.models.payment_order import PaymentOrder
 from app.models.teacher_profile import TeacherProfile
 from app.models.user import User
 
@@ -93,7 +94,11 @@ async def _completed_lesson_setup(client, db_session):
     )
     lesson_id = cr.json()["id"]
     await client.patch(f"/api/v1/lessons/{lesson_id}/confirm", headers=h_te)
-    await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_st)
+    r_lesson = await db_session.execute(select(Lesson).where(Lesson.id == lesson_id))
+    lesson = r_lesson.scalars().one()
+    lesson.scheduled_at = datetime.now(timezone.utc) + timedelta(minutes=5)
+    await db_session.commit()
+    await client.patch(f"/api/v1/lessons/{lesson_id}/start", headers=h_te)
     en = await client.patch(f"/api/v1/lessons/{lesson_id}/end", headers=h_te)
     assert en.json()["status"] == "completed"
     return h_st, h_te, lesson_id, tid
@@ -102,6 +107,12 @@ async def _completed_lesson_setup(client, db_session):
 @pytest.mark.asyncio
 async def test_create_review_updates_teacher_and_lesson(client, db_session):
     h_st, _h_te, lesson_id, tid = await _completed_lesson_setup(client, db_session)
+    r_order_before = await db_session.execute(
+        select(PaymentOrder).where(PaymentOrder.lesson_id == lesson_id)
+    )
+    order_before = r_order_before.scalars().one()
+    held_until_before = order_before.held_until
+    status_before = order_before.status
 
     resp = await client.post(
         "/api/v1/reviews",
@@ -127,9 +138,17 @@ async def test_create_review_updates_teacher_and_lesson(client, db_session):
     t = await client.get(f"/api/v1/teachers/{tid}")
     assert float(t.json()["avg_rating"]) == 5.0
     assert t.json()["total_reviews"] == 1
+    assert t.json()["total_lessons"] == 1
 
     r_lesson = await db_session.execute(select(Lesson).where(Lesson.id == lesson_id))
     assert r_lesson.scalars().first().status == "reviewed"
+
+    r_order_after = await db_session.execute(
+        select(PaymentOrder).where(PaymentOrder.lesson_id == lesson_id)
+    )
+    order_after = r_order_after.scalars().one()
+    assert order_after.status == status_before
+    assert order_after.held_until == held_until_before
 
 
 @pytest.mark.asyncio

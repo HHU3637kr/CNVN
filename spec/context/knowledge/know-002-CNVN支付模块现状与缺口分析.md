@@ -66,9 +66,9 @@ created: 2026-04-03
 - `backend/app/models/payment.py`
 - `backend/app/models/lesson.py`
 - `backend/app/config.py`
-- `spec/01-项目规划/20260330-1650-CNVN中越通项目PRD/plan.md`
+- `spec/01-产品规划/20260330-1650-CNVN中越通项目PRD/plan.md`
 
 ## 参考
 
-- [[../../01-项目规划/20260330-1650-CNVN中越通项目PRD/plan|PRD - 支付与抽成]]
-- [[../../03-功能实现/20260403-1700-预约模块/plan|预约模块实现]]
+- [[../../01-产品规划/20260330-1650-CNVN中越通项目PRD/plan|PRD - 支付与抽成]]
+- [[../../03-能力交付/20260403-1700-预约模块/plan|预约模块实现]]

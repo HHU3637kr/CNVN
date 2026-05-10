@@ -20,6 +20,7 @@ from typing import Sequence
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.config import settings
 from app.models.ledger import (
@@ -66,7 +67,8 @@ async def resolve_commission_rate(
     r = await db.execute(
         select(Lesson).where(
             Lesson.teacher_id == teacher_id,
-            Lesson.status == "completed",
+            Lesson.status.notin_(("cancelled", "expired")),
+            Lesson.actual_end_at.is_not(None),
             Lesson.actual_end_at >= month_start,
             Lesson.actual_end_at < month_end,
         )
@@ -445,6 +447,12 @@ async def list_payouts_by_teacher(
 
     offset = (page - 1) * page_size
     r = await db.execute(
-        base.order_by(PayoutOrder.created_at.desc()).offset(offset).limit(page_size)
+        base.options(
+            selectinload(PayoutOrder.settlement_snapshot),
+            selectinload(PayoutOrder.payment_order),
+        )
+        .order_by(PayoutOrder.created_at.desc())
+        .offset(offset)
+        .limit(page_size)
     )
     return list(r.scalars().all()), int(total)

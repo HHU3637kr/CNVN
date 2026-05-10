@@ -1,0 +1,3295 @@
+{
+  "run_id": "20260501-1228-run-002",
+  "requests": [
+    {
+      "ts": "2026-05-01T04:35:55.915Z",
+      "case_id": "US-001",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.911Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.914Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.926Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.926Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.927Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.929Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.932Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.933Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.934Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.935Z",
+      "case_id": "US-001",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.934Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.934Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.937Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.937Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.939Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.939Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.939Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.939Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.938Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.934Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 14,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.945Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.945Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.945Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.945Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.945Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.946Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.948Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:55.945Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 19,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:56.008Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/photo-1586388750948-16833a41ee95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMHN0dWRlbnQlMjBsZWFybmluZyUyMGxhcHRvcHxlbnwxfHx8fDE3NzQ4NjEyNzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "status": 200,
+      "type": "Image",
+      "duration_ms": 35,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:56.048Z",
+      "case_id": "US-001",
+      "method": "OPTIONS",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Other",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:56.048Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/favicon.ico",
+      "status": 404,
+      "type": "Other",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:56.047Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/teachers?sort_by=recommended&page_size=4&page=1",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:56.047Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 12,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.536Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.546Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.546Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.546Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.549Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.549Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.550Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.551Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.548Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.552Z",
+      "case_id": "US-001",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.550Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.550Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.553Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.554Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.559Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.560Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.555Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.561Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.561Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.561Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.561Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.561Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.562Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.589Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.589Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9/availability",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 13,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.589Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 13,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:57.589Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9/reviews?page_size=10",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 16,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.259Z",
+      "case_id": "US-001",
+      "method": "OPTIONS",
+      "url": "/api/v1/lessons",
+      "status": 200,
+      "type": "Other",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.261Z",
+      "case_id": "US-001",
+      "method": "POST",
+      "url": "/api/v1/lessons",
+      "status": 201,
+      "type": "Fetch",
+      "duration_ms": 29,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.297Z",
+      "case_id": "US-001",
+      "method": "OPTIONS",
+      "url": "/api/v1/lessons?role=student&page=1&page_size=100",
+      "status": 200,
+      "type": "Other",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.297Z",
+      "case_id": "US-001",
+      "method": "OPTIONS",
+      "url": "/api/v1/wallet",
+      "status": 200,
+      "type": "Other",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.297Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.297Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/wallet",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.297Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 17,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.297Z",
+      "case_id": "US-001",
+      "method": "GET",
+      "url": "/api/v1/lessons?role=student&page=1&page_size=100",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 19,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.588Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.596Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.597Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.596Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.599Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.599Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.599Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.599Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.600Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.604Z",
+      "case_id": "US-002",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.602Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.603Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.606Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.606Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.603Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.606Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.608Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.607Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.614Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.614Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.614Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.602Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 15,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.615Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.615Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.615Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.617Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.614Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 15,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.645Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/photo-1586388750948-16833a41ee95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMHN0dWRlbnQlMjBsZWFybmluZyUyMGxhcHRvcHxlbnwxfHx8fDE3NzQ4NjEyNzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "status": 200,
+      "type": "Image",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.645Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/teachers?sort_by=recommended&page_size=4&page=1",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:35:59.645Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.222Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.229Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.230Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.230Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.233Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.233Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.234Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.234Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.233Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.234Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.234Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.236Z",
+      "case_id": "US-002",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.236Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.237Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.238Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.243Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.243Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.238Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.238Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.238Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.239Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.244Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.244Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.244Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.246Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.246Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.246Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.260Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.260Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9/availability",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.260Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 12,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:01.260Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9/reviews?page_size=10",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 14,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:02.855Z",
+      "case_id": "US-002",
+      "method": "POST",
+      "url": "/api/v1/lessons",
+      "status": 400,
+      "type": "Fetch",
+      "duration_ms": 25,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:02.885Z",
+      "case_id": "US-002",
+      "method": "OPTIONS",
+      "url": "/api/v1/wallet/transactions?page=1&page_size=30",
+      "status": 200,
+      "type": "Other",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:02.885Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 12,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:02.885Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/wallet",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 14,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:02.885Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/wallet/transactions?page=1&page_size=30",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 19,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:02.907Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/payment/vietqr.png",
+      "status": 200,
+      "type": "Image",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.171Z",
+      "case_id": "US-002",
+      "method": "OPTIONS",
+      "url": "/api/v1/wallet/topup",
+      "status": 200,
+      "type": "Other",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.172Z",
+      "case_id": "US-002",
+      "method": "POST",
+      "url": "/api/v1/wallet/topup",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 19,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.192Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/wallet",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.192Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/wallet/transactions?page=1&page_size=30",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.278Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.278Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9/availability",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 14,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.278Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 14,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.278Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/teachers/10e269d1-54d3-4441-9958-5a60e65a08e9/reviews?page_size=10",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 17,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.611Z",
+      "case_id": "US-002",
+      "method": "POST",
+      "url": "/api/v1/lessons",
+      "status": 201,
+      "type": "Fetch",
+      "duration_ms": 45,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.664Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 13,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.664Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/wallet",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 21,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.664Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 27,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.664Z",
+      "case_id": "US-002",
+      "method": "GET",
+      "url": "/api/v1/lessons?role=student&page=1&page_size=100",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 33,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.951Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.959Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.958Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.959Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.961Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.961Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.961Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.962Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.965Z",
+      "case_id": "US-003",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.962Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.963Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.964Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.966Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.966Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.966Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.966Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.967Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.973Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.973Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.973Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.964Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 13,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.973Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.976Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.976Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.977Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.963Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 15,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:03.973Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 17,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:04.006Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/photo-1586388750948-16833a41ee95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMHN0dWRlbnQlMjBsZWFybmluZyUyMGxhcHRvcHxlbnwxfHx8fDE3NzQ4NjEyNzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "status": 200,
+      "type": "Image",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:04.012Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/api/v1/teachers?sort_by=recommended&page_size=4&page=1",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:04.012Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.574Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/dashboard/student",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.582Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.583Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.583Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.587Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.587Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.588Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.588Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.586Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.590Z",
+      "case_id": "US-003",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.588Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.588Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.590Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.590Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.591Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.591Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.595Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.596Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.591Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.591Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.592Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.596Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.596Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.596Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.596Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.596Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.597Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.610Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 12,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.610Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/api/v1/wallet",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 14,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.610Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 19,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:05.610Z",
+      "case_id": "US-003",
+      "method": "GET",
+      "url": "/api/v1/lessons?role=student&page=1&page_size=100",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 21,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.335Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.343Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.343Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.343Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.346Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.346Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.346Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.347Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.351Z",
+      "case_id": "US-004",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.346Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.349Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.350Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 2,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.350Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.353Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.354Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.354Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.354Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.360Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.360Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.361Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.361Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.349Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 16,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.362Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.362Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.365Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.360Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 16,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.394Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/photo-1586388750948-16833a41ee95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMHN0dWRlbnQlMjBsZWFybmluZyUyMGxhcHRvcHxlbnwxfHx8fDE3NzQ4NjEyNzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "status": 200,
+      "type": "Image",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.397Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/api/v1/teachers?sort_by=recommended&page_size=4&page=1",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 8,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:07.397Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/api/v1/auth/me",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.966Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/classroom/e93cf80c-e6cb-4111-9490-673f51115490",
+      "status": 200,
+      "type": "Document",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.975Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/@vite/client",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.975Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/main.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.976Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/@react-refresh",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.979Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.980Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-dom_client.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.981Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.981Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/chunk-MLKVGRKF.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.979Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.pnpm/vite@6.3.5_jiti@2.6.1_lightningcss@1.30.1/node_modules/vite/dist/client/env.mjs",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.983Z",
+      "case_id": "US-004",
+      "method": "WS",
+      "url": "/",
+      "status": "created",
+      "type": "WebSocket",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.980Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/App.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 3,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.984Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react-router.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.981Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/styles/index.css",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 4,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.984Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/routes.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.986Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/Layout.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.986Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Home.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Teachers.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.992Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/lucide-react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.993Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/node_modules/.vite/deps/react.js?v=ec88cdce",
+      "status": 200,
+      "type": "Script",
+      "duration_ms": 0,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherProfile.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/StudentDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 7,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/TeacherDashboard.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 9,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Classroom.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Login.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Register.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Wallet.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 10,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.987Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/PaymentOrderDetail.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.988Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/pages/Payouts.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 11,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.993Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/api.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.993Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/http.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.993Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/authStorage.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 6,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.994Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/bookingDraft.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.994Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/lib/format.ts",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:08.994Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/src/app/components/TeacherAvatar.tsx",
+      "status": 304,
+      "type": "Script",
+      "duration_ms": 5,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:09.011Z",
+      "case_id": "US-004",
+      "method": "OPTIONS",
+      "url": "/api/v1/lessons/e93cf80c-e6cb-4111-9490-673f51115490",
+      "status": 200,
+      "type": "Other",
+      "duration_ms": 1,
+      "error": null
+    },
+    {
+      "ts": "2026-05-01T04:36:09.011Z",
+      "case_id": "US-004",
+      "method": "GET",
+      "url": "/api/v1/lessons/e93cf80c-e6cb-4111-9490-673f51115490",
+      "status": 200,
+      "type": "Fetch",
+      "duration_ms": 14,
+      "error": null
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 /**
  * 注册页面 — 支持学生/教师身份选择
- * spec/03-功能实现/20260406-0030-教师中心访问控制/plan.md §3
+ * spec/03-能力交付/20260406-0030-教师中心访问控制/plan.md §3
  */
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
@@ -56,10 +56,21 @@ export function Register() {
             body: JSON.stringify({
               title,
               about: about || undefined,
+              currency: "VND",
               hourly_rate: Number(hourlyRate),
               teacher_type: teacherType,
-              specialties: specialties ? specialties.split(",").map((s) => s.trim()) : undefined,
+              specialties: specialties
+                ? specialties
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                : undefined,
             }),
+          });
+
+          await apiFetchJson<UserOut>("/auth/switch-role", {
+            method: "POST",
+            body: JSON.stringify({ role: "teacher" }),
           });
 
           // 教师注册成功，直接进入教师中心

@@ -1,8 +1,8 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, Text
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, Text, text
+from sqlalchemy.dialects.postgresql import UUID, ExcludeConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -57,4 +57,24 @@ class Lesson(Base):
         Index("idx_lessons_teacher_id", "teacher_id"),
         Index("idx_lessons_status", "status"),
         Index("idx_lessons_scheduled_at", "scheduled_at"),
+        ExcludeConstraint(
+            ("teacher_id", "="),
+            (
+                text("lesson_time_range(scheduled_at, duration_minutes)"),
+                "&&",
+            ),
+            name="ex_lessons_teacher_no_overlap",
+            using="gist",
+            where=text("status NOT IN ('cancelled', 'expired')"),
+        ),
+        ExcludeConstraint(
+            ("student_id", "="),
+            (
+                text("lesson_time_range(scheduled_at, duration_minutes)"),
+                "&&",
+            ),
+            name="ex_lessons_student_no_overlap",
+            using="gist",
+            where=text("status NOT IN ('cancelled', 'expired')"),
+        ),
     )

@@ -23,6 +23,8 @@ router = APIRouter(prefix="/lessons", tags=["Lessons"])
 
 
 def _http(e: Exception) -> HTTPException:
+    if isinstance(e, lesson_service.LessonBookingConflict):
+        return HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
     if isinstance(e, LookupError):
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     if isinstance(e, PermissionError):
@@ -39,6 +41,8 @@ async def create_lesson(
     """学生预约课程"""
     try:
         return await lesson_service.create_lesson(db, current_user, data)
+    except lesson_service.LessonBookingConflict as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
@@ -59,6 +63,8 @@ async def list_lesson_messages(
     except LookupError as e:
         raise _http(e)
     except PermissionError as e:
+        raise _http(e)
+    except ValueError as e:
         raise _http(e)
 
 
@@ -103,7 +109,7 @@ async def lesson_websocket(
         await websocket.close(code=1008)
         return
     try:
-        await lesson_service.require_lesson_participant(db, user, lesson_id)
+        await lesson_service.require_lesson_classroom_access(db, user, lesson_id)
     except LookupError as e:
         await websocket.send_json(
             {"type": "error", "code": "not_found", "message": str(e)}
@@ -113,6 +119,16 @@ async def lesson_websocket(
     except PermissionError as e:
         await websocket.send_json(
             {"type": "error", "code": "forbidden", "message": str(e)}
+        )
+        await websocket.close(code=1008)
+        return
+    except ValueError as e:
+        await websocket.send_json(
+            {
+                "type": "error",
+                "code": "classroom_unavailable",
+                "message": str(e),
+            }
         )
         await websocket.close(code=1008)
         return
@@ -262,7 +278,7 @@ async def cancel_lesson(
 @router.patch("/{lesson_id}/start", response_model=LessonOut)
 async def start_lesson(
     lesson_id: uuid.UUID,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_teacher),
     db: AsyncSession = Depends(get_db),
 ):
     """开始上课"""
@@ -279,7 +295,7 @@ async def start_lesson(
 @router.patch("/{lesson_id}/end", response_model=LessonOut)
 async def end_lesson(
     lesson_id: uuid.UUID,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_teacher),
     db: AsyncSession = Depends(get_db),
 ):
     """结束课程"""

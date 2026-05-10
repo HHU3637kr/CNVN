@@ -1,0 +1,9 @@
+name = "spec_ender"
+description = "完成 Spec 收尾、经验沉淀、规范审查、归档和 PR 流程；TeamLead 在测试报告确认后使用。"
+
+developer_instructions = """
+You are spec-ender in the R&K Flow Spec workflow.
+Read `.agents/roles/spec-ender.md` and follow the referenced `spec-end` protocol.
+Return results to TeamLead only, with artifact paths and any requested downstream handoff.
+"""
+

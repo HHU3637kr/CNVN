@@ -5,22 +5,135 @@ import uuid
 from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import func, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 
+from app.config import settings
 from app.core.datetime_utils import ensure_utc, intervals_overlap
 from app.models.lesson import Lesson
 from app.models.teacher_profile import TeacherProfile
 from app.models.user import User
 from app.schemas.common import PaginatedResponse
 from app.schemas.lesson import LessonCreate, LessonListItem, LessonOut
-from app.services import availability_service, payment_service
+from app.services import availability_service, payment_service, teacher_stats_service
 
 TERMINAL_STATUSES = frozenset({"cancelled", "expired"})
+LESSON_OVERLAP_CONSTRAINTS = frozenset(
+    {
+        "ex_lessons_teacher_no_overlap",
+        "ex_lessons_student_no_overlap",
+    }
+)
+CLASSROOM_ENTRY_EARLY_MINUTES = 15
+CLASSROOM_ENTRY_LATE_MINUTES = 15
+
+
+class LessonBookingConflict(ValueError):
+    pass
 
 
 def _lesson_end(lesson: Lesson) -> datetime:
-    return lesson.scheduled_at + timedelta(minutes=lesson.duration_minutes)
+    return ensure_utc(lesson.scheduled_at) + timedelta(minutes=lesson.duration_minutes)
+
+
+def _classroom_entry_state(
+    lesson: Lesson, *, now: datetime | None = None
+) -> tuple[datetime, bool, str | None]:
+    checked_at = ensure_utc(now or datetime.now(timezone.utc))
+    starts_at = ensure_utc(lesson.scheduled_at)
+    ends_at = _lesson_end(lesson)
+
+    if lesson.status == "pending_confirmation":
+        return ends_at, False, "等待老师确认"
+    if lesson.status == "confirmed":
+        opens_at = starts_at - timedelta(minutes=CLASSROOM_ENTRY_EARLY_MINUTES)
+        closes_at = ends_at + timedelta(minutes=CLASSROOM_ENTRY_LATE_MINUTES)
+        if checked_at < opens_at:
+            return ends_at, False, "未到可进入时间"
+        if checked_at > closes_at:
+            return ends_at, False, "课堂进入时间已过"
+        return ends_at, True, None
+    if lesson.status == "in_progress":
+        return ends_at, True, None
+    if lesson.status in ("completed", "reviewed"):
+        return ends_at, False, "课程已完成"
+    if lesson.status == "cancelled":
+        return ends_at, False, "课程已取消"
+    if lesson.status == "expired":
+        return ends_at, False, "课程已过期"
+    return ends_at, False, "当前状态不可进入"
+
+
+def _lesson_payload(lesson: Lesson, *, now: datetime | None = None) -> dict:
+    ends_at, can_enter, reason = _classroom_entry_state(lesson, now=now)
+    return {
+        "id": lesson.id,
+        "student_id": lesson.student_id,
+        "teacher_id": lesson.teacher_id,
+        "scheduled_at": lesson.scheduled_at,
+        "ends_at": ends_at,
+        "duration_minutes": lesson.duration_minutes,
+        "topic": lesson.topic,
+        "status": lesson.status,
+        "price": lesson.price,
+        "can_enter_classroom": can_enter,
+        "classroom_unavailable_reason": reason,
+        "cancel_reason": lesson.cancel_reason,
+        "actual_start_at": lesson.actual_start_at,
+        "actual_end_at": lesson.actual_end_at,
+        "created_at": lesson.created_at,
+    }
+
+
+def _lesson_out(lesson: Lesson, *, now: datetime | None = None) -> LessonOut:
+    return LessonOut.model_validate(_lesson_payload(lesson, now=now))
+
+
+def _lesson_list_item(
+    lesson: Lesson,
+    *,
+    student_name: str | None,
+    teacher_name: str | None,
+    now: datetime | None = None,
+) -> LessonListItem:
+    payload = _lesson_payload(lesson, now=now)
+    payload["student_name"] = student_name
+    payload["teacher_name"] = teacher_name
+    payload.pop("student_id")
+    payload.pop("teacher_id")
+    payload.pop("cancel_reason")
+    payload.pop("actual_start_at")
+    payload.pop("actual_end_at")
+    payload.pop("created_at")
+    return LessonListItem.model_validate(payload)
+
+
+def _constraint_name_from_integrity_error(exc: IntegrityError) -> str | None:
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        diag = getattr(current, "diag", None)
+        constraint_name = getattr(diag, "constraint_name", None)
+        if constraint_name:
+            return constraint_name
+        constraint_name = getattr(current, "constraint_name", None)
+        if constraint_name:
+            return constraint_name
+        current = getattr(current, "__cause__", None) or getattr(
+            current, "__context__", None
+        )
+
+    message = str(exc)
+    for name in LESSON_OVERLAP_CONSTRAINTS:
+        if name in message:
+            return name
+    return None
+
+
+def _is_lesson_overlap_integrity_error(exc: IntegrityError) -> bool:
+    return _constraint_name_from_integrity_error(exc) in LESSON_OVERLAP_CONSTRAINTS
 
 
 def _price_vnd(hourly_rate: int, duration_minutes: int) -> int:
@@ -36,6 +149,7 @@ async def expire_stale_pending_lessons(db: AsyncSession) -> None:
             Lesson.created_at < deadline,
         )
     )
+    expired_teacher_ids: set[uuid.UUID] = set()
     for lesson in r.scalars().all():
         order = await payment_service.get_active_order_by_lesson(db, lesson.id)
         if order is not None and order.status in ("held", "disputed"):
@@ -43,6 +157,9 @@ async def expire_stale_pending_lessons(db: AsyncSession) -> None:
                 db, order, "教师超时未确认，自动退款"
             )
         lesson.status = "expired"
+        expired_teacher_ids.add(lesson.teacher_id)
+    for teacher_id in expired_teacher_ids:
+        await teacher_stats_service.sync_teacher_delivery_stats(db, teacher_id)
     await db.commit()
 
 
@@ -117,7 +234,7 @@ async def create_lesson(
         scheduled_at=scheduled_at,
         duration_minutes=data.duration_minutes,
     ):
-        raise ValueError("该时段与已有课程冲突")
+        raise LessonBookingConflict("该时段与已有课程冲突")
 
     price = _price_vnd(teacher.hourly_rate, data.duration_minutes)
 
@@ -131,7 +248,13 @@ async def create_lesson(
         price=price,
     )
     db.add(lesson)
-    await db.flush()
+    try:
+        await db.flush()
+    except IntegrityError as e:
+        if _is_lesson_overlap_integrity_error(e):
+            await db.rollback()
+            raise LessonBookingConflict("该时段与已有课程冲突") from e
+        raise
 
     try:
         # 学员付款 → 托管户（plan.md §3.4 第 1 行）
@@ -142,7 +265,7 @@ async def create_lesson(
 
     await db.commit()
     await db.refresh(lesson)
-    return LessonOut.model_validate(lesson)
+    return _lesson_out(lesson)
 
 
 async def get_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> LessonOut:
@@ -153,7 +276,7 @@ async def get_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> Less
         raise LookupError("课程不存在")
     if not _can_access_lesson(user, lesson):
         raise PermissionError("无权查看该课程")
-    return LessonOut.model_validate(lesson)
+    return _lesson_out(lesson)
 
 
 async def require_lesson_participant(
@@ -167,6 +290,17 @@ async def require_lesson_participant(
         raise LookupError("课程不存在")
     if not _can_access_lesson(user, lesson):
         raise PermissionError("无权参与该课程")
+    return lesson
+
+
+async def require_lesson_classroom_access(
+    db: AsyncSession, user: User, lesson_id: uuid.UUID
+) -> Lesson:
+    """校验当前用户可进入互动课堂；用于消息历史、消息写入和 WebSocket。"""
+    lesson = await require_lesson_participant(db, user, lesson_id)
+    _ends_at, can_enter, reason = _classroom_entry_state(lesson)
+    if not can_enter:
+        raise ValueError(reason or "当前状态不可进入")
     return lesson
 
 
@@ -225,11 +359,16 @@ async def list_lessons(
     stmt = stmt.order_by(Lesson.scheduled_at.asc()).offset(offset).limit(page_size)
     rows = await db.execute(stmt)
     items: list[LessonListItem] = []
+    response_now = datetime.now(timezone.utc)
     for lesson, student_name, teacher_name in rows.all():
-        li = LessonListItem.model_validate(lesson)
-        li.student_name = student_name
-        li.teacher_name = teacher_name
-        items.append(li)
+        items.append(
+            _lesson_list_item(
+                lesson,
+                student_name=student_name,
+                teacher_name=teacher_name,
+                now=response_now,
+            )
+        )
 
     return PaginatedResponse(
         total=total,
@@ -248,13 +387,14 @@ async def confirm_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> 
     if not lesson:
         raise LookupError("课程不存在")
     if lesson.teacher_id != user.teacher_profile.id:
-        raise PermissionError("只能确认自己的课程")
+        raise PermissionError("只能操作自己的课程")
     if lesson.status != "pending_confirmation":
         raise ValueError("当前状态不可确认")
     lesson.status = "confirmed"
+    await teacher_stats_service.sync_teacher_delivery_stats(db, lesson.teacher_id)
     await db.commit()
     await db.refresh(lesson)
-    return LessonOut.model_validate(lesson)
+    return _lesson_out(lesson)
 
 
 def _hours_until_lesson(scheduled_at: datetime) -> float:
@@ -287,44 +427,56 @@ async def cancel_lesson(
     #   ≥ 24h：退款 → PaymentOrder → refunded；学员 Wallet 回款
     #   < 24h：Lesson 置 cancelled，PaymentOrder 保持 held；争议期过后
     #          由 dispute_watcher 按常规 release 全额结算给教师（学员违约）
+    order = await payment_service.get_active_order_by_lesson(db, lesson.id)
     if hours_until >= 24.0:
-        order = await payment_service.get_active_order_by_lesson(db, lesson.id)
         if order is not None and order.status in ("held", "disputed"):
             await payment_service.refund_payment_order(
                 db, order, "课程取消退款"
             )
+    elif order is not None and order.status in ("held", "disputed"):
+        order.held_until = _lesson_end(lesson) + timedelta(
+            hours=settings.DISPUTE_WINDOW_HOURS
+        )
     lesson.status = "cancelled"
 
     await db.commit()
     await db.refresh(lesson)
-    return LessonOut.model_validate(lesson)
+    return _lesson_out(lesson)
 
 
 async def start_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> LessonOut:
     await expire_stale_pending_lessons(db)
+    if user.teacher_profile is None:
+        raise PermissionError("需要教师角色权限，请切换到教师身份")
     r = await db.execute(select(Lesson).where(Lesson.id == lesson_id))
     lesson = r.scalars().first()
     if not lesson:
         raise LookupError("课程不存在")
-    if not _can_access_lesson(user, lesson):
-        raise PermissionError("无权操作该课程")
+    if lesson.teacher_id != user.teacher_profile.id:
+        raise PermissionError("只能操作自己的课程")
     if lesson.status != "confirmed":
         raise ValueError("只有已确认的课程可以开始")
+    _ends_at, can_enter, reason = _classroom_entry_state(lesson)
+    if not can_enter:
+        raise ValueError(reason or "当前状态不可进入")
     lesson.status = "in_progress"
     lesson.actual_start_at = datetime.now(timezone.utc)
+    await teacher_stats_service.sync_teacher_delivery_stats(db, lesson.teacher_id)
     await db.commit()
     await db.refresh(lesson)
-    return LessonOut.model_validate(lesson)
+    return _lesson_out(lesson)
 
 
 async def end_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> LessonOut:
     await expire_stale_pending_lessons(db)
+    if user.teacher_profile is None:
+        raise PermissionError("需要教师角色权限，请切换到教师身份")
     r = await db.execute(select(Lesson).where(Lesson.id == lesson_id))
     lesson = r.scalars().first()
     if not lesson:
         raise LookupError("课程不存在")
-    if not _can_access_lesson(user, lesson):
-        raise PermissionError("无权操作该课程")
+    if lesson.teacher_id != user.teacher_profile.id:
+        raise PermissionError("只能操作自己的课程")
     if lesson.status != "in_progress":
         raise ValueError("只有进行中的课程可以结束")
     lesson.status = "completed"
@@ -333,7 +485,8 @@ async def end_lesson(db: AsyncSession, user: User, lesson_id: uuid.UUID) -> Less
     # 课程完成 → 写入争议期 deadline（plan.md §2.1 FR-005）
     # 真正结算由 dispute_watcher 在 held_until 到期后触发
     await payment_service.mark_lesson_completed(db, lesson)
+    await teacher_stats_service.sync_teacher_delivery_stats(db, lesson.teacher_id)
 
     await db.commit()
     await db.refresh(lesson)
-    return LessonOut.model_validate(lesson)
+    return _lesson_out(lesson)

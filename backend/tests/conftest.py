@@ -1,9 +1,11 @@
 import asyncio
+import uuid
 
 import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
 from httpx import ASGITransport, AsyncClient
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.database import Base, get_db
@@ -12,13 +14,56 @@ from app.models import *  # noqa: F401,F403
 
 TEST_DATABASE_URL = "postgresql+asyncpg://cnvn:cnvn_secret@localhost:5432/cnvn_test"
 
+LEDGER_ACCOUNT_NAMES = {
+    "escrow": "托管账户",
+    "platform_revenue": "平台收入账户",
+    "tax_payable": "税费应付账户",
+    "teacher_payable": "教师应付账户",
+}
+
 
 @pytest_asyncio.fixture(scope="session", autouse=True)
 async def setup_database():
     """创建所有表（session 级别）"""
     engine = create_async_engine(TEST_DATABASE_URL, echo=False)
     async with engine.begin() as conn:
+        await conn.execute(text("CREATE EXTENSION IF NOT EXISTS btree_gist"))
+        await conn.execute(
+            text(
+                """
+                CREATE OR REPLACE FUNCTION lesson_time_range(
+                  starts_at timestamptz,
+                  duration_minutes integer
+                )
+                RETURNS tstzrange
+                LANGUAGE sql
+                IMMUTABLE
+                STRICT
+                AS $$
+                  SELECT tstzrange(
+                    starts_at,
+                    starts_at + make_interval(mins => duration_minutes),
+                    '[)'
+                  )
+                $$;
+                """
+            )
+        )
+        await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
+        await conn.execute(
+            text(
+                """
+                INSERT INTO ledger_accounts (id, code, name, balance, created_at)
+                VALUES (:id, :code, :name, 0, now())
+                ON CONFLICT (code) DO NOTHING
+                """
+            ),
+            [
+                {"id": uuid.uuid4(), "code": code, "name": name}
+                for code, name in LEDGER_ACCOUNT_NAMES.items()
+            ],
+        )
     await engine.dispose()
     yield
     engine = create_async_engine(TEST_DATABASE_URL, echo=False)

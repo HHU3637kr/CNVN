@@ -1,0 +1,8 @@
+﻿timestamp=2026-05-01T13:49:14.5630100+08:00
+cwd=D:\project\CNVN
+branch=feat/spec-20260501-1339-classroom-review-flow
+commit=248ff8016e8de3e4de7f26a3745d779d878ce550
+python=Python 3.13.11
+node=v24.12.0
+pnpm=10.28.2
+chrome_paths=

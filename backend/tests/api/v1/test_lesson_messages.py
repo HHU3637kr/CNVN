@@ -4,13 +4,15 @@ from __future__ import annotations
 
 import asyncio
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
+from app.models.lesson import Lesson
+from app.models.message import Message
 from app.models.teacher_profile import TeacherProfile
 from app.models.user import User
 
@@ -52,19 +54,20 @@ def _setup_confirmed_lesson_sync(sync_client):
 
     tid = get_teacher_profile_id_sync(te["email"])
     tz = ZoneInfo("Asia/Ho_Chi_Minh")
-    day = (datetime.now(tz) + timedelta(days=7)).date()
+    local_start = datetime.now(tz) + timedelta(minutes=5)
+    day = local_start.date()
     sync_client.post(
         "/api/v1/availability",
         json={
             "specific_date": day.isoformat(),
-            "start_time": "09:00:00",
-            "end_time": "21:00:00",
+            "start_time": "00:00:00",
+            "end_time": "23:59:00",
             "is_recurring": False,
         },
         headers=h_te,
     )
     sync_client.post("/api/v1/wallet/topup", json={"amount": 500_000}, headers=h_st)
-    sched = vn_dt_local(day, 15, 0).astimezone(ZoneInfo("UTC"))
+    sched = local_start.astimezone(ZoneInfo("UTC"))
     cr = sync_client.post(
         "/api/v1/lessons",
         json={
@@ -168,6 +171,59 @@ async def test_list_messages_forbidden_for_stranger(client, db_session):
     assert r.status_code == 403
 
 
+@pytest.mark.asyncio
+async def test_list_messages_rejects_unavailable_classroom_states(client, db_session):
+    student = make_register_data()
+    await client.post("/api/v1/auth/register", json=student)
+    login_student = await client.post(
+        "/api/v1/auth/login",
+        json={"email": student["email"], "password": student["password"]},
+    )
+    h_student = {"Authorization": f"Bearer {login_student.json()['access_token']}"}
+
+    teacher = make_register_data()
+    await client.post("/api/v1/auth/register", json=teacher)
+    login_teacher = await client.post(
+        "/api/v1/auth/login",
+        json={"email": teacher["email"], "password": teacher["password"]},
+    )
+    h_teacher = {"Authorization": f"Bearer {login_teacher.json()['access_token']}"}
+    await client.post(
+        "/api/v1/auth/become-teacher", json=TEACHER_PROFILE_DATA, headers=h_teacher
+    )
+
+    teacher_id = await get_teacher_profile_id(db_session, teacher["email"])
+    student_id = (
+        await db_session.execute(select(User.id).where(User.email == student["email"]))
+    ).scalar_one()
+    now = datetime.now(timezone.utc).replace(microsecond=0)
+    lessons = [
+        ("pending_confirmation", now + timedelta(minutes=5), "等待老师确认"),
+        ("confirmed", now + timedelta(days=1), "未到可进入时间"),
+        ("confirmed", now - timedelta(hours=2), "课堂进入时间已过"),
+        ("cancelled", now + timedelta(hours=2), "课程已取消"),
+        ("completed", now - timedelta(hours=4), "课程已完成"),
+        ("reviewed", now - timedelta(hours=6), "课程已完成"),
+    ]
+    for status, scheduled_at, reason in lessons:
+        lesson = Lesson(
+            student_id=student_id,
+            teacher_id=teacher_id,
+            scheduled_at=scheduled_at,
+            duration_minutes=30,
+            status=status,
+            price=30_000,
+        )
+        db_session.add(lesson)
+        await db_session.commit()
+
+        resp = await client.get(
+            f"/api/v1/lessons/{lesson.id}/messages", headers=h_student
+        )
+        assert resp.status_code == 400
+        assert resp.json()["detail"] == reason
+
+
 def test_ws_chat_roundtrip(sync_client):
     s = _setup_confirmed_lesson_sync(sync_client)
     lesson_id = s["lesson_id"]
@@ -213,6 +269,38 @@ def get_student_uid_sync(email: str):
     return asyncio.run(_run())
 
 
+def set_lesson_status_sync(lesson_id: str, status: str):
+    async def _run():
+        engine = create_async_engine(TEST_DATABASE_URL, echo=False)
+        try:
+            async with async_sessionmaker(engine, class_=AsyncSession)() as session:
+                r = await session.execute(
+                    select(Lesson).where(Lesson.id == uuid.UUID(lesson_id))
+                )
+                lesson = r.scalars().one()
+                lesson.status = status
+                await session.commit()
+        finally:
+            await engine.dispose()
+
+    asyncio.run(_run())
+
+
+def count_lesson_messages_sync(lesson_id: str) -> int:
+    async def _run():
+        engine = create_async_engine(TEST_DATABASE_URL, echo=False)
+        try:
+            async with async_sessionmaker(engine, class_=AsyncSession)() as session:
+                r = await session.execute(
+                    select(Message).where(Message.lesson_id == uuid.UUID(lesson_id))
+                )
+                return len(r.scalars().all())
+        finally:
+            await engine.dispose()
+
+    return asyncio.run(_run())
+
+
 def test_ws_rejects_without_token(sync_client):
     lid = uuid.uuid4()
     with sync_client.websocket_connect(f"/api/v1/lessons/{lid}/ws") as ws:
@@ -250,6 +338,19 @@ def test_ws_rejects_non_member(sync_client):
     assert err["code"] == "forbidden"
 
 
+def test_ws_rejects_unavailable_classroom(sync_client):
+    s = _setup_confirmed_lesson_sync(sync_client)
+    set_lesson_status_sync(s["lesson_id"], "completed")
+
+    with sync_client.websocket_connect(
+        f"/api/v1/lessons/{s['lesson_id']}/ws?access_token={s['tok_st']}"
+    ) as ws:
+        err = ws.receive_json()
+    assert err["type"] == "error"
+    assert err["code"] == "classroom_unavailable"
+    assert err["message"] == "课程已完成"
+
+
 def test_ws_invalid_json_returns_error(sync_client):
     """TC-WS-005"""
     s = _setup_confirmed_lesson_sync(sync_client)
@@ -260,6 +361,25 @@ def test_ws_invalid_json_returns_error(sync_client):
         err = ws.receive_json()
     assert err["type"] == "error"
     assert err["code"] == "invalid_json"
+
+
+def test_ws_empty_and_too_long_messages_return_validation_without_persisting(sync_client):
+    s = _setup_confirmed_lesson_sync(sync_client)
+    assert count_lesson_messages_sync(s["lesson_id"]) == 0
+
+    with sync_client.websocket_connect(
+        f"/api/v1/lessons/{s['lesson_id']}/ws?access_token={s['tok_st']}"
+    ) as ws:
+        ws.send_json({"type": "chat", "content": "   "})
+        empty = ws.receive_json()
+        ws.send_json({"type": "chat", "content": "x" * 2001})
+        too_long = ws.receive_json()
+
+    assert empty["type"] == "error"
+    assert empty["code"] == "validation"
+    assert too_long["type"] == "error"
+    assert too_long["code"] == "validation"
+    assert count_lesson_messages_sync(s["lesson_id"]) == 0
 
 
 @pytest.mark.asyncio

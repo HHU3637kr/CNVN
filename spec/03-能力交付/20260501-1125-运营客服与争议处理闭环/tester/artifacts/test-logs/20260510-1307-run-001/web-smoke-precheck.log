@@ -1,0 +1,88 @@
+﻿RUN_ID=20260510-1307-run-001
+timestamp=2026-05-10T13:10:23
+postgres_port_5432=
+TCP connect to (127.0.0.1 : 5432) failed
+
+
+ComputerName           : 127.0.0.1
+RemoteAddress          : 127.0.0.1
+RemotePort             : 5432
+InterfaceAlias         : Loopback Pseudo-Interface 1
+SourceAddress          : 127.0.0.1
+PingSucceeded          : True
+PingReplyDetails (RTT) : 0 ms
+TcpTestSucceeded       : False
+
+docker-compose_ps=
+docker-compose : error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.51/containers/json?filters=%7B%22label%22%3A%7B%22com.docker.compose.config-hash%22%3Atrue%2C%22com.docker.compose.oneoff%3DFalse%22%3Atrue%2C%22com.docker.co
+mpose.project%3Dcnvn%22%3Atrue%7D%7D": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+At line:11 char:3
++   docker-compose ps
++   ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error during co...file specified.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+frontend_scripts=
+
+IgnoreCase : True
+LineNumber : 7
+Line       :     "build": "vite build",
+Filename   : InputStream
+Path       : InputStream
+Pattern    : "build"|"dev"|playwright|cypress|test
+Context    : 
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 8
+Line       :     "dev": "vite"
+Filename   : InputStream
+Path       : InputStream
+Pattern    : "build"|"dev"|playwright|cypress|test
+Context    : 
+Matches    : {0}
+
+available_chrome_processes=
+
+ProcessName     : msedge
+Id              : 3980
+MainWindowTitle : 
+
+
+ProcessName     : msedge
+Id              : 6440
+MainWindowTitle : 
+
+
+ProcessName     : msedge
+Id              : 9872
+MainWindowTitle : 
+
+
+ProcessName     : msedge
+Id              : 10120
+MainWindowTitle : 
+
+
+ProcessName     : msedge
+Id              : 13424
+MainWindowTitle : 
+
+
+ProcessName     : msedge
+Id              : 14136
+MainWindowTitle : 
+
+
+ProcessName     : msedge
+Id              : 22464
+MainWindowTitle : 
+
+
+ProcessName     : msedge
+Id              : 23500
+MainWindowTitle : 
+
+
+

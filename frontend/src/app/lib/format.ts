@@ -10,6 +10,39 @@ export function formatVndFull(amount: number): string {
   return `₫${amount.toLocaleString("vi-VN")}`;
 }
 
+export function formatPercentDecimal(rate: string | number): string {
+  const n = typeof rate === "string" ? Number(rate) : rate;
+  if (!Number.isFinite(n)) return "—";
+  const percent = Math.abs(n) <= 1 ? n * 100 : n;
+  return `${percent.toFixed(percent % 1 === 0 ? 0 : 2)}%`;
+}
+
+export function formatDateTimeVN(iso: string | null): string {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleString("zh-CN", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
+export function formatPayoutStatus(status: string): string {
+  const map: Record<string, string> = {
+    pending: "待出款",
+    processing: "处理中",
+    paid: "已到账",
+    failed: "出款失败",
+    cancelled: "已取消",
+  };
+  return map[status] ?? status;
+}
+
 const VN_DAYS = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
 
 export function formatLessonScheduled(iso: string): { date: string; time: string } {

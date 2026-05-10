@@ -1,0 +1,4 @@
+﻿NAMES     STATUS                    PORTS
+cnvn-db   Up 22 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+healthy
+cnvn_test

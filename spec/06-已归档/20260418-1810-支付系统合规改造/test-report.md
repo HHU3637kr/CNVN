@@ -1,7 +1,7 @@
 ---
 title: 支付系统合规改造 — 测试报告
 type: test-report
-category: 03-功能实现
+category: 03-能力交付
 status: 已通过
 priority: 高
 created: 2026-04-18

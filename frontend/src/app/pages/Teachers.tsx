@@ -1,5 +1,5 @@
 /**
- * 教师列表 — spec/03-功能实现/20260404-1400-前端对接真实API/plan.md §5 步骤 2
+ * 教师列表 — spec/03-能力交付/20260404-1400-前端对接真实API/plan.md §5 步骤 2
  */
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router";

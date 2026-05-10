@@ -10,7 +10,7 @@ owner: TeamLead/spec-ender
 spec_dir: spec/03-能力交付/20260501-1125-运营客服与争议处理闭环
 git_branch: feat/spec-20260501-1415-dispute-support-flow
 base_branch: feat/spec-20260501-1058-mvp-to-product-ready
-pr_url:
+pr_url: https://github.com/HHU3637kr/CNVN/pull/6
 run_id: 20260510-1353-run-retest-r001
 tags:
   - spec
@@ -36,7 +36,7 @@ related:
 - 本轮按用户要求由 TeamLead 本地执行，不再创建新的子 Agent。
 - 本轮使用 Skill：`spec-review`、`spec-end`、`exp-reflect`、`git-work`。
 - 本轮不移动 Spec 目录到 `06-已归档`；目录保留在 `spec/03-能力交付/`，与前序 MVP Spec 的现有模式一致。
-- 提交、推送、PR 创建和合并由 TeamLead 在本分支继续执行。
+- 提交、推送、PR 已完成，合并由 TeamLead 在本分支继续执行。
 
 ## 2. 已扫描产物
 
@@ -115,8 +115,8 @@ related:
 
 - 当前分支：`feat/spec-20260501-1415-dispute-support-flow`。
 - Base 分支：`feat/spec-20260501-1058-mvp-to-product-ready`。
-- PR URL：待 TeamLead 创建后回写。
-- 本报告创建后将进入 `git-work` 完成提交、推送、创建 PR，并合并回规划分支。
+- PR URL：`https://github.com/HHU3637kr/CNVN/pull/6`。
+- 已进入 `git-work` 完成提交、推送、创建 PR；下一步合并回规划分支。
 
 ## 9. 最终状态
 
@@ -128,4 +128,4 @@ related:
 | 阻塞问题 | 无 |
 | Debugger 移交 | R-001 已修复并 verified |
 | 归档移动 | 本轮不移动目录 |
-| 提交/推送/PR | TeamLead 后续执行 |
+| 提交/推送/PR | 已完成，PR: https://github.com/HHU3637kr/CNVN/pull/6 |

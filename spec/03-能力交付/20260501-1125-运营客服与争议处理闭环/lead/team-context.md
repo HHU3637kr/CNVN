@@ -4,14 +4,14 @@ schema_version: 1
 team_name: spec-20260501-1415-dispute-support-flow
 spec_dir: spec/03-能力交付/20260501-1125-运营客服与争议处理闭环
 task_description: 运营客服与争议处理闭环
-status: running
-phase: ending
+status: completed
+phase: ended
 runtime: codex
 git_branch: feat/spec-20260501-1415-dispute-support-flow
 base_branch: feat/spec-20260501-1058-mvp-to-product-ready
-pr_url:
+pr_url: https://github.com/HHU3637kr/CNVN/pull/6
 created_at: 2026-05-01T14:16:22+08:00
-updated_at: 2026-05-10T14:03:25+08:00
+updated_at: 2026-05-10T14:10:48+08:00
 ---
 
 # Team Context
@@ -30,7 +30,7 @@ updated_at: 2026-05-10T14:03:25+08:00
 | 8 | testing | spec-tester | 执行测试并留存证据 | done | tester/test-report.md | none | 2026-05-10T13:58:42+08:00 |
 | 9 | review | spec-reviewer | 审查实现、测试证据和剩余风险 | done | reviewer/review.md | none | 2026-05-10T14:03:25+08:00 |
 | 10 | debug | spec-debugger | 诊断并修复 R-001 争议创建权限偏差 | done | debugger/debug-001-fix.md | gate skipped by user | 2026-05-10T13:49:45+08:00 |
-| 11 | ending | spec-ender | 收尾、提交、PR | running | ender/end-report.md | none | 2026-05-10T14:03:25+08:00 |
+| 11 | ending | spec-ender | 收尾、提交、PR | done | ender/end-report.md | none | 2026-05-10T14:10:48+08:00 |
 
 ## Task Progress
 
@@ -42,7 +42,7 @@ updated_at: 2026-05-10T14:03:25+08:00
 | T-004 | spec-executor | 实现争议处理闭环 | done | executor/summary.md | 2026-05-01T14:31:08+08:00 | TeamLead |
 | T-005 | spec-tester | 执行测试并留存证据 | done | tester/test-report.md | 2026-05-10T13:56:00+08:00 | spec-tester |
 | T-006 | spec-reviewer | 审查实现与证据 | done | reviewer/review.md | 2026-05-10T14:03:25+08:00 | TeamLead |
-| T-007 | spec-ender | 收尾、提交、PR | running | ender/end-report.md | | TeamLead |
+| T-007 | spec-ender | 收尾、提交、PR | done | ender/end-report.md | 2026-05-10T14:10:48+08:00 | spec-ender |
 | T-008 | spec-debugger | 修复 R-001 争议创建权限偏差并补齐 P0 测试证据 | done | debugger/debug-001-fix.md | 2026-05-10T13:49:45+08:00 | spec-debugger |
 
 ## Runtime Handles

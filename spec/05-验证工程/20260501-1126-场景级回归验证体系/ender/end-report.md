@@ -10,7 +10,7 @@ owner: TeamLead/spec-ender
 spec_dir: spec/05-验证工程/20260501-1126-场景级回归验证体系
 git_branch: test/spec-20260501-1126-scenario-regression
 base_branch: feat/spec-20260501-1058-mvp-to-product-ready
-pr_url:
+pr_url: https://github.com/HHU3637kr/CNVN/pull/7
 run_id: 20260510-1428-run-001
 tags:
   - spec
@@ -78,5 +78,5 @@ related:
 
 - 当前分支：`test/spec-20260501-1126-scenario-regression`。
 - Base 分支：`feat/spec-20260501-1058-mvp-to-product-ready`。
-- PR URL：待创建后回写。
-- 下一步：提交、推送、创建 PR，并合并回规划分支。
+- PR URL：`https://github.com/HHU3637kr/CNVN/pull/7`。
+- 当前状态：已提交、推送并创建 PR；下一步合并回规划分支。

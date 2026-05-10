@@ -4,14 +4,14 @@ schema_version: 1
 team_name: spec-20260501-1126-scenario-regression
 spec_dir: spec/05-验证工程/20260501-1126-场景级回归验证体系
 task_description: 场景级回归验证体系
-status: running
-phase: ending
+status: completed
+phase: completed
 runtime: codex
 git_branch: test/spec-20260501-1126-scenario-regression
 base_branch: feat/spec-20260501-1058-mvp-to-product-ready
-pr_url:
+pr_url: https://github.com/HHU3637kr/CNVN/pull/7
 created_at: 2026-05-10T14:14:15+08:00
-updated_at: 2026-05-10T14:31:25+08:00
+updated_at: 2026-05-10T14:34:40+08:00
 ---
 
 # Team Context
@@ -30,7 +30,7 @@ updated_at: 2026-05-10T14:31:25+08:00
 | 8 | debugging | spec-debugger | 修复场景测试账本全局余额假设 | verified | debugger/debug-002-fix.md | gate skipped by user | 2026-05-10T14:30:24+08:00 |
 | 9 | testing | spec-tester | 执行 smoke/full 验证并留存证据 | done | tester/test-report.md | none | 2026-05-10T14:30:24+08:00 |
 | 10 | review | spec-reviewer | 审查实现与证据 | done | reviewer/review.md | none | 2026-05-10T14:31:25+08:00 |
-| 11 | ending | spec-ender | 收尾、提交、PR | running | ender/end-report.md | none | 2026-05-10T14:31:25+08:00 |
+| 11 | ending | spec-ender | 收尾、提交、PR | done | ender/end-report.md | none | 2026-05-10T14:34:40+08:00 |
 
 ## Task Progress
 
@@ -45,7 +45,7 @@ updated_at: 2026-05-10T14:31:25+08:00
 | T-007 | spec-debugger | 修复场景测试账本基线断言 | done | debugger/debug-002-fix.md | 2026-05-10T14:26:46+08:00 | spec-debugger |
 | T-008 | spec-tester | 执行 smoke/full 验证并产出测试报告 | done | tester/test-report.md | 2026-05-10T14:30:24+08:00 | spec-tester |
 | T-009 | spec-reviewer | 审查实现与测试证据 | done | reviewer/review.md | 2026-05-10T14:31:25+08:00 | spec-reviewer |
-| T-010 | spec-ender | 收尾、提交、PR | running | ender/end-report.md | | spec-ender |
+| T-010 | spec-ender | 收尾、提交、PR | done | ender/end-report.md | 2026-05-10T14:34:40+08:00 | spec-ender |
 
 ## Problem Resolution Log
 
@@ -65,7 +65,7 @@ updated_at: 2026-05-10T14:31:25+08:00
 | spec-executor | codex | current-agent-as-spec-executor | local | current-thread | current-session | done | yes | executor/summary.md | 2026-05-10T14:30:24+08:00 |
 | spec-debugger | codex | current-agent-as-spec-debugger | local | current-thread | current-session | verified | yes | debugger/debug-002-fix.md | 2026-05-10T14:30:24+08:00 |
 | spec-reviewer | codex | current-agent-as-spec-reviewer | local | current-thread | current-session | done | yes | reviewer/review.md | 2026-05-10T14:31:25+08:00 |
-| spec-ender | codex | current-agent-as-spec-ender | local | current-thread | current-session | running | yes | ender/end-report.md | 2026-05-10T14:31:25+08:00 |
+| spec-ender | codex | current-agent-as-spec-ender | local | current-thread | current-session | done | yes | ender/end-report.md | 2026-05-10T14:34:40+08:00 |
 
 ## Artifact Registry
 
@@ -82,7 +82,7 @@ updated_at: 2026-05-10T14:31:25+08:00
 | debugger/debug-002-fix.md | spec-debugger | verified | yes | 2026-05-10T14:30:24+08:00 |
 | tester/test-report.md | spec-tester | completed | yes | 2026-05-10T14:30:24+08:00 |
 | reviewer/review.md | spec-reviewer | completed | yes | 2026-05-10T14:31:25+08:00 |
-| ender/end-report.md | spec-ender | pending | no | 2026-05-10T14:14:15+08:00 |
+| ender/end-report.md | spec-ender | completed | yes | 2026-05-10T14:34:40+08:00 |
 
 ## Gate Decisions
 
@@ -107,4 +107,4 @@ updated_at: 2026-05-10T14:31:25+08:00
 
 ## Next Action
 
-- 进入 spec-end 收尾；创建 `ender/end-report.md`，提交、推送、创建 PR 并合并回规划分支。
+- spec-end 收尾完成；已创建 PR `https://github.com/HHU3637kr/CNVN/pull/7`，下一步合并回规划分支。

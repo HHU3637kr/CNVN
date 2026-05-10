@@ -1,6 +1,6 @@
 """add availability final-state checks
 
-Revision ID: 005_availability_final_state_checks
+Revision ID: 005_availability_checks
 Revises: 004_lesson_overlap_constraints
 Create Date: 2026-05-01
 """
@@ -8,7 +8,7 @@ from typing import Sequence, Union
 
 from alembic import op
 
-revision: str = "005_availability_final_state_checks"
+revision: str = "005_availability_checks"
 down_revision: Union[str, None] = "004_lesson_overlap_constraints"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

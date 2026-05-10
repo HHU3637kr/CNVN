@@ -1,7 +1,7 @@
 """add dispute cases
 
 Revision ID: 006_add_dispute_cases
-Revises: 005_availability_final_state_checks
+Revises: 005_availability_checks
 Create Date: 2026-05-01
 """
 from typing import Sequence, Union
@@ -11,7 +11,7 @@ from alembic import op
 from sqlalchemy.dialects import postgresql
 
 revision: str = "006_add_dispute_cases"
-down_revision: Union[str, None] = "005_availability_final_state_checks"
+down_revision: Union[str, None] = "005_availability_checks"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
